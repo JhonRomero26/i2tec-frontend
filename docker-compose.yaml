@@ -9,6 +9,7 @@ services:
       - "3000:4321"
     volumes:
       - ./public:/app/public
+      - ./data:/app/src/data
     networks:
       - i2tec
       - nginx_default
