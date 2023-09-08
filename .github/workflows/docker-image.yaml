@@ -27,5 +27,5 @@ jobs:
 
       - name: "Build Inventory Image"
         run: |
-          docker build . --tag ghcr.io/jhonromero26/i2tec-fronted:latest -f Dockerfile
-          docker push ghcr.io/jhonromero26/i2tec-fronted:latest
+          docker build . --tag ghcr.io/jhonromero26/i2tec-frontend:latest -f Dockerfile
+          docker push ghcr.io/jhonromero26/i2tec-frontend:latest
