@@ -1,0 +1,112 @@
+---
+import Icon from "@/components/Icon.astro";
+interface Props {
+  length: number;
+  currentPage: number;
+  urlPag?: string;
+  prevUrl?: string;
+  nextUrl?: string;
+  class?: string;
+}
+
+const {
+  length,
+  currentPage,
+  urlPag,
+  prevUrl,
+  nextUrl,
+  class: className,
+} = Astro.props;
+const paginationList: number[] = Array.from({ length }, (_, i) => i + 1);
+const disabledNavClass = "cursor-not-allowed bg-gray-100 text-gray-200";
+const activeNavClass = "bg-white hover:bg-gray-100 hover:text-gray-700";
+const defaultClass =
+  "flex items-center justify-center px-4 h-10 leading-tight text-gray-500 border border-gray-300";
+---
+
+<nav class={className} aria-label="Pagination">
+  <ul class="inline-flex flex-wrap -space-x-px text-base h-10">
+    <li>
+      {
+        prevUrl ? (
+          <a
+            href={`${urlPag}${prevUrl}`}
+            class:list={[
+              defaultClass,
+              "rounded-l-lg",
+              {
+                [activeNavClass]: Boolean(prevUrl),
+                [disabledNavClass]: !prevUrl,
+              },
+            ]}
+          >
+            <Icon name="chevron-left" />
+          </a>
+        ) : (
+          <span
+            class:list={[
+              defaultClass,
+              "rounded-l-lg",
+              {
+                [activeNavClass]: Boolean(prevUrl),
+                [disabledNavClass]: !prevUrl,
+              },
+            ]}
+          >
+            <Icon name="chevron-left" />
+          </span>
+        )
+      }
+    </li>
+    {
+      paginationList.map((pag) => (
+        <li>
+          <a
+            href={`${urlPag}${pag}`}
+            class:list={[
+              defaultClass,
+              {
+                "cursor-not-allowed bg-primary text-white": currentPage === pag,
+                [activeNavClass]: currentPage !== pag,
+              },
+            ]}
+          >
+            {pag}
+          </a>
+        </li>
+      ))
+    }
+    <li>
+      {
+        nextUrl ? (
+          <a
+            href={`${urlPag}${nextUrl}`}
+            class:list={[
+              defaultClass,
+              "rounded-r-lg",
+              {
+                [activeNavClass]: Boolean(nextUrl),
+                [disabledNavClass]: !nextUrl,
+              },
+            ]}
+          >
+            <Icon name="chevron-right" />
+          </a>
+        ) : (
+          <span
+            class:list={[
+              defaultClass,
+              "rounded-r-lg",
+              {
+                [activeNavClass]: Boolean(nextUrl),
+                [disabledNavClass]: !nextUrl,
+              },
+            ]}
+          >
+            <Icon name="chevron-right" />
+          </span>
+        )
+      }
+    </li>
+  </ul>
+</nav>

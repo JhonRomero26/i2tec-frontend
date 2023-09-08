@@ -1,0 +1,36 @@
+---
+import { ABOUT_ROUTES } from "@/lib/constants";
+---
+
+<section class="section pb-32">
+  <div class="container">
+    <h2 class="mb-16 text-center text-4xl font-bold">
+      Acercate a I<sup>2</sup>TEC
+    </h2>
+    <div class="grid md:grid-cols-4 lg:grid-cols-2 gap-2">
+      {
+        ABOUT_ROUTES.map((route, index) => (
+          <a
+            href={route.path}
+            class:list={[
+              "block aspect-video relative group/linkbox hover:before:backdrop-blur-sm isolate w-full text-white before:backdrop-saturate-150 before:w-full before:bg-primary/40 before:h-full before:block before:absolute before:top-0 before:left-0",
+              { "md:col-span-2 lg:col-span-1": index === 0 },
+              { "md:col-span-2 lg:col-span-1": index !== 0 },
+            ]}
+          >
+            <picture class="overflow-hidden">
+              <img
+                class="object-cente object-cover"
+                alt={route.label}
+                src={route.image}
+              />
+            </picture>
+            <div class="absolute z-10 bottom-0 p-2 lg:p-4 weight-700 object-cover object-center text-ellipsis text-4xl lg:text-4xl">
+              {route.label}
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>

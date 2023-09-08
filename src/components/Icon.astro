@@ -1,0 +1,11 @@
+---
+import type { IconNames } from "@/lib/types";
+import type { HTMLAttributes } from "astro/types";
+type Props = {
+  name: IconNames;
+} & HTMLAttributes<"i">;
+
+const { name, class: className, ...restProps } = Astro.props;
+---
+
+<span class:list={[`ti ti-${name}`, className]} {...restProps}></span>

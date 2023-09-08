@@ -1,0 +1,27 @@
+{
+  "heroInfo": {
+    "title": "En I2TEC crecen todos",
+    "description": "Estamos comprometidos en fomentar un ambiente de trabajo inclusivo y respetuoso donde todas las ideas son bienvenidas y donde cada individuo tiene la oportunidad de crecer y desarrollarse profesionalmente.",
+    "image": "https://images.unsplash.com/photo-1580894896813-652ff5aa8146?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+  },
+  "aboutus": {
+    "title": "Surgimos de la investigación",
+    "description": "En el centro de investigación, innovación y tecnología, nuestro compromiso con la investigación es el corazón de todo lo que hacemos. Surgimos de la investigación y estamos dedicados a llevar a cabo investigaciones vanguardistas que aborden algunos de los desafíos más apremiantes de nuestro tiempo.",
+    "image": "https://images.unsplash.com/photo-1682258635291-20aa5df36fe6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMnx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60"
+  },
+  "misionAndVision": [
+    {
+      "title": "Misión",
+      "description": [
+        "Dinamizar la investigación e innovación aplicada para el desarrollo de soluciones tecnológicas que contribuyan con el medio ambiental y económicamente sostenibles hacia los retos de la sociedad del Sur del Ecuador.",
+        "Contribuir a que el conocimiento en ciencia, tecnología e innovación se transforme en desarrollo de soluciones tecnológicas, para impulsar, articular, generar y transferir conocimiento científico y tecnológico que aporte al desarrollo educativo, productivo y sostenible, para dar respuesta a los intereses de la sociedad Sur del Ecuador, mediante programas, proyectos y servicios económicamente sostenibles y que contribuyan con el desarrollo de la sociedad."
+      ]
+    },
+    {
+      "title": "Visión",
+      "description": [
+        "Ser un referente regional y nacional en la gestión y apropiación de la ciencia, la tecnología y la innovación, para ofrecer soluciones útiles, integrales, sostenibles e innovadoras, para contribuir con el desarrollo de la sociedad."
+      ]
+    }
+  ]
+}

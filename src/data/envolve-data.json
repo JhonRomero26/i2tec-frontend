@@ -1,0 +1,28 @@
+{
+  "features": [
+    {
+      "id": "1",
+      "title": "Hello world",
+      "image": "https://images.unsplash.com/photo-1682250705703-3dc5433a3c2b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw3fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60",
+      "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci eveniet dolorem delectus. Incidunt porro pariatur natus error quam eaque, praesentium, explicabo totam, dolore sunt odit fuga facere doloribus suscipit tenetur!"
+    },
+    {
+      "id": "2",
+      "title": "Hello world 2",
+      "image": "https://images.unsplash.com/photo-1682250705703-3dc5433a3c2b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw3fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60",
+      "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci eveniet dolorem delectus. Incidunt porro pariatur natus error quam eaque, praesentium, explicabo totam, dolore sunt odit fuga facere doloribus suscipit tenetur!"
+    },
+    {
+      "id": "3",
+      "title": "Hello world ADFSASD3",
+      "image": "https://images.unsplash.com/photo-1682250705703-3dc5433a3c2b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw3fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60",
+      "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci eveniet dolorem delectus. Incidunt porro pariatur natus error quam eaque, praesentium, explicabo totam, dolore sunt odit fuga facere doloribus suscipit tenetur!"
+    },
+    {
+      "id": "4",
+      "title": "Hello world 4",
+      "image": "https://images.unsplash.com/photo-1682250705703-3dc5433a3c2b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw3fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60",
+      "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci eveniet dolorem delectus. Incidunt porro pariatur natus error quam eaque, praesentium, explicabo totam, dolore sunt odit fuga facere doloribus suscipit tenetur!"
+    }
+  ]
+}

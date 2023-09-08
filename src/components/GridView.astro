@@ -1,0 +1,48 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { arrayIterable } from "../lib/arrayIterable";
+import ImageSkeleton from "@/components/ImageSkeleton.astro";
+import { EffectsClass } from "@/lib/classNames";
+
+type Props = {
+  minWidth?: "min-content" | "max-content" | string;
+  gap?: string | { x: string; y: string };
+  class?: string;
+  messageEmpty?: string;
+  count: number;
+} & HTMLAttributes<"div">;
+
+const {
+  minWidth = "300px",
+  gap = "1rem",
+  class: className,
+  messageEmpty = "No hay contenido",
+  count = 0,
+} = Astro.props;
+const gapValue = typeof gap === "object" ? `${gap.y} ${gap.x}` : gap;
+---
+
+<div
+  class:list={["grid relative", { relative: count === 0 }, className]}
+  style={{
+    gap: gapValue,
+    gridTemplateColumns: `repeat(auto-fill, minmax(${minWidth}, 1fr))`,
+  }}
+>
+  {
+    count > 0 ? (
+      <slot />
+    ) : (
+      arrayIterable(6).map((i) => (
+        <ImageSkeleton class={EffectsClass["fadeTopBottom"]} />
+      ))
+    )
+  }
+  {
+    count === 0 && (
+      <div class="text-2xl absolute w-full h-full top-0 left-0 flex justify-center items-center">
+        {messageEmpty}
+      </div>
+    )
+  }
+</div>

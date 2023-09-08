@@ -1,0 +1,68 @@
+---
+import CardWrapper from "@/components/CardWrapper.astro";
+import IconAndText from "@/components/IconAndText.astro";
+import Icon from "@/components/Icon.astro";
+
+import { parseDatePublished } from "@/lib/parseDatePublished";
+import type { Person } from "@/models";
+import ButtonAnchor from "./ButtonAnchor.astro";
+import { breandButtonClass } from "@/lib/classNames";
+
+interface Props {
+  title: string;
+  authors?: Person[];
+  publishedDate: Date;
+  image: string;
+  class?: string;
+  facebookUrl: string;
+  instagramUrl?: string;
+  summary: string;
+}
+
+const {
+  title,
+  publishedDate,
+  image,
+  class: className,
+  facebookUrl,
+  instagramUrl,
+  summary,
+} = Astro.props;
+
+const published = parseDatePublished(publishedDate);
+---
+
+<CardWrapper
+  effectImage={false}
+  class={`bg-white p-4 rounded-lg shadow ${className}`}
+  image={image}
+  title={title}
+>
+  <div class="order-2 line-clamp-3 text-neutral-700">{summary}</div>
+  <IconAndText slot="metainfo">
+    <Icon name="calendar" aria-label="published" />
+    <time datetime={published}>{published}</time>
+  </IconAndText>
+  <footer class="order-3 mt-4 flex justify-end" slot="footer">
+    <ButtonAnchor
+      target="_blank"
+      href={facebookUrl}
+      class={breandButtonClass["facebookBtn"]}
+      icon
+    >
+      <Icon name="brand-facebook" />
+    </ButtonAnchor>
+    {
+      instagramUrl && (
+        <ButtonAnchor
+          target="_blank"
+          href={instagramUrl}
+          class={breandButtonClass["instagramBtn"]}
+          icon
+        >
+          <Icon name="brand-instagram" />
+        </ButtonAnchor>
+      )
+    }
+  </footer>
+</CardWrapper>

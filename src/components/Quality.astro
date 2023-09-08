@@ -1,0 +1,21 @@
+---
+import type { IconNames } from "@/lib/types";
+import Icon from "@/components/Icon.astro";
+
+interface Props {
+  title: string;
+  icon: IconNames;
+  description: string;
+  class?: string;
+}
+
+const { title, description, class: className, icon } = Astro.props;
+---
+
+<div class:list={["flex flex-col items-center gap-6", className]}>
+  <Icon class="text-6xl" name={icon} />
+  <div class="w-full max-w-xs text-center">
+    <h4 class="mb-2 text-lg font-bold">{title}</h4>
+    <span class="mb-2 text-sm">{description}</span>
+  </div>
+</div>

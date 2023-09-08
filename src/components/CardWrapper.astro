@@ -1,0 +1,59 @@
+---
+export type CardWrapperProps = {
+  href: string;
+  title: string;
+  image: string;
+  class?: string;
+  effectImage: boolean;
+};
+
+const {
+  href,
+  image,
+  title,
+  class: className,
+  effectImage = true,
+} = Astro.props;
+---
+
+<article class:list={["group relative isolate", className]}>
+  <picture class="block relative aspect-video overflow-hidden">
+    <img
+      loading="lazy"
+      class:list={[
+        "h-full w-full object-cover object-center transition-transform",
+        {
+          "group-hover:filter-blur-lg group-hover:rotate-6 group-hover:scale-125":
+            effectImage,
+        },
+      ]}
+      src={image}
+      alt={title}
+      title={title}
+    />
+  </picture>
+  {
+    href ? (
+      <a
+        href={href}
+        class="flex flex-col gap-2 pt-4 before:absolute before:top-0 before:left-0 before:block before:h-full before:w-full before:content-[''] hover:no-underline"
+      >
+        <h3 class="line-clamp-2 text-ellipsis text-lg font-bold">{title}</h3>
+        <slot />
+        <div class="gap-1 text-neutral-600">
+          <slot name="metainfo" />
+        </div>
+        <slot name="footer" />
+      </a>
+    ) : (
+      <div class="flex flex-col gap-2 pt-4">
+        <h3 class="line-clamp-2 text-ellipsis text-lg font-bold">{title}</h3>
+        <slot />
+        <div class="gap-1 text-neutral-600">
+          <slot name="metainfo" />
+        </div>
+        <slot name="footer" />
+      </div>
+    )
+  }
+</article>

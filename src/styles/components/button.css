@@ -1,0 +1,49 @@
+$height-sm: 36px;
+$height: 42px;
+$height-lg: 48px;
+
+.btn {
+  @apply inline-flex cursor-pointer items-center justify-center gap-2 bg-transparent px-4 py-2 transition-colors;
+  @apply border-0 hover:bg-neutral-200 hover:no-underline;
+  height: $height;
+
+  &-primary {
+    @apply bg-primary text-white;
+    @apply hover:bg-primary;
+  }
+
+  &-secondary {
+    @apply bg-white text-primary;
+    @apply hover:bg-neutral-200;
+  }
+
+  &-icon {
+    @apply p-3 text-xl;
+    width: $height;
+  }
+
+  &-danger {
+    @apply bg-red-500 text-white;
+    @apply hover:bg-red-600;
+  }
+
+  &-block {
+    @apply flex w-full;
+  }
+
+  &-sm {
+    height: $height-sm;
+
+    &-icon {
+      @apply text-lg;
+    }
+  }
+
+  &-lg {
+    height: $height-lg;
+
+    &-icon {
+      @apply text-2xl;
+    }
+  }
+}

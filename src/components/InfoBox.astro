@@ -1,0 +1,36 @@
+---
+import { backBorderInfoBox } from "@/lib/classNames";
+
+export type Props = {
+  title: string;
+  decoration?: keyof typeof backBorderInfoBox;
+  backgroundColor?: string;
+  boxColor?: string;
+  class?: string;
+};
+
+const {
+  title,
+  decoration = "left",
+  backgroundColor = "bg-black",
+  boxColor = "bg-gray-50",
+  class: className,
+} = Astro.props;
+---
+
+<div class:list={["relative isolate my-[5%] mx-[2.5%] h-min", className]}>
+  <div
+    class:list={[
+      "absolute border-2 border-solid border-black block w-full h-full z-[-1]",
+      backBorderInfoBox[decoration],
+      backgroundColor,
+    ]}
+  >
+  </div>
+  <div
+    class={`${boxColor} backdrop-blur-sm saturate-200 p-12 border-2 boder-2 border-solid border-black`}
+  >
+    <h3 class="mb-4 text-2xl font-bold text-inherit">{title}</h3>
+    <div class="flex flex-col gap-4"><slot /></div>
+  </div>
+</div>

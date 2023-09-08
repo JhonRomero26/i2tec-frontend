@@ -1,0 +1,44 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import {
+  baseButtonClass,
+  typeButtonClass,
+  sizeButtonClass,
+  sizeIconButtonClass,
+} from "@/lib/classNames/button";
+
+export type BaseButtonProps = {
+  kind?: keyof typeof typeButtonClass;
+  size?: keyof typeof sizeButtonClass;
+  danger?: boolean;
+  block?: boolean;
+  icon?: boolean;
+};
+
+type Props = BaseButtonProps & HTMLAttributes<"button">;
+
+const {
+  kind = "default",
+  size = "default",
+  block,
+  icon,
+  class: className,
+  ...restProps
+} = Astro.props;
+
+const classNames = [
+  baseButtonClass,
+  typeButtonClass[kind],
+  {
+    "flex w-full": block,
+    [sizeButtonClass[size]]: !icon,
+    [sizeIconButtonClass[size]]: icon,
+  },
+  className,
+];
+---
+
+<button class:list={classNames} {...restProps}>
+  <slot name="icon" />
+  <slot />
+</button>

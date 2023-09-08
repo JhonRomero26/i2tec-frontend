@@ -1,0 +1,59 @@
+---
+import DocumentLayout from "@/layouts/DocumentLayout.astro";
+import PopularProjectsSection from "@/components/PopularProjectsSection.astro";
+import QualitiesSection from "@/components/QualitiesSection.astro";
+import HomeHeroSection from "@/components/HomeHeroSection.astro";
+import PageLayout from "@/layouts/PageLayout.astro";
+import ProjectsSection from "@/components/ProjectsSection.astro";
+import ProjectsCarousel from "@/components/ProjectsCarousel.astro";
+import { getProjects } from "@/services/project";
+import Icon from "@/components/Icon.astro";
+import ApproachSection from "@/components/ApproachSection.astro";
+
+const { data: projects = [] } =
+  (await getProjects(["populate=*", "sort[0]=createdAt:desc"])) ?? [];
+---
+
+<DocumentLayout title="Welcome to Astro.">
+  <PageLayout>
+    <main>
+      <HomeHeroSection />
+      <ProjectsSection class="mb-40">
+        <ProjectsCarousel
+          data-carousel-id="home-projects-carousel"
+          projects={projects.length > 0 ? projects.slice(0, 15) : []}
+        >
+          <Icon
+            slot="complement"
+            name="chevron-left"
+            class="swiper-button-prev"
+          />
+          <Icon
+            slot="complement"
+            name="chevron-right"
+            class="swiper-button-next"
+          />
+        </ProjectsCarousel>
+      </ProjectsSection>
+      <PopularProjectsSection
+        projects={projects.length > 0
+          ? projects
+              .slice(0, 20)
+              .filter((project) => project.attributes.popular === true)
+          : []}
+      />
+      <QualitiesSection />
+      <ApproachSection />
+    </main>
+  </PageLayout>
+</DocumentLayout>
+
+<script>
+  import Swiper from "swiper";
+  import { sliderProyectsOptions } from "@/lib/constants";
+
+  new Swiper(
+    '[data-carousel-id="home-projects-carousel"]',
+    sliderProyectsOptions
+  );
+</script>

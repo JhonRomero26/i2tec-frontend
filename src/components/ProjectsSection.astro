@@ -1,0 +1,18 @@
+---
+interface Props {
+  title?: string;
+  class?: string;
+}
+
+const { title = "Proyectos", class: className } = Astro.props;
+---
+
+<section class:list={["py-32 overflow-hidden", className]}>
+  <div class="container">
+    <div class="mx-auto mb-8 flex items-center justify-between">
+      <h2 class="text-4xl">{title}</h2>
+      <a href="/projects">Ver más</a>
+    </div>
+    <slot />
+  </div>
+</section>

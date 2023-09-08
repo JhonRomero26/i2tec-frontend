@@ -1,0 +1,48 @@
+---
+import ImageSkeleton from "@/components/ImageSkeleton.astro";
+import PopularProject from "@/components/PopularProject.astro";
+import { arrayIterable } from "@/lib/arrayIterable";
+import type { Project } from "@/models/Project";
+import { BACKEND_URL } from "@/lib/constants/environment";
+
+interface Props {
+  projects?: Project[];
+}
+
+const { projects = [] } = Astro.props;
+const projectGridItem =
+  "sm:col-span-2 sm:first:col-span-4 xl:col-span-1 xl:first:col-span-3 xl:first:row-span-2";
+---
+
+<section class="section">
+  <div class="container">
+    <h2 class="mb-16 text-center text-4xl font-bold">Proyectos destacados</h2>
+    <div class="grid gap-4 sm:grid-cols-4 xl:grid-rows-2">
+      {
+        projects.length > 0
+          ? projects
+              .slice(0, 3)
+              // .map((project: Project) => (
+              .map((project: Project) => (
+                <PopularProject
+                  class={projectGridItem}
+                  href={`/projects/${project.attributes.slug}`}
+                  title={project.attributes.title}
+                  image={BACKEND_URL.concat(
+                    project.attributes.image!.data.attributes.formats.medium.url
+                  )}
+                  authors={project.attributes.authors?.data!}
+                  publishedDate={project.attributes.publishedAt}
+                />
+              ))
+          : arrayIterable(3).map((i) => (
+              <ImageSkeleton
+                class={`${projectGridItem} ${i === 0 ? "xl:h-full" : ""}`}
+              />
+            ))
+      }
+    </div>
+  </div>
+</section>
+
+<!-- authors={project.authors} -->

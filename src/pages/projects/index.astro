@@ -1,0 +1,110 @@
+---
+import TitleWithText from "@/components/TitleWithText.astro";
+import GridView from "@/components/GridView.astro";
+import DocumentLayout from "@/layouts/DocumentLayout.astro";
+import PageLayout from "@/layouts/PageLayout.astro";
+import SearchBox from "@/components/SearchBox.astro";
+import CardProject from "@/components/CardProject.astro";
+import Pagination from "@/components/Pagination.astro";
+import { getProjects } from "@/services/project";
+import { BACKEND_URL } from "@/lib/constants";
+
+export const prerender = false;
+
+const searchParam: string = Astro.url.searchParams.get("q") || "";
+const pagParam = Astro.url.searchParams.get("pag") || "";
+const res = await getProjects([
+  "populate=*",
+  "pagination[pageSize]=36",
+  pagParam && `pagination[page]=${pagParam}`,
+  searchParam &&
+    [
+      `filters[$and][0][$or][0][title][$containsi]=${searchParam}`,
+      `filters[$and][0][$or][1][authors][first_name][$containsi]=${searchParam}`,
+      `filters[$and][0][$or][2][authors][last_name][$containsi]=${searchParam}`,
+    ].join("&"),
+]);
+
+const projects = res && res.data ? res.data : [];
+const meta = res && res.meta ? res.meta : undefined;
+
+const [, firstPath] = Astro.url.pathname.split("/");
+let pageCount: number = 0;
+let currentPage: number = 1;
+let pagination = { next: "", prev: "" };
+
+if (meta) {
+  pageCount = meta.pagination.pageCount;
+  currentPage = pagParam ? Number(pagParam) : 1;
+  pagination = {
+    next: pageCount > currentPage ? `${currentPage + 1}` : "",
+    prev: currentPage < pageCount ? `${currentPage - 1}` : "",
+  };
+}
+---
+
+<DocumentLayout title="Projectos | I2TEC">
+  <PageLayout>
+    <main>
+      <section class="py-40 bg-gradient-to-r from-cyan-500 to-blue-500">
+        <div class="items-center text-white">
+          <TitleWithText class="text-center">
+            <h1 slot="title" class="text-3xl font-bold mb-4">
+              Explorando la creatividad y la innovación
+            </h1>
+            <p class="font-medium">
+              Una selección de proyectos excepcionales qu Explorando la
+              creatividad y la innovacióne están cambiando el mundo y abriendo
+              nuevas posibilidades para el futuro dentro de I<sup>2</sup>
+               TEC
+            </p>
+          </TitleWithText>
+        </div>
+      </section>
+      <section class="mt-16 section">
+        <div class="container">
+          <div class="mb-12 flex flex-col">
+            <SearchBox
+              id="search-projects"
+              name="q"
+              title="Busquemos proyectos:"
+              value={searchParam}
+              placeholder="María Gómez o Impresora 3D"
+            />
+          </div>
+          <div class="relative">
+            <GridView
+              id="projects-view"
+              count={projects.length}
+              minWidth="250px"
+            >
+              {
+                projects.length > 0 &&
+                  projects.map((project) => (
+                    <CardProject
+                      href={`/projects/${project.attributes.slug}`}
+                      title={project.attributes.title}
+                      image={BACKEND_URL.concat(
+                        project.attributes.image!.data.attributes.formats.small
+                          .url
+                      )}
+                      publishedDate={project.attributes.publishedAt}
+                      authors={project.attributes.authors?.data}
+                    />
+                  ))
+              }
+            </GridView>
+            <Pagination
+              class="mt-12 flex justify-center"
+              urlPag={`/${firstPath}?pag=`}
+              prevUrl={`${pagination.prev}`}
+              nextUrl={`${pagination.next}`}
+              currentPage={currentPage}
+              length={pageCount}
+            />
+          </div>
+        </div>
+      </section>
+    </main>
+  </PageLayout>
+</DocumentLayout>

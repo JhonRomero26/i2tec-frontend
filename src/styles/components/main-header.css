@@ -1,0 +1,29 @@
+$header-height: 80px;
+
+.main-header {
+  @apply text-primary transition-colors;
+  height: $header-height;
+
+  &-header {
+    @apply fixed top-0 left-0 z-10 w-full bg-white py-2;
+    height: $header-height;
+  }
+
+  &-navigator {
+    @apply max-w-[250px] z-20 flex w-full justify-between gap-4;
+    @apply max-md:fixed max-md:right-0 max-md:bottom-0 max-md:translate-x-full max-md:flex-col max-md:bg-white max-md:pt-4 max-md:transition-transform;
+    @apply md:max-w-full md:justify-end md:static md:translate-x-0 md:flex-row md:items-center md:p-0;
+    top: $header-height;
+    width: 100%;
+  }
+}
+
+.cover-protector {
+  @apply max-md:content-[''];
+  @apply fixed top-0 left-0 z-[2] h-screen w-screen cursor-pointer bg-primary/60 backdrop-blur;
+  @apply md:hidden;
+
+  &-body {
+    @apply max-md:overflow-hidden;
+  }
+}

@@ -1,0 +1,57 @@
+---
+import ImageSkeleton from "@/components/ImageSkeleton.astro";
+import CardProject from "@/components/CardProject.astro";
+
+import type { Project } from "@/models";
+import { arrayIterable } from "@/lib/arrayIterable";
+import { EffectsClass } from "@/lib/classNames/effects";
+import { BACKEND_URL } from "@/lib/constants";
+
+import "swiper/css/navigation";
+
+interface Props {
+  "data-carousel-id": string;
+  projects: Project[];
+}
+
+const { projects, "data-carousel-id": CarouselID } = Astro.props;
+---
+
+{
+  projects.length > 0 ? (
+    <div
+      data-carousel-id={CarouselID}
+      class="swiper slider-scale overflow-visible"
+    >
+      <div class="swiper-wrapper">
+        {projects.map((project) => (
+          <div class="swiper-slide">
+            <CardProject
+              href={`/projects/${project.attributes.slug}`}
+              image={BACKEND_URL.concat(
+                project.attributes.image!.data.attributes.formats.small.url
+              )}
+              authors={project.attributes.authors?.data}
+              title={project.attributes.title}
+              publishedDate={project.attributes.publishedAt}
+            />
+          </div>
+        ))}
+      </div>
+      <slot name="complement" />
+    </div>
+  ) : (
+    <div class="relative overflow-visible">
+      <div class="flex flex-nowrap gap-4">
+        {arrayIterable(7).map(() => (
+          <ImageSkeleton
+            class={`aspect-video ${EffectsClass["fadeTopBottom"]}`}
+          />
+        ))}
+      </div>
+      <div class="absolute w-full h-full top-0 left-0 flex justify-center items-center">
+        <div class="text-2xl">No hay contenido</div>
+      </div>
+    </div>
+  )
+}

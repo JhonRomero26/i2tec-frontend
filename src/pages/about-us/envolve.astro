@@ -1,0 +1,81 @@
+---
+import TitleWithText from "@/components/TitleWithText.astro";
+import DocumentLayout from "@/layouts/DocumentLayout.astro";
+import PageLayout from "@/layouts/PageLayout.astro";
+import dataEnvolve from "@/data/envolve-data.json";
+
+export interface Feature {
+  id: string;
+  title: string;
+  image: string;
+  content: string;
+}
+
+const { features } = dataEnvolve;
+---
+
+<DocumentLayout title="Nuestro entorno | I2TEC">
+  <PageLayout>
+    <main>
+      <section class="py-32">
+        <div class="container grid gap-12 pb-32 lg:grid-cols-[1fr_0.5fr]">
+          <div class="flex flex-col gap-6">
+            <TitleWithText>
+              <h2
+                slot="title"
+                class="text-center text-4xl font-bold lg:text-left mb-8"
+                id="title-feature"
+              >
+                {features[0].title}
+              </h2>
+              <span id="content-feature">{features[0].content}</span>
+            </TitleWithText>
+          </div>
+
+          <div
+            class="row-start-1 row-end-2 grid grid-cols-[repeat(2,_minmax(0,_15rem))] grid-rows-2 place-content-stretch justify-center gap-4 ove console.log(feature);
+rflow-hidden lg:col-start-2 lg:col-end-3"
+          >
+            {
+              features.map((feature, index) => (
+                <picture
+                  data-id="envolve"
+                  data-image-id={feature.id}
+                  class={`relative flex aspect-square w-full max-w-[15rem] cursor-pointer items-center justify-center overflow-hidden before:absolute before:z-[1] before:block before:h-full before:w-full before:bg-primary/50 before:transition-colors before:content-[''] hover:before:bg-transparent ${
+                    index === 0 ? "before:bg-transparent" : ""
+                  }`}
+                >
+                  <img
+                    class="w-full h-full object-cover object-center"
+                    src={feature.image}
+                    alt={feature.title}
+                  />
+                </picture>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+    </main>
+  </PageLayout>
+</DocumentLayout>
+
+<script define:vars={{ features }}>
+const $features = document.querySelectorAll('[data-id="envolve"]');
+const $title = document.querySelector("#title-feature");
+const $content = document.querySelector("#content-feature");
+
+$features.forEach((el) => {
+  el.addEventListener("click", () => {
+    $features.forEach((el) => {
+      el.classList.remove("before:bg-transparent");
+    });
+    const id = el.getAttribute("data-image-id");
+    const feature = features.filter((feature) => feature.id === id)[0];
+
+    el.classList.add("before:bg-transparent");
+    $title.innerHTML = feature.title;
+    $content.innerHTML = feature.content;
+  });
+});
+</script>

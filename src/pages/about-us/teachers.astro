@@ -1,0 +1,17 @@
+---
+import DocumentLayout from "@/layouts/DocumentLayout.astro";
+import TeachersDetailInteractivity from "@/components/preact/TeachersDetailInteractivity";
+import PageLayout from "@/layouts/PageLayout.astro";
+import { getTeachers } from "@/services/teachers";
+
+const res = await getTeachers(["populate=person.avatar"]);
+const teachers = res && res.data ? res.data : [];
+---
+
+<DocumentLayout title="Docentes | I2TEC">
+  <PageLayout>
+    <main>
+      <TeachersDetailInteractivity client:load teachers={teachers} />
+    </main>
+  </PageLayout>
+</DocumentLayout>

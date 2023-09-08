@@ -1,0 +1,32 @@
+---
+import TitleWithText from "@/components/TitleWithText.astro";
+import InfoBox from "@/components/InfoBox.astro";
+import infoPage from "@/data/about-us-data.json";
+---
+
+<section class="section bg-primary text-white pt-40">
+  <div class="container">
+    <TitleWithText class="mb-12 text-center">
+      <h2 slot="title" class="text-center text-4xl font-bold mb-8">
+        Nuestra meta
+      </h2>
+       Tenemos una dirección hacia nuestros propositos, contamos con nuestra
+      misión y visión.
+    </TitleWithText>
+    <div class="grid gap-16 lg:grid-cols-2">
+      {
+        infoPage.misionAndVision.map((item, index) => (
+          <InfoBox
+            decoration={index % 2 == 0 ? "left" : "right"}
+            class="text-black"
+            title={item.title}
+          >
+            {item.description.map((paragraph) => (
+              <p class="text-gray-800">{paragraph}</p>
+            ))}
+          </InfoBox>
+        ))
+      }
+    </div>
+  </div>
+</section>

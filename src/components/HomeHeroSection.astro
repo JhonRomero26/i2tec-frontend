@@ -1,0 +1,45 @@
+---
+import TitleWithText from "@/components/TitleWithText.astro";
+import { Image } from "astro:assets";
+import heroImage from "public/images/heroimage.jpg";
+---
+
+<style>
+  .blur-animation {
+    animation: blur-animation 6s infinite alternate;
+  }
+
+  @keyframes blur-animation {
+    from {
+      filter: blur(0);
+    }
+    to {
+      filter: blur(6px);
+    }
+  }
+</style>
+
+<section
+  class="h-[60dvh] flex isolate items-center gap-12 overflow-hidden relative text-white"
+>
+  <picture
+    class="w-full h-full absolute after:block after:top-0 after:bottom-0 after:w-full after:h-full after:absolute after:bg-primary/50"
+  >
+    <Image
+      class="blur-animation w-full h-full object-cover object-center"
+      src={heroImage}
+      alt="Centro I2TEC"
+    />
+  </picture>
+  <TitleWithText class="z-10 text-center">
+    <h2 slot="title" class="mb-4 text-5xl leading-tight font-medium">
+      Bienvenidos al centro I<sup>2</sup>TEC
+    </h2>
+    <p class="text-lg">
+      Trabajamos incansablemente para impulsar el futuro mediante el desarrollo
+      de tecnologías innovadoras y soluciones creativas. Estamos comprometidos
+      en mejorar la vida de las personas a través del conocimiento y la
+      innovación constante.
+    </p>
+  </TitleWithText>
+</section>

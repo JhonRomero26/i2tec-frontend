@@ -1,0 +1,24 @@
+---
+import DocumentLayout from "@/layouts/DocumentLayout.astro";
+import PageLayout from "@/layouts/PageLayout.astro";
+import HeroImage from "@/components/HeroImage.astro";
+import AboutusSection from "@/components/AboutusSection.astro";
+import FoundersSection from "@/components/FoundersSection.astro";
+import MisionAndVisionSection from "@/components/MisionAndVisionSection.astro";
+import infoPage from "@/data/about-us-data.json";
+---
+
+<DocumentLayout title="Acerca de nosotros | I2TEC">
+  <PageLayout>
+    <main>
+      <HeroImage
+        title={infoPage.heroInfo.title}
+        description={infoPage.heroInfo.description}
+        image={infoPage.heroInfo.image}
+      />
+      <AboutusSection />
+      <MisionAndVisionSection />
+      <FoundersSection />
+    </main>
+  </PageLayout>
+</DocumentLayout>

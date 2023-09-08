@@ -1,0 +1,54 @@
+---
+import { Image } from "astro:assets";
+import { APP_ROUTES, SOCIAL_ROUTES } from "@/lib/constants";
+import infoFooter from "@/data/footer-client-data.json";
+
+import Logo from "public/images/i2tec-logo.png";
+import Icon from "./Icon.astro";
+---
+
+<footer aria-label="Site Footer" class="bg-primary text-white">
+  <div class="mx-auto w-full max-w-xl py-16 px-4">
+    <picture class="mx-auto block relative max-w-xs w-full h-20 justify-center">
+      <Image
+        loading="lazy"
+        src={Logo}
+        class="object-contain object-center brightness-[10]"
+        alt="Logo del centro de investigación, innovación y tecnología"
+      />
+    </picture>
+
+    <p
+      class="mx-auto mt-8 w-full max-w-screen-md text-center leading-relaxed text-white sm:pl-6 lg:pl-8"
+    >
+      {infoFooter.description}
+    </p>
+
+    <nav aria-label="Footer Nav" class="mt-12">
+      <ul class="flex flex-wrap justify-center gap-6 sm:gap-8 lg:gap-12">
+        {
+          APP_ROUTES.map((route) => (
+            <li>
+              <a class="font-medium" href={route.path}>
+                {route.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <ul class="mt-6 flex flex-wrap justify-center gap-6 sm:gap-8 lg:gap-12">
+      {
+        SOCIAL_ROUTES.map((route) => (
+          <li>
+            <a href={route.path} rel="noreferrer" target="_blank">
+              <span class="sr-only">{route.label}</span>
+              <Icon class="text-xl" name={route.iconName} />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</footer>

@@ -1,0 +1,7 @@
+export * from "@/models/ResponseAPI"
+export * from "@/models/Project"
+export * from "@/models/Person"
+export * from "@/models/Account"
+export * from "@/models/Title"
+export * from "@/models/Teacher"
+export * from "@/models/News"

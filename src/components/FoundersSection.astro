@@ -1,0 +1,43 @@
+---
+import Avatar from "@/components/Avatar.astro";
+import { BACKEND_URL } from "@/lib/constants";
+import { getPeople } from "@/services/person";
+
+const res = await getPeople([
+  "populate=avatar",
+  "fields[0]=first_name",
+  "fields[1]=last_name",
+]);
+
+const founders = res && res.data ? res.data : [];
+---
+
+<section class="section bg-primary text-white">
+  <div class="container max-w-screen-md">
+    <h2 class="mb-16 text-center text-4xl font-bold">Nuestros fundadores</h2>
+    <div class="flex flex-col gap-8 xs:flex-row md:gap-12">
+      {
+        founders!.length > 0 &&
+          founders?.map((founder) => {
+            const { first_name, last_name } = founder.attributes;
+            const fullName = `${first_name} ${last_name}`;
+
+            return (
+              <div class="w-full flex flex-col gap-3 items-center">
+                <Avatar
+                  class="w-44 h-44"
+                  image={
+                    founder.attributes.avatar
+                      ? `${BACKEND_URL}${founder.attributes.avatar.data.attributes.formats.small.url}`
+                      : "/images/user-placeholder.png"
+                  }
+                  alt={fullName}
+                />
+                <span class="text-center text-xl font-medium">{fullName}</span>
+              </div>
+            );
+          })
+      }
+    </div>
+  </div>
+</section>

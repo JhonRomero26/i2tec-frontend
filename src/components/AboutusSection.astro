@@ -1,0 +1,22 @@
+---
+import TitleWithText from "@/components/TitleWithText.astro";
+import infoPage from "@/data/about-us-data.json";
+---
+
+<section class="section bg-svg bg-svg-waves pt-56">
+  <div class="container max-w-screen-lg">
+    <TitleWithText class="mb-12 text-center">
+      <h2 slot="title" class="text-center text-4xl font-bold mb-8">
+        {infoPage.aboutus.title}
+      </h2>
+      {infoPage.aboutus.description}
+    </TitleWithText>
+    <picture class="mx-auto relative block aspect-video w-full max-w-screen-md">
+      <img
+        class="w-full h-full object-cover object-center"
+        src={infoPage.aboutus.image}
+        alt="Ingeniero desarrollando producto"
+      />
+    </picture>
+  </div>
+</section>

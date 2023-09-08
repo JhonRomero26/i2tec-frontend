@@ -1,0 +1,37 @@
+---
+import Input from "@/components/Input.astro";
+import Button from "@/components/Button.astro";
+import Icon from "./Icon.astro";
+
+type Props = {
+  title?: string;
+  id: string;
+  value?: string;
+  placeholder: string;
+  name: string;
+  preventSubmit?: boolean;
+};
+
+const { id, name, title, placeholder, value } = Astro.props;
+---
+
+<form method="get">
+  <label
+    for={name}
+    class="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-2"
+  >
+    {title && <span class="font-medium">{title}</span>}
+    <div class="flex align-baseline">
+      <Button
+        id={`${id}-submit`}
+        aria-label="Buscar"
+        kind="primary"
+        type="submit"
+        icon
+      >
+        <Icon name="search" />
+      </Button>
+      <Input value={value} name={name} id={id} placeholder={placeholder} />
+    </div>
+  </label>
+</form>

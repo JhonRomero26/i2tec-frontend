@@ -1,0 +1,50 @@
+---
+// import { Quality } from "../../Quality";
+
+import { Image } from "astro:assets";
+import LogoI2TEC from "public/images/i2tec.png";
+import Quality from "@/components/Quality.astro";
+import dataPage from "@/data/home-data.json";
+import type { IconNames } from "@/lib/types";
+---
+
+<section class="section">
+  <div class="container">
+    <h2 class="mb-16 text-center text-4xl font-bold">
+      Lo especial de I<sup>2</sup>TEC
+    </h2>
+    <div
+      class="mx-auto grid w-full max-w-screen-xl grid-cols-2 grid-rows-4 items-center justify-items-center gap-x-8 gap-y-4"
+    >
+      <Quality
+        icon={dataPage.qualities[0].icon as IconNames}
+        title={dataPage.qualities[0].title}
+        description={dataPage.qualities[0].description}
+      />
+      <Quality
+        icon={dataPage.qualities[1].icon as IconNames}
+        title={dataPage.qualities[1].title}
+        description={dataPage.qualities[1].description}
+      />
+      <picture
+        class="relative col-start-1 col-end-3 row-start-2 row-end-4 w-full max-w-lg h-full"
+      >
+        <Image
+          alt="Logo de I2TEC"
+          class="w-full h-full object-contain object-center"
+          src={LogoI2TEC}
+        />
+      </picture>
+      <Quality
+        icon={dataPage.qualities[2].icon as IconNames}
+        title={dataPage.qualities[2].title}
+        description={dataPage.qualities[2].description}
+      />
+      <Quality
+        icon={dataPage.qualities[3].icon as IconNames}
+        title={dataPage.qualities[3].title}
+        description={dataPage.qualities[3].description}
+      />
+    </div>
+  </div>
+</section>
