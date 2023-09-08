@@ -10,8 +10,8 @@ import { getProjects } from "@/services/project";
 import Icon from "@/components/Icon.astro";
 import ApproachSection from "@/components/ApproachSection.astro";
 
-const { data: projects = [] } =
-  (await getProjects(["populate=*", "sort[0]=createdAt:desc"])) ?? [];
+const res = (await getProjects(["populate=*", "sort[0]=createdAt:desc"])) ?? [];
+const projects = res && res.data ? res.data : [];
 ---
 
 <DocumentLayout title="Welcome to Astro.">
