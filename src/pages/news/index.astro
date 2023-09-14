@@ -72,8 +72,8 @@ if (meta) {
                 {tidings.splice(0, 3).map((news) => (
                   <div class="swiper-slide">
                     <LastestNews
-                      title="La UNL y el I2TEC estaran presentes en la feria de Loja"
-                      summary="El asincronismo que tiene el I2TEC en la solvencia de mejoras técnologicas abrira un camino hacia las nuevas tecnologías"
+                      title={news.attributes.title}
+                      summary={news.attributes.description}
                       image={`${BACKEND_URL}${news.attributes.image.data.attributes.formats.medium.url}`}
                       published={news.attributes.publishedAt}
                       facebookUrl={news.attributes.facebook_url}
