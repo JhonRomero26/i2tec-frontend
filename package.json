@@ -13,7 +13,7 @@
     "@astrojs/node": "6.0.0",
     "@astrojs/preact": "3.0.0",
     "@tabler/icons-webfont": "2.32.0",
-    "astro": "3.0.4",
+    "astro": "next--fix-mime",
     "preact": "10.6.5",
     "sharp": "^0.32.5",
     "snarkdown": "^2.0.0",
