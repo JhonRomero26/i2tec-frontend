@@ -1,6 +1,10 @@
 $header-height: 80px;
 
 .main-header {
+  a {
+    @apply text-inherit no-underline;
+  }
+
   @apply text-primary transition-colors;
   height: $header-height;
 

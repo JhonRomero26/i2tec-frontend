@@ -3,7 +3,7 @@ $height: 42px;
 $height-lg: 48px;
 
 .btn {
-  @apply inline-flex cursor-pointer items-center justify-center gap-2 bg-transparent px-4 py-2 transition-colors;
+  @apply inline-flex cursor-pointer items-center justify-center gap-2 bg-transparent px-4 py-2 transition-colors no-underline text-inherit;
   @apply border-0 hover:bg-neutral-200 hover:no-underline;
   height: $height;
 

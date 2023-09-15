@@ -1,4 +1,4 @@
-import { defineConfig } from 'astro/config';
+import { defineConfig, passthroughImageService } from 'astro/config';
 import node from "@astrojs/node";
 
 import preact from "@astrojs/preact";
@@ -8,6 +8,9 @@ export default defineConfig({
   adapter: node({
     mode: "standalone"
   }),
+  image: {
+    service: passthroughImageService()
+  },
   output: 'hybrid',
   integrations: [preact()]
 });

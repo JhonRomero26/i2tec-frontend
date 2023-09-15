@@ -3,7 +3,7 @@ import { getTeacherAttributes } from "@/lib/getTeacherAttributes";
 import TeacherDetailSection from "@/components/preact/TeacherDetailSection";
 import CardTeacher from "@/components/preact/CardTeacher";
 import type { Teacher } from "@/models";
-import { BACKEND_URL } from "@/lib/constants";
+import { BACKEND_IMAGE } from "@/lib/constants";
 
 export type TeachersDetailInteractivityProps = {
   teachers: Teacher[];
@@ -37,7 +37,11 @@ export default function TeachersDetailInteractivity({
               return (
                 <TeacherDetailSection
                   name={fullName}
-                  image={`${BACKEND_URL}${avatar?.data.attributes.formats.medium.url}`}
+                  image={
+                    avatar && avatar.data
+                      ? `${BACKEND_IMAGE}${avatar.data.attributes.formats.medium.url}`
+                      : "/images/user-placeholder.png"
+                  }
                   summary={biography}
                 />
               );
@@ -66,9 +70,9 @@ export default function TeachersDetailInteractivity({
                     className="cursor-pointer"
                     onClick={() => handleClick(teacher.id)}
                     image={
-                      avatar
-                        ? `${BACKEND_URL}${avatar.data.attributes.formats.small.url}`
-                        : ""
+                      avatar && avatar.data
+                        ? `${BACKEND_IMAGE}${avatar.data.attributes.formats.small.url}`
+                        : "/images/user-placeholder.png"
                     }
                     name={fullName}
                   />

@@ -3,7 +3,7 @@ import type { ResponseAPI } from "@/models"
 
 
 export const fecthBackendAPI = <T>(url: string, params?: string[], options?: RequestInit): Promise<ResponseAPI<T>> => {
-  const requestURL = BACKEND_URL.concat(
+  const requestURL = BACKEND_URL.concat('/api',
     url,
     params ? `?${params.join("&")}` : ""
   )

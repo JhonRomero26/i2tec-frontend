@@ -5,7 +5,7 @@ import CardProject from "@/components/CardProject.astro";
 import type { Project } from "@/models";
 import { arrayIterable } from "@/lib/arrayIterable";
 import { EffectsClass } from "@/lib/classNames/effects";
-import { BACKEND_URL } from "@/lib/constants";
+import { BACKEND_IMAGE } from "@/lib/constants";
 
 import "swiper/css/navigation";
 
@@ -28,7 +28,7 @@ const { projects, "data-carousel-id": CarouselID } = Astro.props;
           <div class="swiper-slide">
             <CardProject
               href={`/projects/${project.attributes.slug}`}
-              image={BACKEND_URL.concat(
+              image={BACKEND_IMAGE.concat(
                 project.attributes.image!.data.attributes.formats.small.url
               )}
               authors={project.attributes.authors?.data}

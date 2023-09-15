@@ -1,6 +1,6 @@
 ---
 import Avatar from "@/components/Avatar.astro";
-import { BACKEND_URL } from "@/lib/constants";
+import { BACKEND_IMAGE } from "@/lib/constants";
 import { getPeople } from "@/services/person";
 
 const res = await getPeople([
@@ -27,8 +27,8 @@ const founders = res && res.data ? res.data : [];
                 <Avatar
                   class="w-44 h-44"
                   image={
-                    founder.attributes.avatar
-                      ? `${BACKEND_URL}${founder.attributes.avatar.data.attributes.formats.small.url}`
+                    founder.attributes.avatar && founder.attributes.avatar.data
+                      ? `${BACKEND_IMAGE}${founder.attributes.avatar.data.attributes.formats.small.url}`
                       : "/images/user-placeholder.png"
                   }
                   alt={fullName}

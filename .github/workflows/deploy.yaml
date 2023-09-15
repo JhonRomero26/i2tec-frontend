@@ -1,0 +1,65 @@
+name: Frontend deploy
+
+env:
+  SERVER_DIRECTORY: ~/apps/i2tec.ec
+  REPOSITORY_URL: ${{ GITHUB_SERVER_URL }}/${{ GITHUB_REPOSITORY }}.git
+  CONAINTER_REGISTRY: ghcr.io/jhonromero26/i2tec-frontend
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  push-docker-image:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: "Checkout GitHub Action"
+        uses: actions/checkout@main
+
+      - name: "Login to GitHub Container Registry"
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{github.actor}}
+          password: ${{secrets.GITHUB_TOKEN}}
+
+      - name: "Build Inventory Image"
+        run: |
+          docker build . --tag ${{ env.CONAINTER_REGISTRY }}:latest -f Dockerfile.prod
+          docker push ${{ env.CONAINTER_REGISTRY }}:latest
+
+  pull-changes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout GitHub Action"
+        uses: actions/checkout@main
+      - name: Pull changes of the origin main
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.HOST_DEPLOY }}
+          username: ${{ secrets.USER_DEPLOY }}
+          port: ${{ secrets.PORT_SERVER_DEPLOY }}
+          key: ${{ secrets.SSH_DEPLOY_KEY }}
+          script: |
+            cd ${{ env.SERVER_DIRECTORY }}
+            if cd frontend; then git pull origin main; else git clone ${{ env.REPOSITORY_URL }} frontend && cd frontend; fi
+
+  run-docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout GitHub Action"
+        uses: actions/checkout@main
+      - name: Run Docker
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.HOST_DEPLOY }}
+          username: ${{ secrets.USER_DEPLOY }}
+          port: ${{ secrets.PORT_SERVER_DEPLOY }}
+          key: ${{ secrets.SSH_DEPLOY_KEY }}
+          script: |
+            cd ${{ env.SERVER_DIRECTORY }}/frontend
+            make deploy

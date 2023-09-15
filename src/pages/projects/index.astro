@@ -7,7 +7,7 @@ import SearchBox from "@/components/SearchBox.astro";
 import CardProject from "@/components/CardProject.astro";
 import Pagination from "@/components/Pagination.astro";
 import { getProjects } from "@/services/project";
-import { BACKEND_URL } from "@/lib/constants";
+import { BACKEND_IMAGE } from "@/lib/constants";
 
 export const prerender = false;
 
@@ -84,7 +84,7 @@ if (meta) {
                     <CardProject
                       href={`/projects/${project.attributes.slug}`}
                       title={project.attributes.title}
-                      image={BACKEND_URL.concat(
+                      image={BACKEND_IMAGE.concat(
                         project.attributes.image!.data.attributes.formats.small
                           .url
                       )}

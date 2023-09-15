@@ -1,46 +1,47 @@
 ---
-import DocumentLayout from "@/layouts/DocumentLayout.astro";
-import PageLayout from "@/layouts/PageLayout.astro";
 import { getProjects } from "@/services/project";
 import { parseDatePublished } from "@/lib/parseDatePublished";
-import { BACKEND_URL } from "@/lib/constants";
-import { firstValueArrayStringJoin } from "@/lib/firstValueArrayJoin";
 import ButtonAnchor from "@/components/ButtonAnchor.astro";
+import PageLayout from "@/layouts/PageLayout.astro";
+import DocumentLayout from "@/layouts/DocumentLayout.astro";
+import { BACKEND_IMAGE } from "@/lib/constants";
+import ImageSkeleton from "@/components/ImageSkeleton.astro";
+import { firstValueArrayStringJoin } from "@/lib/firstValueArrayJoin";
+import mdToHtml from "@/lib/mdToHtml";
 import type { Project } from "@/models";
-import ProjectsSection from "@/components/ProjectsSection.astro";
-import ProjectsCarousel from "@/components/ProjectsCarousel.astro";
 
 interface Props {
   project: Project;
   projects: Project[];
 }
 
-export const getStaticPaths = async () => {
-  const { data: projects } = await getProjects(["populate=*"]);
+export const prerender = false;
 
-  return projects?.map((project) => ({
-    params: {
-      slug: project.attributes.slug,
-    },
-    props: {
-      project,
-      projects,
-    },
-  }));
-};
+const { slug } = Astro.params;
+const res = await getProjects(["populate=*", `filters[slug][$eq]=${slug}`]);
+if (!res || res.data?.length === 0) return Astro.redirect("/404");
 
-const { project, projects } = Astro.props;
+const resProjects = await getProjects([
+  "populate=*",
+  `filters[slug][$ne]=${slug}`,
+  "pagination[limit]=20",
+  "sort[0]=publishedAt:desc",
+]);
+let projects: Project[] = [];
+let project: Project = {} as Project;
 
-const published = parseDatePublished(project?.attributes.publishedAt!);
+if (res && res.data) project = res.data[0];
+if (resProjects && resProjects.data) projects = resProjects.data;
+const published = parseDatePublished(project.attributes.publishedAt);
 ---
 
-<DocumentLayout title="">
+<DocumentLayout title={`${project.attributes.title} | I2TEC`}>
   <PageLayout>
     <main>
       <section class="section pt-16">
         <div class="container max-w-screen-lg">
           <h1 class="mb-8 text-5xl font-bold text-primary">
-            {project?.attributes.title}
+            {project.attributes.title}
           </h1>
           <div class="flex flex-col gap-4 mb-8">
             <div class="flex gap-4">
@@ -51,27 +52,42 @@ const published = parseDatePublished(project?.attributes.publishedAt!);
               <div class="font-bold">Autores:</div>
               <div class="flex flex-col">
                 {
-                  project!.attributes.authors!.data.map((author) => {
-                    const { first_name, last_name } = author.attributes;
-                    const authorName = firstValueArrayStringJoin(
-                      first_name,
-                      last_name
-                    );
-                    return <div>{authorName}</div>;
-                  })
+                  project && project.attributes.authors!.data.length > 0 ? (
+                    project.attributes.authors!.data.map((author) => {
+                      const { first_name, last_name } = author.attributes;
+                      const authorName = firstValueArrayStringJoin(
+                        first_name,
+                        last_name
+                      );
+                      return <div>{authorName}</div>;
+                    })
+                  ) : (
+                    <div>Sin autores</div>
+                  )
                 }
               </div>
             </div>
           </div>
-          <p class="text-[1.05rem] mb-32">{project!.attributes.description}</p>
+          <div
+            class="text-[1.05rem] mb-32"
+            set:html={project!.attributes.description
+              ? mdToHtml(project!.attributes.description)
+              : '<div class="text-center py-8">Sin contenido</div>'}
+          />
           <figure class="mt-8 relative overflow-hidden aspect-video w-full">
-            <img
-              class="w-full h-full object-cover object-center"
-              src={BACKEND_URL.concat(
-                project!.attributes.image!.data.attributes.formats.medium.url
-              )}
-              alt={project!.attributes.title}
-            />
+            {
+              project.attributes.image && project.attributes.image.data ? (
+                <img
+                  class="w-full h-full object-cover object-center"
+                  src={BACKEND_IMAGE.concat(
+                    project.attributes.image.data.attributes.formats.large.url
+                  )}
+                  alt={project!.attributes.title}
+                />
+              ) : (
+                <ImageSkeleton class="h-full w-full" />
+              )
+            }
             <ButtonAnchor
               target="_blank"
               class="absolute bottom-0 right-0 h-auto px-12 py-6 z-[1]"
@@ -83,21 +99,6 @@ const published = parseDatePublished(project?.attributes.publishedAt!);
           </figure>
         </div>
       </section>
-      <ProjectsSection>
-        <ProjectsCarousel
-          data-carousel-id="projects-carousel"
-          projects={projects
-            ? projects.slice(0, 20).filter(({ id }) => id !== project.id)
-            : []}
-        />
-      </ProjectsSection>
     </main>
   </PageLayout>
 </DocumentLayout>
-
-<script>
-  import Swiper from "swiper";
-  import { sliderProyectsOptions } from "@/lib/constants";
-
-  new Swiper('[data-carousel-id="projects-carousel"]', sliderProyectsOptions);
-</script>

@@ -3,7 +3,7 @@ import ImageSkeleton from "@/components/ImageSkeleton.astro";
 import PopularProject from "@/components/PopularProject.astro";
 import { arrayIterable } from "@/lib/arrayIterable";
 import type { Project } from "@/models/Project";
-import { BACKEND_URL } from "@/lib/constants/environment";
+import { BACKEND_IMAGE } from "@/lib/constants/environment";
 
 interface Props {
   projects?: Project[];
@@ -28,7 +28,7 @@ const projectGridItem =
                   class={projectGridItem}
                   href={`/projects/${project.attributes.slug}`}
                   title={project.attributes.title}
-                  image={BACKEND_URL.concat(
+                  image={BACKEND_IMAGE.concat(
                     project.attributes.image!.data.attributes.formats.medium.url
                   )}
                   authors={project.attributes.authors?.data!}

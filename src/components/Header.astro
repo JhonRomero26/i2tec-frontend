@@ -4,7 +4,16 @@ import Button from "@/components/Button.astro";
 import Icon from "@/components/Icon.astro";
 
 import Logo from "public/images/i2tec-logo.png";
-import { APP_ROUTES, SOCIAL_ROUTES } from "@/lib/constants/routing";
+import { APP_ROUTES } from "@/lib/constants/routing";
+import { getSocialNetworks } from "@/services/social-network";
+import type { IconNames } from "@/lib/types";
+import type { SocialNetwork } from "@/models";
+
+const res = await getSocialNetworks();
+let socials: SocialNetwork[] = [];
+if (res && res.data) {
+  socials = res.data;
+}
 ---
 
 <header class="main-header">
@@ -47,19 +56,25 @@ import { APP_ROUTES, SOCIAL_ROUTES } from "@/lib/constants/routing";
           </div>
           <ul class="flex justify-between px-4 py-8">
             {
-              SOCIAL_ROUTES.map((route) => (
-                <li>
-                  <a
-                    href={route.path}
-                    class="text-xl"
-                    rel="noreferrer"
-                    target="_blank"
-                  >
-                    <Icon name={route.iconName} />
-                    <span class="sr-only">{route.label}</span>
-                  </a>
-                </li>
-              ))
+              socials.length > 0 &&
+                socials.map(({ attributes }) => {
+                  const { url, title } = attributes;
+                  return (
+                    <li>
+                      <a
+                        href={url}
+                        class="text-xl"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <Icon
+                          name={`brand-${title.toLowerCase()}` as IconNames}
+                        />
+                        <span class="sr-only">{title}</span>
+                      </a>
+                    </li>
+                  );
+                })
             }
           </ul>
         </div>

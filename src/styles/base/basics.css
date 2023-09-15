@@ -10,3 +10,7 @@ body {
 body {
   @apply bg-gray-100;
 }
+
+a {
+  @apply underline text-primary;
+}

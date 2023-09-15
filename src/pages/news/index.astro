@@ -7,7 +7,7 @@ import Input from "@/components/Input.astro";
 import Icon from "@/components/Icon.astro";
 import Pagination from "@/components/Pagination.astro";
 import { getTidings } from "@/services/news";
-import { BACKEND_URL } from "@/lib/constants";
+import { BACKEND_IMAGE } from "@/lib/constants";
 import LastestNews from "@/components/LastestNews.astro";
 import CardNews from "@/components/CardNews.astro";
 
@@ -74,7 +74,7 @@ if (meta) {
                     <LastestNews
                       title={news.attributes.title}
                       summary={news.attributes.description}
-                      image={`${BACKEND_URL}${news.attributes.image.data.attributes.formats.medium.url}`}
+                      image={`${BACKEND_IMAGE}${news.attributes.image.data.attributes.formats.medium.url}`}
                       published={news.attributes.publishedAt}
                       facebookUrl={news.attributes.facebook_url}
                       instagramUrl={news.attributes.instagram_url}
@@ -104,7 +104,7 @@ if (meta) {
                     facebookUrl={news.attributes.facebook_url}
                     summary={news.attributes.description}
                     title={news.attributes.title}
-                    image={BACKEND_URL.concat(
+                    image={BACKEND_IMAGE.concat(
                       news.attributes.image!.data.attributes.formats.small.url
                     )}
                     publishedDate={news.attributes.publishedAt}

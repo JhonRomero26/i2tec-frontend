@@ -5,15 +5,14 @@ services:
     extends:
       file: common.yaml
       service: frontend
-    build: .
-    command: bun run dev --host
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
     ports:
-      - "4321:4321"
-    volumes:
-      - ./public:/app/public
-      - ./src:/app/src
+      - "3000:4321"
     networks:
       - i2tec
+      - nginx_default
 
 networks:
   i2tec:
@@ -21,3 +20,7 @@ networks:
     driver: bridge
     driver_opts:
       encrypted: 1
+
+  nginx_default:
+    name: nginx_default
+    driver: bridge

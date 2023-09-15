@@ -1,10 +1,25 @@
 ---
 import { Image } from "astro:assets";
-import { APP_ROUTES, SOCIAL_ROUTES } from "@/lib/constants";
+import { APP_ROUTES } from "@/lib/constants";
 import infoFooter from "@/data/footer-client-data.json";
 
 import Logo from "public/images/i2tec-logo.png";
-import Icon from "./Icon.astro";
+import Icon from "@/components/Icon.astro";
+import { getSocialNetworks } from "@/services/social-network";
+import type { SocialNetwork } from "@/models";
+import type { IconNames } from "@/lib/types";
+import IconAndText from "@/components/IconAndText.astro";
+import { fecthBackendAPI } from "@/lib/fetchBackendAPI";
+import { getContactEmail, getContactPhone } from "@/services/contacts";
+
+const res = await getSocialNetworks();
+const resPhone = await getContactPhone();
+const resEmail = await getContactEmail();
+
+let socials: SocialNetwork[] = [];
+if (res && res.data) {
+  socials = res.data;
+}
 ---
 
 <footer aria-label="Site Footer" class="bg-primary text-white">
@@ -25,11 +40,47 @@ import Icon from "./Icon.astro";
     </p>
 
     <nav aria-label="Footer Nav" class="mt-12">
+      <div class="flex flex-col items-center mb-12">
+        <div class="font-semibold">Contactos</div>
+        <ul class="flex flex-col items-center">
+          {
+            resPhone && resPhone.data && (
+              <IconAndText>
+                <Icon name="phone" />
+                <a
+                  class="no-underline text-inherit"
+                  href={`tel:${resPhone.data.attributes.phone}`}
+                >
+                  {resPhone.data.attributes.phone}
+                </a>
+              </IconAndText>
+            )
+          }
+          {
+            resEmail && resEmail.data && (
+              <IconAndText>
+                <Icon name="mail" />
+                <a
+                  class="no-underline text-inherit"
+                  href={`mailto:${resEmail.data.attributes.email}`}
+                >
+                  {resEmail.data.attributes.email}
+                </a>
+              </IconAndText>
+            )
+          }
+        </ul>
+      </div>
+
       <ul class="flex flex-wrap justify-center gap-6 sm:gap-8 lg:gap-12">
         {
           APP_ROUTES.map((route) => (
             <li>
-              <a class="font-medium" href={route.path}>
+              <a
+                class="no-underline text-inherit"
+                class="font-medium"
+                href={route.path}
+              >
                 {route.label}
               </a>
             </li>
@@ -40,14 +91,27 @@ import Icon from "./Icon.astro";
 
     <ul class="mt-6 flex flex-wrap justify-center gap-6 sm:gap-8 lg:gap-12">
       {
-        SOCIAL_ROUTES.map((route) => (
-          <li>
-            <a href={route.path} rel="noreferrer" target="_blank">
-              <span class="sr-only">{route.label}</span>
-              <Icon class="text-xl" name={route.iconName} />
-            </a>
-          </li>
-        ))
+        socials.length > 0 &&
+          socials.map(({ attributes }) => {
+            const { url, title } = attributes;
+
+            return (
+              <li>
+                <a
+                  class="no-underline text-inherit"
+                  href={url}
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <span class="sr-only">{title}</span>
+                  <Icon
+                    class="text-xl"
+                    name={`brand-${title.toLowerCase()}` as IconNames}
+                  />
+                </a>
+              </li>
+            );
+          })
       }
     </ul>
   </div>
