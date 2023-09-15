@@ -2,7 +2,7 @@ name: Frontend deploy
 
 env:
   SERVER_DIRECTORY: ~/apps/i2tec.ec
-  REPOSITORY_URL: ${{ GITHUB_SERVER_URL }}/${{ GITHUB_REPOSITORY }}.git
+  REPOSITORY_URL: ${{ secrets.GITHUB_SERVER_URL }}/${{ secrets.GITHUB_REPOSITORY }}.git
   CONAINTER_REGISTRY: ghcr.io/jhonromero26/i2tec-frontend
 
 on:
