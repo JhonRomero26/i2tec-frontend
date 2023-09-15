@@ -35,9 +35,8 @@ const {
   {
     href ? (
       <a
-        class="text-inherit no-underline"
         href={href}
-        class="flex flex-col gap-2 pt-4 before:absolute before:top-0 before:left-0 before:block before:h-full before:w-full before:content-[''] hover:no-underline"
+        class="flex flex-col gap-2 pt-4 text-inherit no-underline before:absolute before:top-0 before:left-0 before:block before:h-full before:w-full before:content-[''] hover:no-underline"
       >
         <h3 class="line-clamp-2 text-ellipsis text-lg font-bold">{title}</h3>
         <slot />
