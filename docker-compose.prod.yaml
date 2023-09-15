@@ -8,6 +8,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.prod
+    environment:
+      BACKEND_URL: https://admin.i2tec.ec
     ports:
       - "3000:4321"
     networks:
