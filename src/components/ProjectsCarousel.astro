@@ -28,9 +28,8 @@ const { projects, "data-carousel-id": CarouselID } = Astro.props;
           <div class="swiper-slide">
             <CardProject
               href={`/projects/${project.attributes.slug}`}
-              image={BACKEND_IMAGE.concat(
-                project.attributes.image!.data.attributes.formats.small.url
-              )}
+              image={`${BACKEND_IMAGE}
+                ${project.attributes.image!.data.attributes.formats.small.url}`}
               authors={project.attributes.authors?.data}
               title={project.attributes.title}
               publishedDate={project.attributes.publishedAt}

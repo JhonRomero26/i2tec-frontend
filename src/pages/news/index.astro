@@ -104,9 +104,9 @@ if (meta) {
                     facebookUrl={news.attributes.facebook_url}
                     summary={news.attributes.description}
                     title={news.attributes.title}
-                    image={BACKEND_IMAGE.concat(
+                    image={`${BACKEND_IMAGE}${
                       news.attributes.image!.data.attributes.formats.small.url
-                    )}
+                    }`}
                     publishedDate={news.attributes.publishedAt}
                     authors={news.attributes.authors?.data}
                   />

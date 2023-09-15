@@ -28,9 +28,9 @@ const projectGridItem =
                   class={projectGridItem}
                   href={`/projects/${project.attributes.slug}`}
                   title={project.attributes.title}
-                  image={BACKEND_IMAGE.concat(
+                  image={`${BACKEND_IMAGE}${
                     project.attributes.image!.data.attributes.formats.medium.url
-                  )}
+                  }`}
                   authors={project.attributes.authors?.data!}
                   publishedDate={project.attributes.publishedAt}
                 />
