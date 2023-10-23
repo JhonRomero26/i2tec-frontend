@@ -1,4 +1,4 @@
-FROM docker.io/20-alpine3.17 AS runtime
+FROM docker.io/node:20-alpine3.17 AS runtime
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
