@@ -6,16 +6,8 @@ services:
     image: ghcr.io/jhonromero26/i2tec-frontend:latest
     restart: unless-stopped
     build: .
-    networks:
-      - i2tec
 
 networks:
-  i2tec:
-    name: i2tec
-    driver: bridge
-    driver_opts:
-      encrypted: 1
-
   nginx_default:
     name: nginx_default
     driver: bridge
