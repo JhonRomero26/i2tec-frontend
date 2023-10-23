@@ -6,7 +6,7 @@ COPY bun.lockb .
 FROM runtime AS build
 RUN bun install
 COPY . .
-RUN bunx --bun run build
+RUN bunx --bun astro build
 
 FROM runtime AS prod
 COPY --from=build /app/dist /app/dist
@@ -22,4 +22,4 @@ ENV VITE_BACKEND_IMAGE=BACKEND_IMAGE
 ENV HOST=0.0.0.0
 ENV PORT=4321
 EXPOSE 4321
-CMD ["bunx", "--bun", "./dist/server/entry.mjs"]
+CMD ["bun", "./dist/server/entry.mjs"]
