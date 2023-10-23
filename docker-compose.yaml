@@ -12,12 +12,3 @@ services:
     volumes:
       - ./public:/app/public
       - ./src:/app/src
-    networks:
-      - i2tec
-
-networks:
-  i2tec:
-    name: i2tec
-    driver: bridge
-    driver_opts:
-      encrypted: 1
