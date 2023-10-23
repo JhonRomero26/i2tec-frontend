@@ -14,16 +14,9 @@ services:
     ports:
       - "3000:4321"
     networks:
-      - i2tec
       - nginx_default
 
 networks:
-  i2tec:
-    name: i2tec
-    driver: bridge
-    driver_opts:
-      encrypted: 1
-
   nginx_default:
     name: nginx_default
     driver: bridge
