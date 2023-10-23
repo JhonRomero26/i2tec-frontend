@@ -17,7 +17,6 @@ const { id, name, title, placeholder, value } = Astro.props;
 
 <form method="get">
   <label
-    for={name}
     class="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-2"
   >
     {title && <span class="font-medium">{title}</span>}
@@ -31,7 +30,7 @@ const { id, name, title, placeholder, value } = Astro.props;
       >
         <Icon name="search" />
       </Button>
-      <Input value={value} name={name} id={id} placeholder={placeholder} />
+      <Input value={value} name={name} placeholder={placeholder} />
     </div>
   </label>
 </form>

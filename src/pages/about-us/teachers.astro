@@ -1,17 +1,142 @@
 ---
+import CardTeacher from "@/components/CardTeacher.astro";
+import TeacherDetailSection from "@/components/TeacherDetailSection.astro";
 import DocumentLayout from "@/layouts/DocumentLayout.astro";
-import TeachersDetailInteractivity from "@/components/preact/TeachersDetailInteractivity";
 import PageLayout from "@/layouts/PageLayout.astro";
+import { BACKEND_IMAGE } from "@/lib/constants";
+import { getTeacherAttributes } from "@/lib/getTeacherAttributes";
+import type { ImageResponse } from "@/models";
 import { getTeachers } from "@/services/teachers";
 
 const res = await getTeachers(["populate=person.avatar"]);
 const teachers = res && res.data ? res.data : [];
+const selectedTeacher = teachers.length > 0 ? teachers[0] : undefined;
+const personData = { fullName: "", avatar: {}, biography: "" };
+
+if (selectedTeacher) {
+  const result = getTeacherAttributes(selectedTeacher);
+  Object.assign(personData, result);
+}
 ---
 
 <DocumentLayout title="Docentes | I2TEC">
   <PageLayout>
     <main>
-      <TeachersDetailInteractivity client:load teachers={teachers} />
+      <section class="py-32 bg-primary text-white bg-svg-architect">
+        <div class="container">
+          {
+            selectedTeacher ? (
+              <TeacherDetailSection
+                name={personData.fullName}
+                image={`${BACKEND_IMAGE}${
+                  (personData.avatar as ImageResponse).data.attributes.formats
+                    .small.url
+                }`}
+                summary={personData.biography}
+              />
+            ) : (
+              <TeacherDetailSection
+                name="No hemos encontrado docentes"
+                summary="En breve estaremos presentes con nuevos docentes que participan dentro del I2TEC"
+                image=""
+              />
+            )
+          }
+        </div>
+      </section>
+      <section class="section pt-40">
+        <div class="container">
+          <h1 class="mb-32 text-center text-4xl font-bold">
+            Nuestros docentes
+          </h1>
+        </div>
+        <div class="container">
+          <div
+            class="grid gap-4 grid-cols-[repeat(auto-fill,minmax(220px,1fr))]"
+          >
+            {
+              teachers.length > 0 &&
+                teachers.map((teacher) => {
+                  const { fullName, avatar } = getTeacherAttributes(teacher);
+
+                  return (
+                    <div
+                      id={`${teacher.id}`}
+                      class="transition hover:shadow bg-gray-50 rounded"
+                      data-ref="CardTeacher"
+                    >
+                      <CardTeacher
+                        class="cursor-pointer"
+                        image={
+                          avatar && avatar.data
+                            ? `${BACKEND_IMAGE}${avatar.data.attributes.formats.small.url}`
+                            : "/images/user-placeholder.png"
+                        }
+                        name={fullName}
+                      />
+                    </div>
+                  );
+                })
+            }
+          </div>
+        </div>
+      </section>
     </main>
   </PageLayout>
 </DocumentLayout>
+
+<script>
+  import { getTeacher } from "@/services/teachers";
+  import { getTeacherAttributes } from "@/lib/getTeacherAttributes";
+  import { BACKEND_IMAGE } from "@/lib/constants";
+  import type { ImageResponse, Teacher } from "@/models";
+
+  const $cards = document.querySelectorAll("[data-ref='CardTeacher']");
+  const $name = document.querySelector("[data-ref='TeacherDetail-name']");
+  const $image = document.querySelector(
+    "[data-ref='TeacherDetail-image']"
+  ) as HTMLImageElement;
+  const $summary = document.querySelector("[data-ref='TeacherDetail-summary']");
+
+  const teachers: Teacher[] = [];
+  const setTeacherInfo = ({
+    fullName,
+    avatar,
+    biography,
+  }: {
+    fullName: string;
+    avatar?: ImageResponse;
+    biography: string;
+  }) => {
+    $name!.innerHTML = fullName;
+    if (avatar)
+      $image!.src = `${BACKEND_IMAGE}${
+        (avatar as ImageResponse).data.attributes.formats.small.url
+      }`;
+    $summary!.innerHTML = biography;
+  };
+
+  $cards.forEach(($card) => {
+    $card.addEventListener("click", () => {
+      const id = Number($card.getAttribute("id"));
+
+      const index = teachers.findIndex((teacher) => teacher.id === id);
+      if (index === -1)
+        getTeacher(id, ["populate=person.avatar"])
+          .then((res) => {
+            const result = getTeacherAttributes(res.data!);
+            setTeacherInfo(result);
+            teachers.push(res.data!);
+          })
+          .catch(() => {
+            console.error(`Not found teacher with id ${id}`);
+          });
+      else {
+        const result = getTeacherAttributes(teachers[index]);
+        setTeacherInfo(result);
+      }
+
+      window.scroll({ behavior: "smooth", top: 60 });
+    });
+  });
+</script>

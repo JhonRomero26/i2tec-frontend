@@ -3,13 +3,11 @@ import { Image } from "astro:assets";
 import { APP_ROUTES } from "@/lib/constants";
 import infoFooter from "@/data/footer-client-data.json";
 
-import Logo from "public/images/i2tec-logo.png";
 import Icon from "@/components/Icon.astro";
 import { getSocialNetworks } from "@/services/social-network";
 import type { SocialNetwork } from "@/models";
 import type { IconNames } from "@/lib/types";
 import IconAndText from "@/components/IconAndText.astro";
-import { fecthBackendAPI } from "@/lib/fetchBackendAPI";
 import { getContactEmail, getContactPhone } from "@/services/contacts";
 
 const res = await getSocialNetworks();
@@ -24,17 +22,17 @@ if (res && res.data) {
 
 <footer aria-label="Site Footer" class="bg-primary text-white">
   <div class="mx-auto w-full max-w-xl py-16 px-4">
-    <picture class="mx-auto block relative max-w-xs w-full h-20 justify-center">
-      <Image
+    <picture class="mx-auto block max-w-xs w-full h-20 justify-center">
+      <img
         loading="lazy"
-        src={Logo}
+        src="/images/i2tec-logo.png"
         class="object-contain object-center brightness-[10]"
         alt="Logo del centro de investigación, innovación y tecnología"
       />
     </picture>
 
     <p
-      class="mx-auto mt-8 w-full max-w-screen-md text-center leading-relaxed text-white sm:pl-6 lg:pl-8"
+      class="mx-auto mt-20 w-full max-w-screen-md text-center leading-relaxed text-white sm:pl-6 lg:pl-8"
     >
       {infoFooter.description}
     </p>

@@ -10,13 +10,10 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/node": "6.0.0",
-    "@astrojs/preact": "3.0.0",
+    "@astrojs/node": "6.0.3",
     "@tabler/icons-webfont": "2.32.0",
-    "astro": "next--fix-mime",
-    "preact": "10.6.5",
-    "sharp": "^0.32.5",
-    "snarkdown": "^2.0.0",
+    "astro": "3.3.3",
+    "snarkdown": "2.0.0",
     "swiper": "10.2.0",
     "tailwindcss": "3.3.3"
   },

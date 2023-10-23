@@ -1,9 +1,7 @@
 ---
-import { Image } from "astro:assets";
 import Button from "@/components/Button.astro";
 import Icon from "@/components/Icon.astro";
 
-import Logo from "public/images/i2tec-logo.png";
 import { APP_ROUTES } from "@/lib/constants/routing";
 import { getSocialNetworks } from "@/services/social-network";
 import type { IconNames } from "@/lib/types";
@@ -22,9 +20,10 @@ if (res && res.data) {
       class="md:justify-initial container flex h-full items-center justify-between"
     >
       <a class="relative mr-4 flex h-full w-28" href="/">
-        <Image
+        <img
+          loading="lazy"
           class="object-contain object-center"
-          src={Logo}
+          src="/images/i2tec-logo.png"
           alt="Logo del centro de investigación, innovación y tecnología"
         />
       </a>

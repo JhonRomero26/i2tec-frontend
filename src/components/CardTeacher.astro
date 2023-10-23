@@ -1,0 +1,22 @@
+---
+type Props = {
+  name: string;
+  image: string;
+  prefix?: string;
+  class?: string;
+};
+
+const { name, image, class: className } = Astro.props;
+---
+
+<div class:list={["flex flex-col gap-2 p-2", className]}>
+  <picture class="relative aspect-[3/4] overflow-hidden w-full h-full">
+    <img
+      loading="lazy"
+      class="w-full h-full object-cover object-center"
+      alt={name}
+      src={image}
+    />
+  </picture>
+  <div class="text-center">{name}</div>
+</div>

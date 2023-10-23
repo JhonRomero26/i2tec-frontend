@@ -1,12 +1,16 @@
 FROM oven/bun:1.0 AS runtime
 WORKDIR /app
+COPY package.json  .
+COPY bun.lockb .
 
-COPY package.json .
-
+FROM runtime AS build
 RUN bun install
-
 COPY . .
 RUN bun run build
+
+FROM runtime AS prod
+COPY --from=build /app/dist /app/dist
+RUN bun install --production
 
 ARG BACKEND_URL="https://admin.i2tec.ec"
 ARG BACKEND_IMAGES="https://admin.i2tec.ec"
@@ -16,6 +20,6 @@ ENV BACKEND_IMAGE=BACKEND_IMAGE
 ENV VITE_BACKEND_IMAGE=BACKEND_IMAGE
 
 ENV HOST=0.0.0.0
-ENV PORT=4321
-EXPOSE 4321
+ENV PORT=3000
+EXPOSE 3000
 CMD ["bun", "./dist/server/entry.mjs"]

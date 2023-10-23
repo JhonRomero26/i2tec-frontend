@@ -24,9 +24,9 @@ export const getTeacherAttributes = (teacher: Teacher) => {
   const prefixes = rawTitles(prefix_titles?.data);
   const suffixes = rawTitles(suffix_titles?.data);
 
-  const fullName = `${prefixes ? `${prefixes} ` : ""
-    }${first_name} ${last_name}${suffixes}${suffixes ? ` ${suffixes}` : ""
-    }`;
+  const fullName = `${
+    prefixes ? `${prefixes} ` : ""
+  }${first_name} ${last_name}${suffixes}${suffixes ? ` ${suffixes}` : ""}`;
 
   return { fullName, biography, avatar };
 };
