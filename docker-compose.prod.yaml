@@ -27,3 +27,4 @@ networks:
   nginx_default:
     name: nginx_default
     driver: bridge
+    external: true
