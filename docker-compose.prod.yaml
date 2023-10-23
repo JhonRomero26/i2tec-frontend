@@ -12,7 +12,7 @@ services:
       BACKEND_URL: https://backend:1337
       BACKEND_IMAGES: https://admin.i2tec.com
     ports:
-      - "3000:3000"
+      - "3000:4321"
     networks:
       - nginx_default
 
