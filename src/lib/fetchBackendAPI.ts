@@ -6,17 +6,20 @@ export const fecthBackendAPI = <T>(
   params?: string[],
   options?: RequestInit
 ): Promise<ResponseAPI<T>> => {
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), 5000);
   const requestURL = BACKEND_URL.concat(
     "/api",
     url,
     params ? `?${params.join("&")}` : ""
   );
-  return fetch(requestURL, options)
+  return fetch(requestURL, { signal: controller.signal, ...options })
     .then((res) => {
       if (!res.ok) throw new Error(res.statusText);
       return res.json();
     })
     .catch((err) => {
       console.error("RequestError:", err);
-    });
+    })
+    .finally(() => clearTimeout(id));
 };
