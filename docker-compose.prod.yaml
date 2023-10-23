@@ -10,7 +10,7 @@ services:
       dockerfile: Dockerfile.prod
     environment:
       BACKEND_URL: https://backend:1337
-      BACKEND_IMAGES: https://admin.i2tec.ec
+      BACKEND_IMAGES: https://admin.i2tec.com
     ports:
       - "3000:4321"
     networks:

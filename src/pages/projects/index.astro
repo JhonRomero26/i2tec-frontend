@@ -84,11 +84,10 @@ if (meta) {
                     <CardProject
                       href={`/projects/${project.attributes.slug}`}
                       title={project.attributes.title}
-                      image={`${BACKEND_IMAGE}
-                       ${
-                         project.attributes.image!.data.attributes.formats.small
-                           .url
-                       }`}
+                      image={`${BACKEND_IMAGE}${
+                        project.attributes.image!.data.attributes.formats.small
+                          .url
+                      }`}
                       publishedDate={project.attributes.publishedAt}
                       authors={project.attributes.authors?.data}
                     />

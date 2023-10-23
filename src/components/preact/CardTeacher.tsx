@@ -13,9 +13,13 @@ export default function CardTeacher({
   className,
 }: CardTeacherProps) {
   return (
-    <div className={`flex flex-col gap-2 ${className ? className : ''}`} onClick={onClick}>
+    <div
+      className={`flex flex-col gap-2 ${className ? className : ""}`}
+      onClick={onClick}
+    >
       <picture className="relative aspect-[3/4] overflow-hidden w-full h-full">
         <img
+          loading="lazy"
           className="w-full h-full object-cover object-center"
           alt={name}
           src={image}
@@ -24,4 +28,4 @@ export default function CardTeacher({
       <div className="text-center">{name}</div>
     </div>
   );
-};
+}

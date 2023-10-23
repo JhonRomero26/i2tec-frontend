@@ -25,6 +25,17 @@ if (!res || res.data?.length === 0) return Astro.redirect("/404");
 let project: Project = {} as Project;
 
 if (res && res.data) project = res.data[0];
+const images = project.attributes.image
+  ? project.attributes.image.data.attributes.formats
+  : null;
+const principalImage =
+  images && images.large
+    ? images.large.url
+    : images && images.medium
+    ? images.medium.url
+    : images && images.small
+    ? images.small.url
+    : "";
 const published = parseDatePublished(project.attributes.publishedAt);
 ---
 
@@ -70,12 +81,11 @@ const published = parseDatePublished(project.attributes.publishedAt);
           />
           <figure class="mt-8 relative overflow-hidden aspect-video w-full">
             {
-              project.attributes.image && project.attributes.image.data ? (
+              images ? (
                 <img
+                  loading="lazy"
                   class="w-full h-full object-cover object-center"
-                  src={BACKEND_IMAGE.concat(
-                    project.attributes.image.data.attributes.formats.large.url
-                  )}
+                  src={BACKEND_IMAGE.concat(principalImage)}
                   alt={project!.attributes.title}
                 />
               ) : (

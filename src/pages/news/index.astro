@@ -10,6 +10,7 @@ import { getTidings } from "@/services/news";
 import { BACKEND_IMAGE } from "@/lib/constants";
 import LastestNews from "@/components/LastestNews.astro";
 import CardNews from "@/components/CardNews.astro";
+import ImageSkeleton from "@/components/ImageSkeleton.astro";
 
 export const prerender = false;
 
@@ -69,18 +70,32 @@ if (meta) {
             <h2 class="font-semibold text-2xl mb-12">Última noticia</h2>
             <div id="last-news" class="swiper">
               <div class="swiper-wrapper">
-                {tidings.splice(0, 3).map((news) => (
-                  <div class="swiper-slide">
-                    <LastestNews
-                      title={news.attributes.title}
-                      summary={news.attributes.description}
-                      image={`${BACKEND_IMAGE}${news.attributes.image.data.attributes.formats.medium.url}`}
-                      published={news.attributes.publishedAt}
-                      facebookUrl={news.attributes.facebook_url}
-                      instagramUrl={news.attributes.instagram_url}
-                    />
-                  </div>
-                ))}
+                {tidings.splice(0, 3).map((news) => {
+                  const image = news.attributes.image
+                    ? news.attributes.image.data.attributes.formats
+                    : null;
+                  const imageSrc =
+                    image && image.medium
+                      ? image.medium.url
+                      : image && image.small
+                      ? image.small.url
+                      : "";
+
+                  if (!image) return <ImageSkeleton />;
+
+                  return (
+                    <div class="swiper-slide">
+                      <LastestNews
+                        title={news.attributes.title}
+                        summary={news.attributes.description}
+                        image={`${BACKEND_IMAGE}${imageSrc}`}
+                        published={news.attributes.publishedAt}
+                        facebookUrl={news.attributes.facebook_url}
+                        instagramUrl={news.attributes.instagram_url}
+                      />
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </section>
