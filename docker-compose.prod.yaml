@@ -9,15 +9,7 @@ services:
       context: .
       dockerfile: Dockerfile.prod
     environment:
-      BACKEND_URL: https://backend:1337
-      BACKEND_IMAGES: https://admin.i2tec.com
+      BACKEND_URL: https://admin.i2tec.ec
+      BACKEND_IMAGES: https://admin.i2tec.ec
     ports:
       - "3000:4321"
-    networks:
-      - nginx_default
-
-networks:
-  nginx_default:
-    name: nginx_default
-    driver: bridge
-    external: true

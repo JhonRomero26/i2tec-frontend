@@ -5,7 +5,6 @@ services:
     extends:
       file: common.yaml
       service: frontend
-    build: .
     command: bun run dev --host
     ports:
       - "4321:4321"

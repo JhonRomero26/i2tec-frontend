@@ -1,23 +1,22 @@
-FROM docker.io/node:20-alpine3.17 AS runtime
+FROM docker.io/oven/bun:1-alpine as runtime
+WORKDIR /app
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
-
-WORKDIR /app
 COPY package.json  .
-COPY bun.lockb .
+COPY pnpm-lock.yaml .
 
 FROM runtime AS build
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install
+RUN bun install
 COPY . .
-RUN pnpm run build
+RUN bunx --bun astro build
 
 FROM runtime AS prod
 COPY --from=build /app/dist /app/dist
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod
+RUN bun install --prod
 
-ARG BACKEND_URL="https://admin.i2tec.ec"
-ARG BACKEND_IMAGES="https://admin.i2tec.ec"
+ARG BACKEND_URL
+ARG BACKEND_IMAGES
 ENV BACKEND_URL=BACKEND_URL
 ENV VITE_BACKEND_URL=BACKEND_URL
 ENV BACKEND_IMAGE=BACKEND_IMAGE
@@ -25,5 +24,5 @@ ENV VITE_BACKEND_IMAGE=BACKEND_IMAGE
 
 ENV HOST=0.0.0.0
 ENV PORT=4321
-EXPOSE 4312
+EXPOSE 4321
 CMD ["node", "./dist/server/entry.mjs"]
