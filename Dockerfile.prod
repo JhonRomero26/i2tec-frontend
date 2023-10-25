@@ -6,7 +6,7 @@ COPY bun.lockb .
 FROM runtime AS build
 RUN bun install
 COPY . .
-RUN bunx --bun astro build
+RUN bunx run build
 
 FROM runtime AS prod
 RUN bun install --production
