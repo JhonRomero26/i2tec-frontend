@@ -1,10 +1,7 @@
 FROM docker.io/oven/bun:1-alpine as runtime
 WORKDIR /app
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
 COPY package.json  .
-COPY pnpm-lock.yaml .
+COPY bun.lockb .
 
 FROM runtime AS build
 RUN bun install
@@ -13,7 +10,7 @@ RUN bunx --bun astro build
 
 FROM runtime AS prod
 COPY --from=build /app/dist /app/dist
-RUN bun install --prod
+RUN bun install --production
 
 ARG BACKEND_URL
 ARG BACKEND_IMAGES
@@ -25,4 +22,4 @@ ENV VITE_BACKEND_IMAGE=BACKEND_IMAGE
 ENV HOST=0.0.0.0
 ENV PORT=4321
 EXPOSE 4321
-CMD ["node", "./dist/server/entry.mjs"]
+CMD ["bun", "./dist/server/entry.mjs"]
