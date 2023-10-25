@@ -9,7 +9,13 @@ services:
       context: .
       dockerfile: Dockerfile.prod
     environment:
-      BACKEND_URL: https://admin.i2tec.ec
+      BACKEND_URL: http://backend:1337
       BACKEND_IMAGES: https://admin.i2tec.ec
     ports:
       - "3000:4321"
+    networks:
+      - i2tec-backend
+
+networks:
+  i2tec-backend:
+    external: true
