@@ -18,4 +18,5 @@ services:
 
 networks:
   i2tec-backend:
+    name: i2tec-backend
     external: true
