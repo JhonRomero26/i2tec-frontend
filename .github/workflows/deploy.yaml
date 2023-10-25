@@ -29,8 +29,8 @@ jobs:
 
       - name: "Build Inventory Image"
         run: |
-          docker build . --tag ${{ env.CONAINTER_REGISTRY }}:latest -f Dockerfile.prod
-          docker push ${{ env.CONAINTER_REGISTRY }}:latest
+          docker build . --tag ${{ env.CONAINTER_REGISTRY }}:${{ github.sha }} -f Dockerfile.prod
+          docker push ${{ env.CONAINTER_REGISTRY }}:${{ github.sha }}
 
   pull-changes:
     runs-on: ubuntu-latest
