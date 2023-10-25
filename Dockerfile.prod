@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 FROM docker.io/oven/bun:1-alpine as runtime
+=======
+FROM oven/bun:1.0 AS runtime
+>>>>>>> c972036b6ec9e9d90bcca407c9f617a4d879a7b2
 WORKDIR /app
 COPY package.json  .
 COPY bun.lockb .
@@ -22,4 +26,8 @@ ENV VITE_BACKEND_IMAGE=BACKEND_IMAGE
 ENV HOST=0.0.0.0
 ENV PORT=4321
 EXPOSE 4321
+<<<<<<< HEAD
 CMD ["bun", "./dist/server/entry.mjs"]
+=======
+CMD ["bun", "./dist/server/entry.mjs"]
+>>>>>>> c972036b6ec9e9d90bcca407c9f617a4d879a7b2
