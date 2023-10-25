@@ -9,8 +9,8 @@ COPY . .
 RUN bunx --bun astro build
 
 FROM runtime AS prod
-COPY --from=build /app/dist /app/dist
 RUN bun install --production
+COPY --from=build /app/dist /app/dist
 
 ARG BACKEND_URL
 ARG BACKEND_IMAGES
