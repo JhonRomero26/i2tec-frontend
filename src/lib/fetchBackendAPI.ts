@@ -16,10 +16,12 @@ export const fecthBackendAPI = <T>(
   return fetch(requestURL, { signal: controller.signal, ...options })
     .then((res) => {
       if (!res.ok) throw new Error(res.statusText);
+      console.log("Request:", requestURL);
       return res.json();
     })
     .catch((err) => {
       console.error("RequestError:", err);
+      console.log();
     })
     .finally(() => clearTimeout(id));
 };
