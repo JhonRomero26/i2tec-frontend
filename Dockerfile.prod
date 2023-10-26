@@ -2,6 +2,7 @@ FROM docker.io/node:20-alpine as runtime
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
+RUN npm install --platform=linux --arch=x64 sharp
 
 WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
