@@ -6,8 +6,16 @@ services:
       file: common.yaml
       service: frontend
     command: bun run dev --host
+    environment:
+      BACKEND_URL: http://localhost:1337
+      BACKEND_IMAGES: http://localhost:1337
     ports:
       - "4321:4321"
     volumes:
       - ./public:/app/public
       - ./src:/app/src
+
+networks:
+  default:
+    name: nginx-proxy
+    driver: bridge
