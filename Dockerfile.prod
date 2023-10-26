@@ -2,18 +2,19 @@ FROM docker.io/node:20-alpine as runtime
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
-RUN npm install --platform=linux --arch=x64 sharp
+RUN npm install -g --platform=linux sharp
 
 WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
 
 FROM runtime AS build
+RUN apk update && apk add --no-cache vips-dev
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install
 COPY . .
 RUN pnpm run build
 
 FROM runtime AS prod
-RUN apk update
+RUN apk update && apk add --no-cache vips-dev
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod
 COPY --from=build /app/dist /app/dist
 
