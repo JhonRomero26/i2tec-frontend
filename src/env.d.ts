@@ -1,8 +1,9 @@
 /// <reference types="astro/client" />
 
 interface ImportMetaEnv {
-  readonly TOKEN_BACKEND: string;
   readonly BACKEND_URL: string;
+  readonly BACKEND_IMAGES: string;
+  readonly VITE_BACKEND_IMAGES: string;
   readonly VITE_BACKEND_URL: string;
   // more env variables...
 }
