@@ -1,8 +1,4 @@
 ---
-// import { Quality } from "../../Quality";
-
-import { Image } from "astro:assets";
-import LogoI2TEC from "public/images/i2tec.png";
 import Quality from "@/components/Quality.astro";
 import dataPage from "@/data/home-data.json";
 import type { IconNames } from "@/lib/types";
@@ -29,10 +25,11 @@ import type { IconNames } from "@/lib/types";
       <picture
         class="relative col-start-1 col-end-3 row-start-2 row-end-4 w-full max-w-lg h-full"
       >
-        <Image
+        <img
+          loading="lazy"
           alt="Logo de I2TEC"
           class="w-full h-full object-contain object-center"
-          src={LogoI2TEC}
+          src="/images/i2tec.png"
         />
       </picture>
       <Quality

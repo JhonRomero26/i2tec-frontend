@@ -1,19 +1,17 @@
 ---
 import ButtonAnchor from "@/components/ButtonAnchor.astro";
 import DocumentLayout from "@/layouts/DocumentLayout.astro";
-import { Image } from "astro:assets";
-import Logo from "public/images/i2tec-logo.png";
 ---
 
 <DocumentLayout title="Pagina no encontrada | I2TEC">
   <main
     class="py-24 bg-black flex flex-col gap-12 items-center bg-gradient-to-b from-primary to-transparent h-full"
   >
-    <Image
+    <img
       class="absolute top-16 brightness-[10] max-w-xs"
       alt="I2TEC Logo"
       loading="lazy"
-      src={Logo}
+      src="images/i2tec-logo.png"
     />
     <div class="flex flex-col justify-center items-center h-full">
       <span class="text-9xl text-amber-500 font-black mb-12">404</span>

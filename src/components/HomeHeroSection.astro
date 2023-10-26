@@ -1,7 +1,5 @@
 ---
 import TitleWithText from "@/components/TitleWithText.astro";
-import { Image } from "astro:assets";
-import heroImage from "public/images/heroimage.jpg";
 ---
 
 <style>
@@ -25,9 +23,10 @@ import heroImage from "public/images/heroimage.jpg";
   <picture
     class="w-full h-full absolute after:block after:top-0 after:bottom-0 after:w-full after:h-full after:absolute after:bg-primary/50"
   >
-    <Image
+    <img
+      loading="lazy"
       class="blur-animation w-full h-full object-cover object-center"
-      src={heroImage}
+      src="images/heroimage.jpg"
       alt="Centro I2TEC"
     />
   </picture>
