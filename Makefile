@@ -8,7 +8,6 @@ img-build:
 	docker compose -f docker-compose.prod.yaml build
 
 deploy:
-	docker network create i2tec
 	docker compose -f docker-compose.prod.yaml stop
 	docker compose -f docker-compose.prod.yaml pull
 	docker compose -f docker-compose.prod.yaml up -d
