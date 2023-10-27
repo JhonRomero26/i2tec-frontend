@@ -6,6 +6,8 @@ services:
     image: ghcr.io/jhonromero26/i2tec-frontend:latest
     restart: unless-stopped
     build: .
+    networks:
+      - nginx_default
 
 networks:
   default:
