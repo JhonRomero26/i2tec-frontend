@@ -6,10 +6,8 @@ services:
     image: ghcr.io/jhonromero26/i2tec-frontend:latest
     restart: unless-stopped
     build: .
-    networks:
-      - nginx_default
 
 networks:
-  nginx_default:
+  default:
     name: nginx_default
     external: true
