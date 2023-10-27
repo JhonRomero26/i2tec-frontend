@@ -10,6 +10,6 @@ services:
       - nginx_default
 
 networks:
-  default:
+  nginx_default:
     name: nginx_default
     external: true
