@@ -13,3 +13,8 @@ services:
     environment:
       BACKEND_URL: https://admin.i2tec.ec
       BACKEND_IMAGES: https://admin.i2tec.ec
+
+networks:
+  default:
+    name: nginx_default
+    external: true
