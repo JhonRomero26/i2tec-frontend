@@ -24,19 +24,24 @@ const { projects, "data-carousel-id": CarouselID } = Astro.props;
       class="swiper slider-scale overflow-visible"
     >
       <div class="swiper-wrapper">
-        {projects.map((project) => (
-          <div class="swiper-slide">
-            <CardProject
-              href={`/projects/${project.attributes.slug}`}
-              image={`${BACKEND_IMAGE}${
-                project.attributes.image!.data.attributes.formats.small.url
-              }`}
-              authors={project.attributes.authors?.data}
-              title={project.attributes.title}
-              publishedDate={project.attributes.publishedAt}
-            />
-          </div>
-        ))}
+        {projects.map((project: Project) => {
+          const image = project.attributes.image.data.attributes.formats;
+          const imageSrc =
+            image && image.small
+              ? image.small.url
+              : image && image.thumbnail.url;
+          return (
+            <div class="swiper-slide">
+              <CardProject
+                href={`/projects/${project.attributes.slug}`}
+                image={`${BACKEND_IMAGE}${imageSrc}`}
+                authors={project.attributes.authors?.data}
+                title={project.attributes.title}
+                publishedDate={project.attributes.publishedAt}
+              />
+            </div>
+          );
+        })}
       </div>
       <slot name="complement" />
     </div>

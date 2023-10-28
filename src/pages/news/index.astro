@@ -79,6 +79,8 @@ if (meta) {
                       ? image.medium.url
                       : image && image.small
                       ? image.small.url
+                      : image && image.thumbnail
+                      ? image.thumbnail.url
                       : "";
 
                   if (!image) return <ImageSkeleton />;
@@ -113,19 +115,24 @@ if (meta) {
           <GridView count={tidings.length} minWidth="350px">
             {
               tidings.length > 0 &&
-                tidings.map((news) => (
-                  <CardNews
-                    instagramUrl={news.attributes.instagram_url}
-                    facebookUrl={news.attributes.facebook_url}
-                    summary={news.attributes.description}
-                    title={news.attributes.title}
-                    image={`${BACKEND_IMAGE}${
-                      news.attributes.image!.data.attributes.formats.small.url
-                    }`}
-                    publishedDate={news.attributes.publishedAt}
-                    authors={news.attributes.authors?.data}
-                  />
-                ))
+                tidings.map((news) => {
+                  const image = news.attributes.image.data.attributes.formats;
+                  const imageSrc =
+                    image && image.small
+                      ? image.small.url
+                      : image && image.thumbnail.url;
+                  return (
+                    <CardNews
+                      instagramUrl={news.attributes.instagram_url}
+                      facebookUrl={news.attributes.facebook_url}
+                      summary={news.attributes.description}
+                      title={news.attributes.title}
+                      image={`${BACKEND_IMAGE}${imageSrc}`}
+                      publishedDate={news.attributes.publishedAt}
+                      authors={news.attributes.authors?.data}
+                    />
+                  );
+                })
             }
           </GridView>
           <Pagination

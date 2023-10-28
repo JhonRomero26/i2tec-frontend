@@ -80,18 +80,23 @@ if (meta) {
             >
               {
                 projects.length > 0 &&
-                  projects.map((project) => (
-                    <CardProject
-                      href={`/projects/${project.attributes.slug}`}
-                      title={project.attributes.title}
-                      image={`${BACKEND_IMAGE}${
-                        project.attributes.image!.data.attributes.formats.small
-                          .url
-                      }`}
-                      publishedDate={project.attributes.publishedAt}
-                      authors={project.attributes.authors?.data}
-                    />
-                  ))
+                  projects.map((project) => {
+                    const image =
+                      project.attributes.image.data.attributes.formats;
+                    const imageSrc =
+                      image && image.small
+                        ? image.small.url
+                        : image && image.thumbnail.url;
+                    return (
+                      <CardProject
+                        href={`/projects/${project.attributes.slug}`}
+                        title={project.attributes.title}
+                        image={`${BACKEND_IMAGE}${imageSrc}`}
+                        publishedDate={project.attributes.publishedAt}
+                        authors={project.attributes.authors?.data}
+                      />
+                    );
+                  })
               }
             </GridView>
             <Pagination

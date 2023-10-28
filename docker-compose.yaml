@@ -5,10 +5,10 @@ services:
     extends:
       file: common.yaml
       service: frontend
-    command: bun run dev --host
+    command: pnpm run dev --host
     environment:
-      BACKEND_URL: http://localhost:1337
-      BACKEND_IMAGES: http://localhost:1337
+      BACKEND_URL: https://admin.i2tec.ec
+      BACKEND_IMAGES: https://admin.i2tec.ec
     ports:
       - "4321:4321"
     volumes:
