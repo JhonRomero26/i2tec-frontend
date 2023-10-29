@@ -4,6 +4,7 @@ import PopularProject from "@/components/PopularProject.astro";
 import { arrayIterable } from "@/lib/arrayIterable";
 import type { Project } from "@/models/Project";
 import { BACKEND_IMAGE } from "@/lib/constants/environment";
+import { getImageFormats } from "@/lib/getImageFormats";
 
 interface Props {
   projects?: Project[];
@@ -20,21 +21,23 @@ const projectGridItem =
     <div class="grid gap-4 sm:grid-cols-4 xl:grid-rows-2">
       {
         projects.length > 0
-          ? projects
-              .slice(0, 3)
-              // .map((project: Project) => (
-              .map((project: Project) => (
+          ? projects.slice(0, 3).map((project: Project) => {
+              const imageSrc = getImageFormats(
+                project.attributes.image,
+                "medium"
+              );
+
+              return (
                 <PopularProject
                   class={projectGridItem}
                   href={`/projects/${project.attributes.slug}`}
                   title={project.attributes.title}
-                  image={`${BACKEND_IMAGE}${
-                    project.attributes.image!.data.attributes.formats.medium.url
-                  }`}
+                  image={`${BACKEND_IMAGE}${imageSrc}`}
                   authors={project.attributes.authors?.data!}
                   publishedDate={project.attributes.publishedAt}
                 />
-              ))
+              );
+            })
           : arrayIterable(3).map((i) => (
               <ImageSkeleton
                 class={`${projectGridItem} ${i === 0 ? "xl:h-full" : ""}`}
