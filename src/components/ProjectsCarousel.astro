@@ -8,6 +8,7 @@ import { EffectsClass } from "@/lib/classNames/effects";
 import { BACKEND_IMAGE } from "@/lib/constants";
 
 import "swiper/css/navigation";
+import { getImageFormats } from "@/lib/getImageFormats";
 
 interface Props {
   "data-carousel-id": string;
@@ -25,11 +26,7 @@ const { projects, "data-carousel-id": CarouselID } = Astro.props;
     >
       <div class="swiper-wrapper">
         {projects.map((project: Project) => {
-          const image = project.attributes.image.data.attributes.formats;
-          const imageSrc =
-            image && image.small
-              ? image.small.url
-              : image && image.thumbnail.url;
+          const imageSrc = getImageFormats(project.attributes.image, "small");
           return (
             <div class="swiper-slide">
               <CardProject

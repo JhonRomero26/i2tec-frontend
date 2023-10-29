@@ -11,6 +11,7 @@ import { BACKEND_IMAGE } from "@/lib/constants";
 import LastestNews from "@/components/LastestNews.astro";
 import CardNews from "@/components/CardNews.astro";
 import ImageSkeleton from "@/components/ImageSkeleton.astro";
+import { getImageFormats } from "@/lib/getImageFormats";
 
 export const prerender = false;
 
@@ -71,19 +72,12 @@ if (meta) {
             <div id="last-news" class="swiper">
               <div class="swiper-wrapper">
                 {tidings.splice(0, 3).map((news) => {
-                  const image = news.attributes.image
-                    ? news.attributes.image.data.attributes.formats
-                    : null;
-                  const imageSrc =
-                    image && image.medium
-                      ? image.medium.url
-                      : image && image.small
-                      ? image.small.url
-                      : image && image.thumbnail
-                      ? image.thumbnail.url
-                      : "";
+                  const imageSrc = getImageFormats(
+                    news.attributes.image,
+                    "medium"
+                  );
 
-                  if (!image) return <ImageSkeleton />;
+                  if (imageSrc === undefined) return <ImageSkeleton />;
 
                   return (
                     <div class="swiper-slide">
@@ -116,11 +110,11 @@ if (meta) {
             {
               tidings.length > 0 &&
                 tidings.map((news) => {
-                  const image = news.attributes.image.data.attributes.formats;
-                  const imageSrc =
-                    image && image.small
-                      ? image.small.url
-                      : image && image.thumbnail.url;
+                  const imageSrc = getImageFormats(
+                    news.attributes.image,
+                    "small"
+                  );
+
                   return (
                     <CardNews
                       instagramUrl={news.attributes.instagram_url}
