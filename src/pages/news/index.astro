@@ -13,8 +13,6 @@ import CardNews from "@/components/CardNews.astro";
 import ImageSkeleton from "@/components/ImageSkeleton.astro";
 import { getImageFormats } from "@/lib/getImageFormats";
 
-export const prerender = false;
-
 const searchParam: string = Astro.url.searchParams.get("q") || "";
 const pagParam = Astro.url.searchParams.get("pag") || "";
 const res = await getTidings([

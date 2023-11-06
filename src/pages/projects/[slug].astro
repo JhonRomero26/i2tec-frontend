@@ -17,8 +17,6 @@ interface Props {
   projects: Project[];
 }
 
-export const prerender = false;
-
 const { slug } = Astro.params;
 const res = await getProjects(["populate=*", `filters[slug][$eq]=${slug}`]);
 if (!res || res.data?.length === 0) return Astro.redirect("/404");

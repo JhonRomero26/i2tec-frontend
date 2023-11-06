@@ -4,13 +4,6 @@ import DocumentLayout from "@/layouts/DocumentLayout.astro";
 import PageLayout from "@/layouts/PageLayout.astro";
 import dataEnvolve from "@/data/envolve-data.json";
 
-export interface Feature {
-  id: string;
-  title: string;
-  image: string;
-  content: string;
-}
-
 const { features } = dataEnvolve;
 ---
 
@@ -62,21 +55,21 @@ rflow-hidden lg:col-start-2 lg:col-end-3"
 </DocumentLayout>
 
 <script define:vars={{ features }}>
-const $features = document.querySelectorAll('[data-id="envolve"]');
-const $title = document.querySelector("#title-feature");
-const $content = document.querySelector("#content-feature");
+  const $features = document.querySelectorAll('[data-id="envolve"]');
+  const $title = document.querySelector("#title-feature");
+  const $content = document.querySelector("#content-feature");
 
-$features.forEach((el) => {
-  el.addEventListener("click", () => {
-    $features.forEach((el) => {
-      el.classList.remove("before:bg-transparent");
+  $features.forEach((el) => {
+    el.addEventListener("click", () => {
+      $features.forEach((el) => {
+        el.classList.remove("before:bg-transparent");
+      });
+      const id = el.getAttribute("data-image-id");
+      const feature = features.filter((feature) => feature.id === id)[0];
+
+      el.classList.add("before:bg-transparent");
+      $title.innerHTML = feature.title;
+      $content.innerHTML = feature.content;
     });
-    const id = el.getAttribute("data-image-id");
-    const feature = features.filter((feature) => feature.id === id)[0];
-
-    el.classList.add("before:bg-transparent");
-    $title.innerHTML = feature.title;
-    $content.innerHTML = feature.content;
   });
-});
 </script>

@@ -10,8 +10,6 @@ import { getProjects } from "@/services/project";
 import { BACKEND_IMAGE } from "@/lib/constants";
 import { getImageFormats } from "@/lib/getImageFormats";
 
-export const prerender = false;
-
 const searchParam: string = Astro.url.searchParams.get("q") || "";
 const pagParam = Astro.url.searchParams.get("pag") || "";
 const res = await getProjects([
