@@ -1,4 +1,4 @@
-import { ImageResponse } from "@/models";
+import type { ImageResponse } from "@/models";
 
 type ImageFormatsKeys = keyof ImageResponse["data"]["attributes"]["formats"];
 
@@ -17,7 +17,9 @@ export const getImageFormats = (
     ? formats["medium"].url
     : formats["small"]
     ? formats["small"].url
-    : formats["thumbnail"].url;
+    : format != "thumbnail"
+      ? data.data.attributes.url
+      : formats["thumbnail"].url;
 
   return image;
 };

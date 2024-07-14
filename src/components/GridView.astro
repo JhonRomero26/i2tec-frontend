@@ -33,7 +33,7 @@ const gapValue = typeof gap === "object" ? `${gap.y} ${gap.x}` : gap;
     count > 0 ? (
       <slot />
     ) : (
-      arrayIterable(6).map((i) => (
+      arrayIterable(6).map(() => (
         <ImageSkeleton class={EffectsClass["fadeTopBottom"]} />
       ))
     )

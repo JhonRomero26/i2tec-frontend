@@ -80,6 +80,7 @@ if (meta) {
                   );
                   return (
                     <CardProject
+                      id={`${project.id}`}
                       href={`/projects/${project.attributes.slug}`}
                       title={project.attributes.title}
                       image={`${BACKEND_IMAGE}${imageSrc}`}

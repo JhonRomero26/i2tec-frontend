@@ -51,7 +51,7 @@ rflow-hidden lg:col-start-2 lg:col-end-3"
   </main>
 </PageLayout>
 
-<script define:vars={{ features }}>
+<script is:inline define:vars={{ features }}>
   const $features = document.querySelectorAll('[data-id="envolve"]');
   const $title = document.querySelector("#title-feature");
   const $content = document.querySelector("#content-feature");

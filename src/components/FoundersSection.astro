@@ -2,6 +2,7 @@
 import Avatar from "@/components/Avatar.astro";
 import { BACKEND_IMAGE } from "@/lib/constants";
 import { getPeople } from "@/services/person";
+import { getImageFormats } from "@/lib/getImageFormats"
 
 const res = await getPeople([
   "populate=avatar",
@@ -28,7 +29,7 @@ const founders = res && res.data ? res.data : [];
                   class="w-44 h-44"
                   image={
                     founder.attributes.avatar && founder.attributes.avatar.data
-                      ? `${BACKEND_IMAGE}${founder.attributes.avatar.data.attributes.url}`
+                      ? `${BACKEND_IMAGE}${getImageFormats(founder.attributes.avatar, 'small')}`
                       : "/images/user-placeholder.png"
                   }
                   alt={fullName}
