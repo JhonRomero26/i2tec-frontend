@@ -4,6 +4,7 @@ import TeacherDetailSection from "@/components/TeacherDetailSection.astro";
 import PageLayout from "@/layouts/PageLayout.astro";
 import { BACKEND_IMAGE } from "@/lib/constants";
 import { getTeacherAttributes } from "@/lib/getTeacherAttributes";
+import { getImageFormats } from "@/lib/getImageFormats";
 import type { ImageResponse } from "@/models";
 import { getTeachers } from "@/services/teachers";
 
@@ -27,8 +28,7 @@ if (selectedTeacher) {
             <TeacherDetailSection
               name={personData.fullName}
               image={`${BACKEND_IMAGE}${
-                (personData.avatar as ImageResponse).data.attributes.formats
-                  .small.url
+                getImageFormats(personData.avatar, 'large')
               }`}
               summary={personData.biography}
             />
@@ -67,7 +67,7 @@ if (selectedTeacher) {
                       class="cursor-pointer"
                       image={
                         avatar && avatar.data
-                          ? `${BACKEND_IMAGE}${avatar.data.attributes.formats.small.url}`
+                          ? `${BACKEND_IMAGE}${getImageFormats(avatar, 'small')}`
                           : "/images/user-placeholder.png"
                       }
                       name={fullName}
@@ -85,6 +85,7 @@ if (selectedTeacher) {
 <script>
   import { getTeacher } from "@/services/teachers";
   import { getTeacherAttributes } from "@/lib/getTeacherAttributes";
+  import { getImageFormats } from "@/lib/getImageFormats";
   import { BACKEND_IMAGE } from "@/lib/constants";
   import type { ImageResponse, Teacher } from "@/models";
 
@@ -108,7 +109,7 @@ if (selectedTeacher) {
     $name!.innerHTML = fullName;
     if (avatar)
       $image!.src = `${BACKEND_IMAGE}${
-        (avatar as ImageResponse).data.attributes.formats.small.url
+        getImageFormats(avatar, 'large')
       }`;
     $summary!.innerHTML = biography;
   };
