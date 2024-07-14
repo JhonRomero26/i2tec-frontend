@@ -1,0 +1,8 @@
+version: "3.8"
+
+services:
+  frontend:
+    container_name: frontend
+    image: ghcr.io/jhonromero26/i2tec-frontend:latest
+    restart: unless-stopped
+    build: .
