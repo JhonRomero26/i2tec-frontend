@@ -19,71 +19,69 @@ if (selectedTeacher) {
 }
 ---
 
-<DocumentLayout title="Docentes | I2TEC">
-  <PageLayout>
-    <main>
-      <section class="py-32 bg-primary text-white bg-svg-architect">
-        <div class="container">
+<PageLayout title="Docentes | I2TEC" description="">
+  <main>
+    <section class="py-32 bg-primary text-white bg-svg-architect">
+      <div class="container">
+        {
+          selectedTeacher ? (
+            <TeacherDetailSection
+              name={personData.fullName}
+              image={`${BACKEND_IMAGE}${
+                (personData.avatar as ImageResponse).data.attributes.formats
+                  .small.url
+              }`}
+              summary={personData.biography}
+            />
+          ) : (
+            <TeacherDetailSection
+              name="No hemos encontrado docentes"
+              summary="En breve estaremos presentes con nuevos docentes que participan dentro del I2TEC"
+              image=""
+            />
+          )
+        }
+      </div>
+    </section>
+    <section class="section pt-40">
+      <div class="container">
+        <h1 class="mb-32 text-center text-4xl font-bold">
+          Nuestros docentes
+        </h1>
+      </div>
+      <div class="container">
+        <div
+          class="grid gap-4 grid-cols-[repeat(auto-fill,minmax(220px,1fr))]"
+        >
           {
-            selectedTeacher ? (
-              <TeacherDetailSection
-                name={personData.fullName}
-                image={`${BACKEND_IMAGE}${
-                  (personData.avatar as ImageResponse).data.attributes.formats
-                    .small.url
-                }`}
-                summary={personData.biography}
-              />
-            ) : (
-              <TeacherDetailSection
-                name="No hemos encontrado docentes"
-                summary="En breve estaremos presentes con nuevos docentes que participan dentro del I2TEC"
-                image=""
-              />
-            )
+            teachers.length > 0 &&
+              teachers.map((teacher) => {
+                const { fullName, avatar } = getTeacherAttributes(teacher);
+
+                return (
+                  <div
+                    id={`${teacher.id}`}
+                    class="transition hover:shadow bg-gray-50 rounded"
+                    data-ref="CardTeacher"
+                  >
+                    <CardTeacher
+                      class="cursor-pointer"
+                      image={
+                        avatar && avatar.data
+                          ? `${BACKEND_IMAGE}${avatar.data.attributes.formats.small.url}`
+                          : "/images/user-placeholder.png"
+                      }
+                      name={fullName}
+                    />
+                  </div>
+                );
+              })
           }
         </div>
-      </section>
-      <section class="section pt-40">
-        <div class="container">
-          <h1 class="mb-32 text-center text-4xl font-bold">
-            Nuestros docentes
-          </h1>
-        </div>
-        <div class="container">
-          <div
-            class="grid gap-4 grid-cols-[repeat(auto-fill,minmax(220px,1fr))]"
-          >
-            {
-              teachers.length > 0 &&
-                teachers.map((teacher) => {
-                  const { fullName, avatar } = getTeacherAttributes(teacher);
-
-                  return (
-                    <div
-                      id={`${teacher.id}`}
-                      class="transition hover:shadow bg-gray-50 rounded"
-                      data-ref="CardTeacher"
-                    >
-                      <CardTeacher
-                        class="cursor-pointer"
-                        image={
-                          avatar && avatar.data
-                            ? `${BACKEND_IMAGE}${avatar.data.attributes.formats.small.url}`
-                            : "/images/user-placeholder.png"
-                        }
-                        name={fullName}
-                      />
-                    </div>
-                  );
-                })
-            }
-          </div>
-        </div>
-      </section>
-    </main>
-  </PageLayout>
-</DocumentLayout>
+      </div>
+    </section>
+  </main>
+</PageLayout>
 
 <script>
   import { getTeacher } from "@/services/teachers";

@@ -8,17 +8,15 @@ import MisionAndVisionSection from "@/components/MisionAndVisionSection.astro";
 import infoPage from "@/data/about-us-data.json";
 ---
 
-<DocumentLayout title="Acerca de nosotros | I2TEC">
-  <PageLayout>
-    <main>
-      <HeroImage
-        title={infoPage.heroInfo.title}
-        description={infoPage.heroInfo.description}
-        image={infoPage.heroInfo.image}
-      />
-      <AboutusSection />
-      <MisionAndVisionSection />
-      <FoundersSection />
-    </main>
-  </PageLayout>
-</DocumentLayout>
+<PageLayout title="Acerca de nosotros | I2TEC" description="">
+  <main>
+    <HeroImage
+      title={infoPage.heroInfo.title}
+      description={infoPage.heroInfo.description}
+      image={infoPage.heroInfo.image}
+    />
+    <AboutusSection />
+    <MisionAndVisionSection />
+    <FoundersSection />
+  </main>
+</PageLayout>
