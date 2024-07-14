@@ -1,5 +1,5 @@
 ---
-import Icon from "@/components/Icon.astro";
+import { Icon } from "astro-icon/components";
 interface Props {
   length: number;
   currentPage: number;
@@ -40,7 +40,7 @@ const defaultClass =
               },
             ]}
           >
-            <Icon name="chevron-left" />
+            <Icon name="tabler:chevron-left" />
           </a>
         ) : (
           <span
@@ -53,7 +53,7 @@ const defaultClass =
               },
             ]}
           >
-            <Icon name="chevron-left" />
+            <Icon name="tabler:chevron-left" />
           </span>
         )
       }
@@ -90,7 +90,7 @@ const defaultClass =
               },
             ]}
           >
-            <Icon name="chevron-right" />
+            <Icon name="tabler:chevron-right" />
           </a>
         ) : (
           <span
@@ -103,7 +103,7 @@ const defaultClass =
               },
             ]}
           >
-            <Icon name="chevron-right" />
+            <Icon name="tabler:chevron-right" />
           </span>
         )
       }

@@ -1,12 +1,13 @@
 ---
-import "@/styles/global.css";
+import "@/styles/global.scss";
+import { ViewTransitions } from "astro:transitions";
 
 interface Props {
   title: string;
-  metadata?: HTMLElement[];
+  description: string;
 }
 
-const { title, metadata = [] } = Astro.props;
+const { title, description } = Astro.props;
 ---
 
 <!doctype html>
@@ -18,7 +19,9 @@ const { title, metadata = [] } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
-    {metadata.map((el) => el)}
+    <meta name="description" content={description} />
+    <slot name="head" />
+    <ViewTransitions />
   </head>
   <body>
     <slot />

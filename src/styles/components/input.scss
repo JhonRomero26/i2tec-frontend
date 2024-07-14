@@ -3,15 +3,15 @@ $height: 42px;
 $height-sm: 36px;
 $height-lg: 48px;
 
-.$(selector)-wrapper {
-  @apply relative;
+.input {
+  @apply pr-10;
 
-  .$(selector) {
-    @apply pr-10;
+  &-wrapper {
+    @apply relative;
   }
 }
 
-.$(selector) {
+.input {
   height: $height;
   @apply w-full border-0 border-b-2 border-neutral-300 p-2 pl-1 outline-0 transition-colors focus:border-primary;
 

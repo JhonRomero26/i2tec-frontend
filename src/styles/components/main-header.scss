@@ -1,12 +1,12 @@
 $header-height: 80px;
 
 .main-header {
+  @apply text-primary transition-colors;
+  height: $header-height;
+
   a {
     @apply text-inherit no-underline;
   }
-
-  @apply text-primary transition-colors;
-  height: $header-height;
 
   &-header {
     @apply fixed top-0 left-0 z-10 w-full bg-white py-2;

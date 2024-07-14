@@ -1,7 +1,6 @@
 ---
 import TitleWithText from "@/components/TitleWithText.astro";
 import GridView from "@/components/GridView.astro";
-import DocumentLayout from "@/layouts/DocumentLayout.astro";
 import PageLayout from "@/layouts/PageLayout.astro";
 import SearchBox from "@/components/SearchBox.astro";
 import CardProject from "@/components/CardProject.astro";
@@ -42,71 +41,65 @@ if (meta) {
 }
 ---
 
-<DocumentLayout title="Proyectos | I2TEC">
-  <PageLayout>
-    <main>
-      <section class="py-40 bg-gradient-to-r from-cyan-500 to-blue-500">
-        <div class="items-center text-white">
-          <TitleWithText class="text-center">
-            <h1 slot="title" class="text-3xl font-bold mb-4">
-              Explorando la creatividad y la innovación
-            </h1>
-            <p class="font-medium">
-              Una selección de proyectos excepcionales qu Explorando la
-              creatividad y la innovacióne están cambiando el mundo y abriendo
-              nuevas posibilidades para el futuro dentro de I<sup>2</sup>
-               TEC
-            </p>
-          </TitleWithText>
+<PageLayout title="Proyectos | I2TEC" description="">
+  <main>
+    <section class="py-40 bg-gradient-to-r from-cyan-500 to-blue-500">
+      <div class="items-center text-white">
+        <TitleWithText class="text-center">
+          <h1 slot="title" class="text-3xl font-bold mb-4">
+            Explorando la creatividad y la innovación
+          </h1>
+          <p class="font-medium">
+            Una selección de proyectos excepcionales qu Explorando la
+            creatividad y la innovacióne están cambiando el mundo y abriendo
+            nuevas posibilidades para el futuro dentro de I<sup>2</sup>
+            TEC
+          </p>
+        </TitleWithText>
+      </div>
+    </section>
+    <section class="mt-16 section">
+      <div class="container">
+        <div class="mb-12 flex flex-col">
+          <SearchBox
+            id="search-projects"
+            name="q"
+            title="Busquemos proyectos:"
+            value={searchParam}
+            placeholder="María Gómez o Impresora 3D"
+          />
         </div>
-      </section>
-      <section class="mt-16 section">
-        <div class="container">
-          <div class="mb-12 flex flex-col">
-            <SearchBox
-              id="search-projects"
-              name="q"
-              title="Busquemos proyectos:"
-              value={searchParam}
-              placeholder="María Gómez o Impresora 3D"
-            />
-          </div>
-          <div class="relative">
-            <GridView
-              id="projects-view"
-              count={projects.length}
-              minWidth="250px"
-            >
-              {
-                projects.length > 0 &&
-                  projects.map((project) => {
-                    const imageSrc = getImageFormats(
-                      project.attributes.image,
-                      "small"
-                    );
-                    return (
-                      <CardProject
-                        href={`/projects/${project.attributes.slug}`}
-                        title={project.attributes.title}
-                        image={`${BACKEND_IMAGE}${imageSrc}`}
-                        publishedDate={project.attributes.publishedAt}
-                        authors={project.attributes.authors?.data}
-                      />
-                    );
-                  })
-              }
-            </GridView>
-            <Pagination
-              class="mt-12 flex justify-center"
-              urlPag={`/${firstPath}?pag=`}
-              prevUrl={`${pagination.prev}`}
-              nextUrl={`${pagination.next}`}
-              currentPage={currentPage}
-              length={pageCount}
-            />
-          </div>
+        <div class="relative">
+          <GridView id="projects-view" count={projects.length} minWidth="250px">
+            {
+              projects.length > 0 &&
+                projects.map((project) => {
+                  const imageSrc = getImageFormats(
+                    project.attributes.image,
+                    "small",
+                  );
+                  return (
+                    <CardProject
+                      href={`/projects/${project.attributes.slug}`}
+                      title={project.attributes.title}
+                      image={`${BACKEND_IMAGE}${imageSrc}`}
+                      publishedDate={project.attributes.publishedAt}
+                      authors={project.attributes.authors?.data}
+                    />
+                  );
+                })
+            }
+          </GridView>
+          <Pagination
+            class="mt-12 flex justify-center"
+            urlPag={`/${firstPath}?pag=`}
+            prevUrl={`${pagination.prev}`}
+            nextUrl={`${pagination.next}`}
+            currentPage={currentPage}
+            length={pageCount}
+          />
         </div>
-      </section>
-    </main>
-  </PageLayout>
-</DocumentLayout>
+      </div>
+    </section>
+  </main>
+</PageLayout>

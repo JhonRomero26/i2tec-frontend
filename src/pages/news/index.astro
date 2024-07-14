@@ -4,7 +4,7 @@ import GridView from "@/components/GridView.astro";
 import DocumentLayout from "@/layouts/DocumentLayout.astro";
 import PageLayout from "@/layouts/PageLayout.astro";
 import Input from "@/components/Input.astro";
-import Icon from "@/components/Icon.astro";
+import { Icon } from "astro-icon/components";
 import Pagination from "@/components/Pagination.astro";
 import { getTidings } from "@/services/news";
 import { BACKEND_IMAGE } from "@/lib/constants";
@@ -58,7 +58,7 @@ if (meta) {
           <form class="flex text-black items-center mx-auto max-w-screen-lg">
             <Input name="q" placeholder="¿Qué noticia buscas?" />
             <Button class="border-b-2 border-b-white" kind="secondary" icon>
-              <Icon name="search" />
+              <Icon name="tabler:search" />
             </Button>
           </form>
         </div>
@@ -72,7 +72,7 @@ if (meta) {
                 {tidings.splice(0, 3).map((news) => {
                   const imageSrc = getImageFormats(
                     news.attributes.image,
-                    "medium"
+                    "medium",
                   );
 
                   if (imageSrc === undefined) return <ImageSkeleton />;
@@ -110,7 +110,7 @@ if (meta) {
                 tidings.map((news) => {
                   const imageSrc = getImageFormats(
                     news.attributes.image,
-                    "small"
+                    "small",
                   );
 
                   return (

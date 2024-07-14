@@ -1,6 +1,6 @@
 ---
 import ButtonAnchor from "@/components/ButtonAnchor.astro";
-import Icon from "@/components/Icon.astro";
+import { Icon } from "astro-icon/components";
 import { breandButtonClass } from "@/lib/classNames";
 import IconAndText from "./IconAndText.astro";
 import { parseDatePublished } from "@/lib/parseDatePublished";
@@ -36,7 +36,7 @@ const publishedAt = parseDatePublished(published);
     </h3>
     <div class="flex flex-wrap gap-4 mb-6">
       <IconAndText class="text-gray-600">
-        <Icon class="text-lg" name="calendar" />
+        <Icon class="text-lg" name="tabler:calendar" />
         <time datetime={publishedAt}>{publishedAt}</time>
       </IconAndText>
     </div>
@@ -49,8 +49,8 @@ const publishedAt = parseDatePublished(published);
         href={facebookUrl}
         class={breandButtonClass["facebookBtn"]}
       >
-        <Icon name="brand-facebook" />
-         Ver Noticia en facebook
+        <Icon name="tabler:brand-facebook" />
+        Ver Noticia en facebook
       </ButtonAnchor>
       {
         instagramUrl && (
@@ -58,7 +58,7 @@ const publishedAt = parseDatePublished(published);
             href={instagramUrl}
             class={breandButtonClass["instagramBtn"]}
           >
-            <Icon name="brand-instagram" />
+            <Icon name="tabler:brand-instagram" />
             Ver Noticia en instagram
           </ButtonAnchor>
         )

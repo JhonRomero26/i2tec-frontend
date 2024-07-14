@@ -2,22 +2,22 @@
   "qualities": [
     {
       "title": "Investigación y desarrollo (I+D)",
-      "icon": "analyze",
+      "icon": "tabler:analyze",
       "description": "Destinamos recursos a la exploración con nuevas tecnologías, así como a la mejora continua de los productos y servicios existentes."
     },
     {
       "title": "Personas",
-      "icon": "360-view",
+      "icon": "tabler:360-view",
       "description": "En el I2TEC trabajamos con docentes y estudiantes de distintas ramas tecnológicas que se dedican a desarrollar soluciones tecnológicas para mejorar la calidad de vida de las personas"
     },
     {
       "title": "Creatividad y pensamiento innovador",
-      "icon": "brain",
+      "icon": "tabler:brain",
       "description": "En el corazón del I2TEC nace una profunda dedicación a la creatividad e innovación con la capacidad de concebir soluciones fuera de lo convencional, abordando desafíos con un enfoque fresco y original"
     },
     {
       "title": "Vinculados a la sociedad",
-      "icon": "icons",
+      "icon": "tabler:icons",
       "description": "Priorizamos la conexión con la sociedad a pesar de nuestra avanzada tecnología. Nos dedicamos a crear productos y servicios intuitivos para brindar una experiencia excepcional a nuestros usuarios en cada interacción"
     }
   ]

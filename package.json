@@ -5,23 +5,25 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/node": "6.0.3",
-    "@tabler/icons-webfont": "2.32.0",
-    "astro": "3.0.4",
+    "@astrojs/check": "0.8.1",
+    "@astrojs/node": "8.3.2",
+    "@csstools/postcss-sass": "5.1.1",
+    "@iconify-json/tabler": "1.1.117",
+    "astro": "4.11.5",
+    "astro-icon": "1.1.0",
+    "postcss-lightningcss": "1.0.0",
+    "postcss-nested": "6.0.1",
     "snarkdown": "2.0.0",
-    "swiper": "10.2.0",
-    "sharp": "0.32.5",
-    "tailwindcss": "3.3.3"
+    "swiper": "11.1.4",
+    "typescript": "5.5.3"
   },
   "devDependencies": {
-    "autoprefixer": "10.4.15",
-    "postcss": "8.4.29",
-    "postcss-advanced-variables": "3.0.1",
-    "postcss-nested": "6.0.1"
+    "postcss": "8.4.39",
+    "tailwindcss": "3.4.4"
   }
 }

@@ -1,14 +1,16 @@
 ---
+import { Image } from "astro:assets";
+
 type Props = {
   image?: string;
-  size?: string;
+  size?: number;
   class?: string;
   alt: string;
 };
 
 const {
   image = "/images/user-placeholder.png",
-  size,
+  size = 40,
   class: className,
   alt,
 } = Astro.props;
@@ -24,8 +26,10 @@ const {
     className,
   ]}
 >
-  <img
+  <Image
     loading="lazy"
+    width={size}
+    height={size}
     src={image}
     alt={alt}
     class="w-full h-full object-cover object-center"

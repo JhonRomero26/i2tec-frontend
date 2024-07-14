@@ -1,13 +1,14 @@
 ---
 import CardWrapper from "@/components/CardWrapper.astro";
 import IconAndText from "@/components/IconAndText.astro";
-import Icon from "@/components/Icon.astro";
+import { Icon } from "astro-icon/components";
 
-import { parseDatePublished } from "@/lib/parseDatePublished";
 import { firstValueArrayStringJoin } from "@/lib/firstValueArrayJoin";
+import { parseDatePublished } from "@/lib/parseDatePublished";
 import type { Person } from "@/models";
 
 interface Props {
+  id: string;
   href: string;
   title: string;
   authors?: Person[];
@@ -17,6 +18,7 @@ interface Props {
 }
 
 const {
+  id,
   title,
   href,
   authors,
@@ -28,23 +30,23 @@ const {
 const published = parseDatePublished(publishedDate);
 ---
 
-<CardWrapper className={className} image={image} title={title} href={href}>
-  <IconAndText slot="metainfo">
-    <Icon name="calendar" aria-label="published" />
+<CardWrapper id={id} class={className} image={image} title={title} href={href}>
+  <IconAndText transition:name={`card-project ${id} published`} slot="metainfo">
+    <Icon name="tabler:calendar" aria-label="published" />
     <time datetime={published}>{published}</time>
   </IconAndText>
   {
     authors && authors.length > 0 && (
-      <IconAndText slot="metainfo">
-        <Icon name="user" aria-label="authors" />
+      <IconAndText transition:name={`card-project ${id} authors`} slot="metainfo">
+        <Icon name="tabler:user" aria-label="authors" />
         <span>
           {authors &&
             authors
               .map((author) =>
                 firstValueArrayStringJoin(
                   author.attributes.first_name,
-                  author.attributes.last_name
-                )
+                  author.attributes.last_name,
+                ),
               )
               .join(", ")}
         </span>

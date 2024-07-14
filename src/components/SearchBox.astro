@@ -1,7 +1,7 @@
 ---
 import Input from "@/components/Input.astro";
 import Button from "@/components/Button.astro";
-import Icon from "./Icon.astro";
+import { Icon } from "astro-icon/components";
 
 type Props = {
   title?: string;
@@ -28,7 +28,7 @@ const { id, name, title, placeholder, value } = Astro.props;
         type="submit"
         icon
       >
-        <Icon name="search" />
+        <Icon name="tabler:search" />
       </Button>
       <Input value={value} name={name} placeholder={placeholder} />
     </div>

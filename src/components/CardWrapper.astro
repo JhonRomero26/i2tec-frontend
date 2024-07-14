@@ -1,5 +1,6 @@
 ---
 export type CardWrapperProps = {
+  id: string;
   href: string;
   title: string;
   image: string;
@@ -8,6 +9,7 @@ export type CardWrapperProps = {
 };
 
 const {
+  id,
   href,
   image,
   title,
@@ -16,9 +18,10 @@ const {
 } = Astro.props;
 ---
 
-<article class:list={["group relative isolate", className]}>
+<article class:list={["group relative isolate w-full h-auto", className]}>
   <picture class="block relative aspect-video overflow-hidden">
     <img
+      transition:name={`card ${id} image`}
       loading="lazy"
       class:list={[
         "h-full w-full object-cover object-center transition-transform",
@@ -38,7 +41,7 @@ const {
         href={href}
         class="flex flex-col gap-2 pt-4 text-inherit no-underline before:absolute before:top-0 before:left-0 before:block before:h-full before:w-full before:content-[''] hover:no-underline"
       >
-        <h3 class="line-clamp-2 text-ellipsis text-lg font-bold">{title}</h3>
+        <h3 transition:name={`card ${id} title`} class="line-clamp-2 text-ellipsis text-lg font-bold">{title}</h3>
         <slot />
         <div class="gap-1 text-neutral-600">
           <slot name="metainfo" />
@@ -47,7 +50,7 @@ const {
       </a>
     ) : (
       <div class="flex flex-col gap-2 pt-4">
-        <h3 class="line-clamp-2 text-ellipsis text-lg font-bold">{title}</h3>
+        <h3 transition:name={`card ${id} title`} class="line-clamp-2 text-ellipsis text-lg font-bold">{title}</h3>
         <slot />
         <div class="gap-1 text-neutral-600">
           <slot name="metainfo" />

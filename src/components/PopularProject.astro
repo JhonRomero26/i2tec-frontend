@@ -1,7 +1,7 @@
 ---
 import IconAndText from "@/components/IconAndText.astro";
 import { parseDatePublished } from "@/lib/parseDatePublished";
-import Icon from "@/components/Icon.astro";
+import { Icon } from "astro-icon/components";
 import type { Person } from "@/models";
 import { firstValueArrayStringJoin } from "@/lib/firstValueArrayJoin";
 
@@ -47,7 +47,7 @@ const published = parseDatePublished(publishedDate);
     </h3>
     <div class="text-white">
       <IconAndText>
-        <Icon class="text-xl" name="calendar" />
+        <Icon class="text-xl" name="tabler:calendar" />
         <time date-time={published}>{published}</time>
       </IconAndText>
       {
@@ -55,11 +55,11 @@ const published = parseDatePublished(publishedDate);
           authors.map(({ attributes }) => {
             const shortName = firstValueArrayStringJoin(
               attributes.first_name,
-              attributes.last_name
+              attributes.last_name,
             );
             return (
               <IconAndText>
-                <Icon class="text-xl" name="user" />
+                <Icon class="text-xl" name="tabler:user" />
                 <span>{shortName}</span>
               </IconAndText>
             );

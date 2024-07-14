@@ -7,29 +7,26 @@ import { arrayIterable } from "@/lib/arrayIterable";
 import { EffectsClass } from "@/lib/classNames/effects";
 import { BACKEND_IMAGE } from "@/lib/constants";
 
-import "swiper/css/navigation";
 import { getImageFormats } from "@/lib/getImageFormats";
 
 interface Props {
-  "data-carousel-id": string;
   projects: Project[];
 }
 
-const { projects, "data-carousel-id": CarouselID } = Astro.props;
+const { projects } = Astro.props;
 ---
 
 {
   projects.length > 0 ? (
-    <div
-      data-carousel-id={CarouselID}
-      class="swiper slider-scale overflow-visible"
+    <div class="slider-scale px-6 overflow-x-auto scrollbar-invisible"
     >
-      <div class="swiper-wrapper">
+      <div class="slider-wrapper gap-4 flex flex-nowrap">
         {projects.map((project: Project) => {
           const imageSrc = getImageFormats(project.attributes.image, "small");
           return (
-            <div class="swiper-slide">
+            <div class="slider-slide inline-flex min-w-72">
               <CardProject
+                id={`${project.id}`}
                 href={`/projects/${project.attributes.slug}`}
                 image={`${BACKEND_IMAGE}${imageSrc}`}
                 authors={project.attributes.authors?.data}
@@ -40,7 +37,6 @@ const { projects, "data-carousel-id": CarouselID } = Astro.props;
           );
         })}
       </div>
-      <slot name="complement" />
     </div>
   ) : (
     <div class="relative overflow-visible">

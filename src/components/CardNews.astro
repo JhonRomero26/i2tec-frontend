@@ -1,7 +1,7 @@
 ---
 import CardWrapper from "@/components/CardWrapper.astro";
 import IconAndText from "@/components/IconAndText.astro";
-import Icon from "@/components/Icon.astro";
+import { Icon } from "astro-icon/components";
 
 import { parseDatePublished } from "@/lib/parseDatePublished";
 import type { Person } from "@/models";
@@ -40,7 +40,7 @@ const published = parseDatePublished(publishedDate);
 >
   <div class="order-2 line-clamp-3 text-neutral-700">{summary}</div>
   <IconAndText slot="metainfo">
-    <Icon name="calendar" aria-label="published" />
+    <Icon name="tabler:calendar" aria-label="published" />
     <time datetime={published}>{published}</time>
   </IconAndText>
   <footer class="order-3 mt-4 flex justify-end" slot="footer">
@@ -50,7 +50,7 @@ const published = parseDatePublished(publishedDate);
       class={breandButtonClass["facebookBtn"]}
       icon
     >
-      <Icon name="brand-facebook" />
+      <Icon name="tabler:brand-facebook" />
     </ButtonAnchor>
     {
       instagramUrl && (
@@ -60,7 +60,7 @@ const published = parseDatePublished(publishedDate);
           class={breandButtonClass["instagramBtn"]}
           icon
         >
-          <Icon name="brand-instagram" />
+          <Icon name="tabler:brand-instagram" />
         </ButtonAnchor>
       )
     }

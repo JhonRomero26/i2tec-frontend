@@ -1,7 +1,6 @@
 ---
 import Quality from "@/components/Quality.astro";
 import dataPage from "@/data/home-data.json";
-import type { IconNames } from "@/lib/types";
 ---
 
 <section class="section">
@@ -13,12 +12,12 @@ import type { IconNames } from "@/lib/types";
       class="mx-auto grid w-full max-w-screen-xl grid-cols-2 grid-rows-4 items-center justify-items-center gap-x-8 gap-y-4"
     >
       <Quality
-        icon={dataPage.qualities[0].icon as IconNames}
+        icon={dataPage.qualities[0].icon}
         title={dataPage.qualities[0].title}
         description={dataPage.qualities[0].description}
       />
       <Quality
-        icon={dataPage.qualities[1].icon as IconNames}
+        icon={dataPage.qualities[1].icon}
         title={dataPage.qualities[1].title}
         description={dataPage.qualities[1].description}
       />
@@ -33,12 +32,12 @@ import type { IconNames } from "@/lib/types";
         />
       </picture>
       <Quality
-        icon={dataPage.qualities[2].icon as IconNames}
+        icon={dataPage.qualities[2].icon}
         title={dataPage.qualities[2].title}
         description={dataPage.qualities[2].description}
       />
       <Quality
-        icon={dataPage.qualities[3].icon as IconNames}
+        icon={dataPage.qualities[3].icon}
         title={dataPage.qualities[3].title}
         description={dataPage.qualities[3].description}
       />

@@ -1,0 +1,31 @@
+/* width */
+.scrollbar-1 {
+  &::-webkit-scrollbar {
+    width:  4px;
+    height:  4px;
+    border-radius: 1000px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 100px;
+  }
+
+  &:hover {
+
+    &::-webkit-scrollbar-thumb {
+      background: rgb(220 220 220 / 60%);
+    }
+  }
+}
+
+.scrollbar-invisible {
+  &::-webkit-scrollbar {
+    width:  0;
+    height:  0;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+}

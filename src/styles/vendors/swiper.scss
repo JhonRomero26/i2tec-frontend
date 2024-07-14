@@ -1,0 +1,34 @@
+$scale: 115%;
+$padding-scale: calc($scale / 60);
+
+
+.slider-scale {
+  overflow: auto;
+
+  .slider-wrapper {
+    padding-top: $padding-scale;
+    padding-bottom: $padding-scale;
+
+    &:hover > .slider-slide:not(:hover) {
+      opacity: 0.75;
+      filter: blur(0.125rem);
+    }
+
+    &:hover .slider-slide:hover {
+      --translate-slide: calc(($scale - 100%) / 2);
+      transform: translateX(var(--translate-slide)) scale($scale);
+      opacity: 1;
+    }
+  }
+
+  .slider-slide {
+    transition-timing-function: ease;
+    transition-duration: 250ms;
+    transition-property: filter, opacity, transform;
+
+    &:hover ~ & {
+      --translate-slides: calc($scale - 100%);
+      transform: translate3d(var(--translate-slides), 0, 0);
+    }
+  }
+}

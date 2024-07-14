@@ -28,7 +28,7 @@ const founders = res && res.data ? res.data : [];
                   class="w-44 h-44"
                   image={
                     founder.attributes.avatar && founder.attributes.avatar.data
-                      ? `${BACKEND_IMAGE}${founder.attributes.avatar.data.attributes.formats.small.url}`
+                      ? `${BACKEND_IMAGE}${founder.attributes.avatar.data.attributes.url}`
                       : "/images/user-placeholder.png"
                   }
                   alt={fullName}

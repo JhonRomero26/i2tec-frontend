@@ -1,16 +1,15 @@
 ---
-import { getProjects } from "@/services/project";
-import { parseDatePublished } from "@/lib/parseDatePublished";
 import ButtonAnchor from "@/components/ButtonAnchor.astro";
-import PageLayout from "@/layouts/PageLayout.astro";
-import DocumentLayout from "@/layouts/DocumentLayout.astro";
-import { BACKEND_IMAGE } from "@/lib/constants";
 import ImageSkeleton from "@/components/ImageSkeleton.astro";
+import PageLayout from "@/layouts/PageLayout.astro";
+import { BACKEND_IMAGE } from "@/lib/constants";
 import { firstValueArrayStringJoin } from "@/lib/firstValueArrayJoin";
-import snarkdown from "snarkdown";
-import type { Project } from "@/models";
-import "@/styles/base/markdown.css";
 import { getImageFormats } from "@/lib/getImageFormats";
+import { parseDatePublished } from "@/lib/parseDatePublished";
+import type { Project } from "@/models";
+import { getProjects } from "@/services/project";
+import "@/styles/base/markdown.css";
+import snarkdown from "snarkdown";
 
 interface Props {
   project: Project;
@@ -28,50 +27,45 @@ const principalImage = getImageFormats(project.attributes.image, "large");
 const published = parseDatePublished(project.attributes.publishedAt);
 ---
 
-<DocumentLayout title={`${project.attributes.title} | I2TEC`}>
-  <PageLayout>
-    <main>
-      <section class="section pt-16">
-        <div class="container max-w-screen-lg">
-          <h1 class="mb-8 text-5xl font-bold text-primary">
-            {project.attributes.title}
-          </h1>
-          <div class="flex flex-col gap-4 mb-8">
-            <div class="flex gap-4">
-              <div class="font-bold">Publicado:</div>
-              <time datetime={published}>{published}</time>
-            </div>
-            <div class="flex gap-4">
-              <div class="font-bold">Autores:</div>
-              <div class="flex flex-col">
-                {
-                  project && project.attributes.authors!.data.length > 0 ? (
-                    project.attributes.authors!.data.map((author) => {
-                      const { first_name, last_name } = author.attributes;
-                      const authorName = firstValueArrayStringJoin(
-                        first_name,
-                        last_name
-                      );
-                      return <div>{authorName}</div>;
-                    })
-                  ) : (
-                    <div>Sin autores</div>
-                  )
-                }
-              </div>
+<PageLayout title={`${project.attributes.title} | I2TEC`} description="">
+  <main>
+    <section class="section pt-16">
+      <div class="container max-w-screen-lg">
+        <h1 transition:name={`card ${slug} title`} class="mb-8 text-5xl font-bold text-primary">
+          {project.attributes.title}
+        </h1>
+        <div class="flex flex-col gap-4 mb-8">
+          <div class="flex gap-4">
+            <div class="font-bold">Publicado:</div>
+            <time transition:name={`card-project ${slug} publised`} datetime={published}>{published}</time>
+          </div>
+          <div transition:name={`card-project ${slug} authors`} class="flex gap-4">
+            <div class="font-bold">Autores:</div>
+            <div class="flex flex-col">
+              {
+                project && project.attributes.authors!.data.length > 0 ? (
+                  project.attributes.authors!.data.map((author) => {
+                    const { first_name, last_name } = author.attributes;
+                    const authorName = firstValueArrayStringJoin(
+                      first_name,
+                      last_name
+                    );
+                    return <div>{authorName}</div>;
+                  })
+                ) : (
+                  <div>Sin autores</div>
+                )
+              }
             </div>
           </div>
-          <hr class="border-neutral-400 my-12" />
-          <div
-            class="text-[1.05rem] mx-auto max-w-3xl mb-32"
-            set:html={project!.attributes.description
-              ? snarkdown(project!.attributes.description)
-              : '<div class="text-center py-8">Sin contenido</div>'}
-          />
-          <figure class="mt-8 relative overflow-hidden aspect-video w-full">
+        </div>
+        <hr class="border-neutral-400 my-12" />
+        <div class="text-[1.05rem] mx-auto max-w-3xl">
+          <figure class="mt-8 relative overflow-hidden aspect-video w-full mb-12">
             {
               principalImage ? (
                 <img
+                  transition:name={`card ${slug} image`}
                   loading="lazy"
                   class="w-full h-full object-cover object-center"
                   src={BACKEND_IMAGE.concat(principalImage)}
@@ -90,8 +84,13 @@ const published = parseDatePublished(project.attributes.publishedAt);
               Vér proyecto
             </ButtonAnchor>
           </figure>
-        </div>
-      </section>
-    </main>
-  </PageLayout>
-</DocumentLayout>
+          <div
+            set:html={project!.attributes.description
+              ? snarkdown(project!.attributes.description)
+              : '<div class="text-center py-8">Sin contenido</div>'}
+          />
+        <div>
+      </div>
+    </section>
+  </main>
+</PageLayout>
