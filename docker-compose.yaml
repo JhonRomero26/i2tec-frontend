@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  frontend:
+    extends:
+      file: common.yaml
+      service: frontend
+    command: pnpm run dev --host
+    environment:
+      BACKEND_URL: https://admin.i2tec.ec
+      BACKEND_IMAGES: https://admin.i2tec.ec
+    ports:
+      - "4321:4321"
+    volumes:
+      - ./public:/app/public
+      - ./src:/app/src
