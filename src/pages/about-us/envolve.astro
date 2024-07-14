@@ -1,9 +1,9 @@
 ---
-import TitleWithText from "@/components/TitleWithText.astro";
-import PageLayout from "@/layouts/PageLayout.astro";
-import dataEnvolve from "@/data/envolve-data.json";
+import TitleWithText from "@/components/TitleWithText.astro"
+import PageLayout from "@/layouts/PageLayout.astro"
+import dataEnvolve from "@/data/envolve-data.json"
 
-const { features } = dataEnvolve;
+const { features } = dataEnvolve
 ---
 
 <PageLayout title="Nuestro entorno | I2TEC" description="">
@@ -32,7 +32,7 @@ rflow-hidden lg:col-start-2 lg:col-end-3"
               <picture
                 data-id="envolve"
                 data-image-id={feature.id}
-                class={`relative flex aspect-square w-full max-w-[15rem] cursor-pointer items-center justify-center overflow-hidden before:absolute before:z-[1] before:block before:h-full before:w-full before:bg-primary/50 before:transition-colors before:content-[''] hover:before:bg-transparent ${
+                class:list={`relative flex aspect-square w-full max-w-[15rem] cursor-pointer items-center justify-center overflow-hidden before:absolute before:z-[1] before:block before:h-full before:w-full before:bg-primary/50 before:transition-colors before:content-[''] hover:before:bg-transparent ${
                   index === 0 ? "before:bg-transparent" : ""
                 }`}
               >
@@ -52,21 +52,21 @@ rflow-hidden lg:col-start-2 lg:col-end-3"
 </PageLayout>
 
 <script is:inline define:vars={{ features }}>
-  const $features = document.querySelectorAll('[data-id="envolve"]');
-  const $title = document.querySelector("#title-feature");
-  const $content = document.querySelector("#content-feature");
+  const $features = document.querySelectorAll("[data-id=\"envolve\"]")
+  const $title = document.querySelector("#title-feature")
+const $content = document.querySelector("#content-feature")
 
-  $features.forEach((el) => {
+$features.forEach((el) => {
     el.addEventListener("click", () => {
       $features.forEach((el) => {
-        el.classList.remove("before:bg-transparent");
-      });
-      const id = el.getAttribute("data-image-id");
-      const feature = features.filter((feature) => feature.id === id)[0];
+        el.classList.remove("before:bg-transparent")
+    })
+      const id = el.getAttribute("data-image-id")
+    const feature = features.filter((feature) => feature.id === id)[0]
 
-      el.classList.add("before:bg-transparent");
-      $title.innerHTML = feature.title;
-      $content.innerHTML = feature.content;
-    });
-  });
+    el.classList.add("before:bg-transparent")
+    $title.innerHTML = feature.title
+    $content.innerHTML = feature.content
+  })
+  })
 </script>

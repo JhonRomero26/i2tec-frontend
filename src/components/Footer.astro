@@ -1,20 +1,20 @@
 ---
-import { APP_ROUTES } from "@/lib/constants";
-import infoFooter from "@/data/footer-client-data.json";
+import { APP_ROUTES } from "@/lib/constants"
+import infoFooter from "@/data/footer-client-data.json"
 
-import { Icon } from "astro-icon/components";
-import { getSocialNetworks } from "@/services/social-network";
-import type { SocialNetwork } from "@/models";
-import IconAndText from "@/components/IconAndText.astro";
-import { getContactEmail, getContactPhone } from "@/services/contacts";
+import { Icon } from "astro-icon/components"
+import { getSocialNetworks } from "@/services/social-network"
+import type { SocialNetwork } from "@/models"
+import IconAndText from "@/components/IconAndText.astro"
+import { getContactEmail, getContactPhone } from "@/services/contacts"
 
-const res = await getSocialNetworks();
-const resPhone = await getContactPhone();
-const resEmail = await getContactEmail();
+const res = await getSocialNetworks()
+const resPhone = await getContactPhone()
+const resEmail = await getContactEmail()
 
-let socials: SocialNetwork[] = [];
+let socials: SocialNetwork[] = []
 if (res && res.data) {
-  socials = res.data;
+  socials = res.data
 }
 ---
 
@@ -89,7 +89,7 @@ if (res && res.data) {
       {
         socials.length > 0 &&
           socials.map(({ attributes }) => {
-            const { url, title } = attributes;
+            const { url, title } = attributes
 
             return (
               <li>
@@ -106,7 +106,7 @@ if (res && res.data) {
                   />
                 </a>
               </li>
-            );
+            )
           })
       }
     </ul>

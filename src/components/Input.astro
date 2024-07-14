@@ -1,9 +1,9 @@
 ---
-import type { HTMLAttributes } from "astro/types";
-import { baseInputClass } from "@/lib/classNames";
+import type { HTMLAttributes } from "astro/types"
+import { baseInputClass } from "@/lib/classNames"
 
-type Props = HTMLAttributes<"input">;
-const { class: className, ...restProps } = Astro.props;
+type Props = HTMLAttributes<"input">
+const { class: className, ...restProps } = Astro.props
 ---
 
 <input class:list={[baseInputClass, className]} {...restProps} />

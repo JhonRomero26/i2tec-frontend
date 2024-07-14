@@ -1,7 +1,7 @@
-const baseIconButtonClass = "justify-center items-center";
+const baseIconButtonClass = "justify-center items-center"
 
 export const baseButtonClass =
-  "inline-flex gap-2 focus:ring-4 font-medium no-underline transition-colors items-center";
+  "inline-flex gap-2 focus:ring-4 font-medium no-underline transition-colors items-center"
 
 export enum sizeIconButtonClass {
   default = `h-10 w-10 p-1 text-xl ${baseIconButtonClass}`,

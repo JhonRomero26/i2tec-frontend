@@ -1,8 +1,8 @@
 ---
-import type { HTMLAttributes } from "astro/types";
-import { arrayIterable } from "../lib/arrayIterable";
-import ImageSkeleton from "@/components/ImageSkeleton.astro";
-import { EffectsClass } from "@/lib/classNames";
+import type { HTMLAttributes } from "astro/types"
+import { arrayIterable } from "../lib/arrayIterable"
+import ImageSkeleton from "@/components/ImageSkeleton.astro"
+import { EffectsClass } from "@/lib/classNames"
 
 type Props = {
   minWidth?: "min-content" | "max-content" | string;
@@ -10,7 +10,7 @@ type Props = {
   class?: string;
   messageEmpty?: string;
   count: number;
-} & HTMLAttributes<"div">;
+} & HTMLAttributes<"div">
 
 const {
   minWidth = "300px",
@@ -18,8 +18,8 @@ const {
   class: className,
   messageEmpty = "No hay contenido",
   count = 0,
-} = Astro.props;
-const gapValue = typeof gap === "object" ? `${gap.y} ${gap.x}` : gap;
+} = Astro.props
+const gapValue = typeof gap === "object" ? `${gap.y} ${gap.x}` : gap
 ---
 
 <div
@@ -34,7 +34,7 @@ const gapValue = typeof gap === "object" ? `${gap.y} ${gap.x}` : gap;
       <slot />
     ) : (
       arrayIterable(6).map(() => (
-        <ImageSkeleton class={EffectsClass["fadeTopBottom"]} />
+        <ImageSkeleton class:list={EffectsClass["fadeTopBottom"]} />
       ))
     )
   }

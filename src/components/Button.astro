@@ -1,11 +1,11 @@
 ---
-import type { HTMLAttributes } from "astro/types";
+import type { HTMLAttributes } from "astro/types"
 import {
   baseButtonClass,
   typeButtonClass,
   sizeButtonClass,
   sizeIconButtonClass,
-} from "@/lib/classNames/button";
+} from "@/lib/classNames/button"
 
 export type BaseButtonProps = {
   kind?: keyof typeof typeButtonClass;
@@ -13,9 +13,9 @@ export type BaseButtonProps = {
   danger?: boolean;
   block?: boolean;
   icon?: boolean;
-};
+}
 
-type Props = BaseButtonProps & HTMLAttributes<"button">;
+type Props = BaseButtonProps & HTMLAttributes<"button">
 
 const {
   kind = "default",
@@ -24,7 +24,7 @@ const {
   icon,
   class: className,
   ...restProps
-} = Astro.props;
+} = Astro.props
 
 const classNames = [
   baseButtonClass,
@@ -35,7 +35,7 @@ const classNames = [
     [sizeIconButtonClass[size]]: icon,
   },
   className,
-];
+]
 ---
 
 <button class:list={classNames} {...restProps}>

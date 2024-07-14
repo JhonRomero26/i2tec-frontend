@@ -1,16 +1,15 @@
 ---
-import PopularProjectsSection from "@/components/PopularProjectsSection.astro";
-import QualitiesSection from "@/components/QualitiesSection.astro";
-import HomeHeroSection from "@/components/HomeHeroSection.astro";
-import PageLayout from "@/layouts/PageLayout.astro";
-import ProjectsSection from "@/components/ProjectsSection.astro";
-import ProjectsCarousel from "@/components/ProjectsCarousel.astro";
-import { getProjects } from "@/services/project";
-import ApproachSection from "@/components/ApproachSection.astro";
-import { Icon } from "astro-icon/components";
+import PopularProjectsSection from "@/components/PopularProjectsSection.astro"
+import QualitiesSection from "@/components/QualitiesSection.astro"
+import HomeHeroSection from "@/components/HomeHeroSection.astro"
+import PageLayout from "@/layouts/PageLayout.astro"
+import ProjectsSection from "@/components/ProjectsSection.astro"
+import ProjectsCarousel from "@/components/ProjectsCarousel.astro"
+import { getProjects } from "@/services/project"
+import ApproachSection from "@/components/ApproachSection.astro"
 
-const res = (await getProjects(["populate=*", "sort[0]=createdAt:desc"])) ?? [];
-const projects = res && res.data ? res.data : [];
+const res = (await getProjects(["populate=*", "sort[0]=createdAt:desc"])) ?? []
+const projects = res && res.data ? res.data : []
 ---
 
 <PageLayout title="Bienvenidos al centro I2TEC" description="">
@@ -34,11 +33,11 @@ const projects = res && res.data ? res.data : [];
 </PageLayout>
 
 <script>
-import { sliderProyectsOptions } from "@/lib/constants";
-import Swiper from "swiper";
+import { sliderProyectsOptions } from "@/lib/constants"
+import Swiper from "swiper"
 
 new Swiper(
-  '[data-carousel-id="home-projects-carousel"]',
+  "[data-carousel-id=\"home-projects-carousel\"]",
   sliderProyectsOptions,
-);
+)
 </script>

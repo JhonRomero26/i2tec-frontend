@@ -1,19 +1,19 @@
 ---
-import ImageSkeleton from "@/components/ImageSkeleton.astro";
-import CardProject from "@/components/CardProject.astro";
+import ImageSkeleton from "@/components/ImageSkeleton.astro"
+import CardProject from "@/components/CardProject.astro"
 
-import type { Project } from "@/models";
-import { arrayIterable } from "@/lib/arrayIterable";
-import { EffectsClass } from "@/lib/classNames/effects";
-import { BACKEND_IMAGE } from "@/lib/constants";
+import type { Project } from "@/models"
+import { arrayIterable } from "@/lib/arrayIterable"
+import { EffectsClass } from "@/lib/classNames/effects"
+import { BACKEND_IMAGE } from "@/lib/constants"
 
-import { getImageFormats } from "@/lib/getImageFormats";
+import { getImageFormats } from "@/lib/getImageFormats"
 
 interface Props {
   projects: Project[];
 }
 
-const { projects } = Astro.props;
+const { projects } = Astro.props
 ---
 
 {
@@ -22,7 +22,7 @@ const { projects } = Astro.props;
     >
       <div class="slider-wrapper gap-4 flex flex-nowrap">
         {projects.map((project: Project) => {
-          const imageSrc = getImageFormats(project.attributes.image, "small");
+          const imageSrc = getImageFormats(project.attributes.image, "small")
           return (
             <div class="slider-slide inline-flex min-w-72">
               <CardProject
@@ -34,7 +34,7 @@ const { projects } = Astro.props;
                 publishedDate={project.attributes.publishedAt}
               />
             </div>
-          );
+          )
         })}
       </div>
     </div>
@@ -43,7 +43,7 @@ const { projects } = Astro.props;
       <div class="flex flex-nowrap gap-4">
         {arrayIterable(7).map(() => (
           <ImageSkeleton
-            class={`aspect-video ${EffectsClass["fadeTopBottom"]}`}
+            class:list={`aspect-video ${EffectsClass["fadeTopBottom"]}`}
           />
         ))}
       </div>

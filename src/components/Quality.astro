@@ -1,5 +1,5 @@
 ---
-import { Icon } from "astro-icon/components";
+import { Icon } from "astro-icon/components"
 
 interface Props {
   title: string;
@@ -8,7 +8,7 @@ interface Props {
   class?: string;
 }
 
-const { title, description, class: className, icon } = Astro.props;
+const { title, description, class: className, icon } = Astro.props
 ---
 
 <div class:list={["flex flex-col items-center gap-6", className]}>

@@ -1,11 +1,11 @@
 ---
-import CardWrapper from "@/components/CardWrapper.astro";
-import IconAndText from "@/components/IconAndText.astro";
-import { Icon } from "astro-icon/components";
+import CardWrapper from "@/components/CardWrapper.astro"
+import IconAndText from "@/components/IconAndText.astro"
+import { Icon } from "astro-icon/components"
 
-import { firstValueArrayStringJoin } from "@/lib/firstValueArrayJoin";
-import { parseDatePublished } from "@/lib/parseDatePublished";
-import type { Person } from "@/models";
+import { firstValueArrayStringJoin } from "@/lib/firstValueArrayJoin"
+import { parseDatePublished } from "@/lib/parseDatePublished"
+import type { Person } from "@/models"
 
 interface Props {
   id: string;
@@ -25,12 +25,12 @@ const {
   publishedDate,
   image,
   class: className,
-} = Astro.props;
+} = Astro.props
 
-const published = parseDatePublished(publishedDate);
+const published = parseDatePublished(publishedDate)
 ---
 
-<CardWrapper id={id} class={className} image={image} title={title} href={href}>
+<CardWrapper id={id} class:list={className} image={image} title={title} href={href}>
   <IconAndText transition:name={`card-project ${id} published`} slot="metainfo">
     <Icon name="tabler:calendar" aria-label="published" />
     <time datetime={published}>{published}</time>

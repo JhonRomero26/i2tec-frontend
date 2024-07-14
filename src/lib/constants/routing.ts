@@ -1,4 +1,4 @@
-import type { Route, RouteWithIcon, RouteWithImage } from "../types";
+import type { Route, RouteWithIcon, RouteWithImage } from "../types"
 
 export const APP_ROUTES: Route[] = [
   {
@@ -17,7 +17,7 @@ export const APP_ROUTES: Route[] = [
     path: "/about-us",
     label: "Nosotros",
   },
-];
+]
 
 export const SOCIAL_ROUTES: RouteWithIcon[] = [
   {
@@ -40,7 +40,7 @@ export const SOCIAL_ROUTES: RouteWithIcon[] = [
     path: "https://behance.com",
     label: "Behance",
   },
-];
+]
 
 export const ABOUT_ROUTES: RouteWithImage[] = [
   {
@@ -60,4 +60,4 @@ export const ABOUT_ROUTES: RouteWithImage[] = [
   //   path: "/about-us/envolve",
   //   image: "/images/prueba.jpg",
   // },
-];
+]

@@ -1,9 +1,9 @@
 ---
-import ButtonAnchor from "@/components/ButtonAnchor.astro";
-import { Icon } from "astro-icon/components";
-import { breandButtonClass } from "@/lib/classNames";
-import IconAndText from "./IconAndText.astro";
-import { parseDatePublished } from "@/lib/parseDatePublished";
+import ButtonAnchor from "@/components/ButtonAnchor.astro"
+import { Icon } from "astro-icon/components"
+import { breandButtonClass } from "@/lib/classNames"
+import IconAndText from "./IconAndText.astro"
+import { parseDatePublished } from "@/lib/parseDatePublished"
 
 interface Props {
   title: string;
@@ -15,9 +15,9 @@ interface Props {
 }
 
 const { title, summary, image, facebookUrl, instagramUrl, published } =
-  Astro.props;
+  Astro.props
 
-const publishedAt = parseDatePublished(published);
+const publishedAt = parseDatePublished(published)
 ---
 
 <article
@@ -47,7 +47,7 @@ const publishedAt = parseDatePublished(published);
       <ButtonAnchor
         target="_target"
         href={facebookUrl}
-        class={breandButtonClass["facebookBtn"]}
+        class:list={breandButtonClass["facebookBtn"]}
       >
         <Icon name="tabler:brand-facebook" />
         Ver Noticia en facebook
@@ -56,7 +56,7 @@ const publishedAt = parseDatePublished(published);
         instagramUrl && (
           <ButtonAnchor
             href={instagramUrl}
-            class={breandButtonClass["instagramBtn"]}
+            class:list={breandButtonClass["instagramBtn"]}
           >
             <Icon name="tabler:brand-instagram" />
             Ver Noticia en instagram

@@ -1,42 +1,42 @@
 ---
-import Button from "@/components/Button.astro";
-import GridView from "@/components/GridView.astro";
-import PageLayout from "@/layouts/PageLayout.astro";
-import Input from "@/components/Input.astro";
-import { Icon } from "astro-icon/components";
-import Pagination from "@/components/Pagination.astro";
-import { getTidings } from "@/services/news";
-import { BACKEND_IMAGE } from "@/lib/constants";
-import LastestNews from "@/components/LastestNews.astro";
-import CardNews from "@/components/CardNews.astro";
-import ImageSkeleton from "@/components/ImageSkeleton.astro";
-import { getImageFormats } from "@/lib/getImageFormats";
+import Button from "@/components/Button.astro"
+import GridView from "@/components/GridView.astro"
+import PageLayout from "@/layouts/PageLayout.astro"
+import Input from "@/components/Input.astro"
+import { Icon } from "astro-icon/components"
+import Pagination from "@/components/Pagination.astro"
+import { getTidings } from "@/services/news"
+import { BACKEND_IMAGE } from "@/lib/constants"
+import LastestNews from "@/components/LastestNews.astro"
+import CardNews from "@/components/CardNews.astro"
+import ImageSkeleton from "@/components/ImageSkeleton.astro"
+import { getImageFormats } from "@/lib/getImageFormats"
 
-const searchParam: string = Astro.url.searchParams.get("q") || "";
-const pagParam = Astro.url.searchParams.get("pag") || "";
+const searchParam: string = Astro.url.searchParams.get("q") || ""
+const pagParam = Astro.url.searchParams.get("pag") || ""
 const res = await getTidings([
   "populate=*",
   "sort[0]=publishedAt:desc",
   "pagination[pageSize]=36",
   pagParam && `pagination[page]=${pagParam}`,
   searchParam && `filters[title][$containsi]=${searchParam}`,
-]);
+])
 
-const tidings = res && res.data ? res.data : [];
-const meta = res && res.meta ? res.meta : undefined;
+const tidings = res && res.data ? res.data : []
+const meta = res && res.meta ? res.meta : undefined
 
-const [, firstPath] = Astro.url.pathname.split("/");
-let pageCount: number = 0;
-let currentPage: number = 1;
-let pagination = { next: "", prev: "" };
+const [, firstPath] = Astro.url.pathname.split("/")
+let pageCount: number = 0
+let currentPage: number = 1
+let pagination = { next: "", prev: "" }
 
 if (meta) {
-  pageCount = meta.pagination.pageCount;
-  currentPage = pagParam ? Number(pagParam) : 1;
+  pageCount = meta.pagination.pageCount
+  currentPage = pagParam ? Number(pagParam) : 1
   pagination = {
     next: pageCount > currentPage ? `${currentPage + 1}` : "",
     prev: currentPage < pageCount ? `${currentPage - 1}` : "",
-  };
+  }
 }
 ---
 
@@ -71,9 +71,9 @@ if (meta) {
                 const imageSrc = getImageFormats(
                   news.attributes.image,
                   "medium",
-                );
+                )
 
-                if (imageSrc === undefined) return <ImageSkeleton />;
+                if (imageSrc === undefined) return <ImageSkeleton />
 
                 return (
                   <div class="swiper-slide">
@@ -86,7 +86,7 @@ if (meta) {
                       instagramUrl={news.attributes.instagram_url}
                     />
                   </div>
-                );
+                )
               })}
             </div>
           </div>
@@ -109,7 +109,7 @@ if (meta) {
                 const imageSrc = getImageFormats(
                   news.attributes.image,
                   "small",
-                );
+                )
 
                 return (
                   <CardNews
@@ -121,7 +121,7 @@ if (meta) {
                     publishedDate={news.attributes.publishedAt}
                     authors={news.attributes.authors?.data}
                   />
-                );
+                )
               })
           }
         </GridView>
@@ -139,11 +139,11 @@ if (meta) {
 </PageLayout>
 
 <script>
-import Swiper from "swiper";
-import { Autoplay, Pagination } from "swiper/modules";
+import Swiper from "swiper"
+import { Autoplay, Pagination } from "swiper/modules"
 
 new Swiper("#last-news", {
   modules: [Autoplay, Pagination],
   autoplay: { delay: 5000 },
-});
+})
 </script>

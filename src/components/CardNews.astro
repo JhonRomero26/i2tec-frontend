@@ -1,12 +1,12 @@
 ---
-import CardWrapper from "@/components/CardWrapper.astro";
-import IconAndText from "@/components/IconAndText.astro";
-import { Icon } from "astro-icon/components";
+import CardWrapper from "@/components/CardWrapper.astro"
+import IconAndText from "@/components/IconAndText.astro"
+import { Icon } from "astro-icon/components"
 
-import { parseDatePublished } from "@/lib/parseDatePublished";
-import type { Person } from "@/models";
-import ButtonAnchor from "./ButtonAnchor.astro";
-import { breandButtonClass } from "@/lib/classNames";
+import { parseDatePublished } from "@/lib/parseDatePublished"
+import type { Person } from "@/models"
+import ButtonAnchor from "./ButtonAnchor.astro"
+import { breandButtonClass } from "@/lib/classNames"
 
 interface Props {
   title: string;
@@ -27,14 +27,14 @@ const {
   facebookUrl,
   instagramUrl,
   summary,
-} = Astro.props;
+} = Astro.props
 
-const published = parseDatePublished(publishedDate);
+const published = parseDatePublished(publishedDate)
 ---
 
 <CardWrapper
   effectImage={false}
-  class={`bg-white p-4 rounded-lg shadow ${className}`}
+  class:list={`bg-white p-4 rounded-lg shadow ${className}`}
   image={image}
   title={title}
 >
@@ -47,7 +47,7 @@ const published = parseDatePublished(publishedDate);
     <ButtonAnchor
       target="_blank"
       href={facebookUrl}
-      class={breandButtonClass["facebookBtn"]}
+      class:list={breandButtonClass["facebookBtn"]}
       icon
     >
       <Icon name="tabler:brand-facebook" />
@@ -57,7 +57,7 @@ const published = parseDatePublished(publishedDate);
         <ButtonAnchor
           target="_blank"
           href={instagramUrl}
-          class={breandButtonClass["instagramBtn"]}
+          class:list={breandButtonClass["instagramBtn"]}
           icon
         >
           <Icon name="tabler:brand-instagram" />

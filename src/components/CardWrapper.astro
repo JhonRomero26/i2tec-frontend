@@ -6,7 +6,7 @@ export type CardWrapperProps = {
   image: string;
   class?: string;
   effectImage: boolean;
-};
+}
 
 const {
   id,
@@ -15,7 +15,7 @@ const {
   title,
   class: className,
   effectImage = true,
-} = Astro.props;
+} = Astro.props
 ---
 
 <article class:list={["group relative isolate w-full h-auto", className]}>

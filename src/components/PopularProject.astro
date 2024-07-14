@@ -1,9 +1,9 @@
 ---
-import IconAndText from "@/components/IconAndText.astro";
-import { parseDatePublished } from "@/lib/parseDatePublished";
-import { Icon } from "astro-icon/components";
-import type { Person } from "@/models";
-import { firstValueArrayStringJoin } from "@/lib/firstValueArrayJoin";
+import IconAndText from "@/components/IconAndText.astro"
+import { parseDatePublished } from "@/lib/parseDatePublished"
+import { Icon } from "astro-icon/components"
+import type { Person } from "@/models"
+import { firstValueArrayStringJoin } from "@/lib/firstValueArrayJoin"
 
 interface Props {
   href: string;
@@ -21,9 +21,9 @@ const {
   image,
   title,
   authors,
-} = Astro.props;
+} = Astro.props
 
-const published = parseDatePublished(publishedDate);
+const published = parseDatePublished(publishedDate)
 ---
 
 <article class:list={["relative isolate", className]}>
@@ -56,13 +56,13 @@ const published = parseDatePublished(publishedDate);
             const shortName = firstValueArrayStringJoin(
               attributes.first_name,
               attributes.last_name,
-            );
+            )
             return (
               <IconAndText>
                 <Icon class="text-xl" name="tabler:user" />
                 <span>{shortName}</span>
               </IconAndText>
-            );
+            )
           })
       }
     </div>

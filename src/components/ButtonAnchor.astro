@@ -1,14 +1,14 @@
 ---
-import type { HTMLAttributes } from "astro/types";
-import type { BaseButtonProps } from "@/components/Button.astro";
+import type { HTMLAttributes } from "astro/types"
+import type { BaseButtonProps } from "@/components/Button.astro"
 import {
   baseButtonClass,
   typeButtonClass,
   sizeButtonClass,
   sizeIconButtonClass,
-} from "@/lib/classNames/button";
+} from "@/lib/classNames/button"
 
-type Props = BaseButtonProps & HTMLAttributes<"a">;
+type Props = BaseButtonProps & HTMLAttributes<"a">
 
 const {
   kind = "default",
@@ -17,7 +17,7 @@ const {
   class: className,
   icon,
   ...restProps
-} = Astro.props;
+} = Astro.props
 
 const classNames = [
   baseButtonClass,
@@ -28,7 +28,7 @@ const classNames = [
     [sizeIconButtonClass[size]]: icon,
   },
   className,
-];
+]
 ---
 
 <a class:list={classNames} {...restProps}>

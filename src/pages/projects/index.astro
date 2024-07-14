@@ -1,16 +1,16 @@
 ---
-import TitleWithText from "@/components/TitleWithText.astro";
-import GridView from "@/components/GridView.astro";
-import PageLayout from "@/layouts/PageLayout.astro";
-import SearchBox from "@/components/SearchBox.astro";
-import CardProject from "@/components/CardProject.astro";
-import Pagination from "@/components/Pagination.astro";
-import { getProjects } from "@/services/project";
-import { BACKEND_IMAGE } from "@/lib/constants";
-import { getImageFormats } from "@/lib/getImageFormats";
+import TitleWithText from "@/components/TitleWithText.astro"
+import GridView from "@/components/GridView.astro"
+import PageLayout from "@/layouts/PageLayout.astro"
+import SearchBox from "@/components/SearchBox.astro"
+import CardProject from "@/components/CardProject.astro"
+import Pagination from "@/components/Pagination.astro"
+import { getProjects } from "@/services/project"
+import { BACKEND_IMAGE } from "@/lib/constants"
+import { getImageFormats } from "@/lib/getImageFormats"
 
-const searchParam: string = Astro.url.searchParams.get("q") || "";
-const pagParam = Astro.url.searchParams.get("pag") || "";
+const searchParam: string = Astro.url.searchParams.get("q") || ""
+const pagParam = Astro.url.searchParams.get("pag") || ""
 const res = await getProjects([
   "populate=*",
   "pagination[pageSize]=36",
@@ -21,23 +21,23 @@ const res = await getProjects([
       `filters[$and][0][$or][1][authors][first_name][$containsi]=${searchParam}`,
       `filters[$and][0][$or][2][authors][last_name][$containsi]=${searchParam}`,
     ].join("&"),
-]);
+])
 
-const projects = res && res.data ? res.data : [];
-const meta = res && res.meta ? res.meta : undefined;
+const projects = res && res.data ? res.data : []
+const meta = res && res.meta ? res.meta : undefined
 
-const [, firstPath] = Astro.url.pathname.split("/");
-let pageCount: number = 0;
-let currentPage: number = 1;
-let pagination = { next: "", prev: "" };
+const [, firstPath] = Astro.url.pathname.split("/")
+let pageCount: number = 0
+let currentPage: number = 1
+let pagination = { next: "", prev: "" }
 
 if (meta) {
-  pageCount = meta.pagination.pageCount;
-  currentPage = pagParam ? Number(pagParam) : 1;
+  pageCount = meta.pagination.pageCount
+  currentPage = pagParam ? Number(pagParam) : 1
   pagination = {
     next: pageCount > currentPage ? `${currentPage + 1}` : "",
     prev: currentPage < pageCount ? `${currentPage - 1}` : "",
-  };
+  }
 }
 ---
 
@@ -77,7 +77,7 @@ if (meta) {
                   const imageSrc = getImageFormats(
                     project.attributes.image,
                     "small",
-                  );
+                  )
                   return (
                     <CardProject
                       id={`${project.id}`}
@@ -87,7 +87,7 @@ if (meta) {
                       publishedDate={project.attributes.publishedAt}
                       authors={project.attributes.authors?.data}
                     />
-                  );
+                  )
                 })
             }
           </GridView>

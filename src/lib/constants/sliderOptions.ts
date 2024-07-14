@@ -1,7 +1,7 @@
-import { Autoplay, EffectCreative, Navigation } from "swiper/modules";
+import { Autoplay, EffectCreative, Navigation } from "swiper/modules"
 
-import type { SwiperOptions } from "swiper/types";
-import { breakpoints } from "@/lib/constants";
+import type { SwiperOptions } from "swiper/types"
+import { breakpoints } from "@/lib/constants"
 
 export const homeHeroOptionsSlider: SwiperOptions = {
   modules: [Autoplay, EffectCreative],
@@ -12,7 +12,7 @@ export const homeHeroOptionsSlider: SwiperOptions = {
     prev: { translate: [0, 0, -400] },
     next: { translate: ["100%", 0, 0] },
   },
-};
+}
 
 export const sliderProyectsOptions: SwiperOptions = {
   modules: [Autoplay, Navigation],
@@ -38,4 +38,4 @@ export const sliderProyectsOptions: SwiperOptions = {
       slidesPerView: 5,
     },
   },
-};
+}

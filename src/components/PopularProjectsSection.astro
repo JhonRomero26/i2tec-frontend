@@ -1,18 +1,18 @@
 ---
-import ImageSkeleton from "@/components/ImageSkeleton.astro";
-import PopularProject from "@/components/PopularProject.astro";
-import { arrayIterable } from "@/lib/arrayIterable";
-import type { Project } from "@/models/Project";
-import { BACKEND_IMAGE } from "@/lib/constants/environment";
-import { getImageFormats } from "@/lib/getImageFormats";
+import ImageSkeleton from "@/components/ImageSkeleton.astro"
+import PopularProject from "@/components/PopularProject.astro"
+import { arrayIterable } from "@/lib/arrayIterable"
+import type { Project } from "@/models/Project"
+import { BACKEND_IMAGE } from "@/lib/constants/environment"
+import { getImageFormats } from "@/lib/getImageFormats"
 
 interface Props {
   projects?: Project[];
 }
 
-const { projects = [] } = Astro.props;
+const { projects = [] } = Astro.props
 const projectGridItem =
-  "sm:col-span-2 sm:first:col-span-4 xl:col-span-1 xl:first:col-span-3 xl:first:row-span-2";
+  "sm:col-span-2 sm:first:col-span-4 xl:col-span-1 xl:first:col-span-3 xl:first:row-span-2"
 ---
 
 <section class="section">
@@ -25,22 +25,22 @@ const projectGridItem =
               const imageSrc = getImageFormats(
                 project.attributes.image,
                 "medium"
-              );
+              )
 
               return (
                 <PopularProject
-                  class={projectGridItem}
+                  class:list={projectGridItem}
                   href={`/projects/${project.attributes.slug}`}
                   title={project.attributes.title}
                   image={`${BACKEND_IMAGE}${imageSrc}`}
                   authors={project.attributes.authors?.data!}
                   publishedDate={project.attributes.publishedAt}
                 />
-              );
+              )
             })
           : arrayIterable(3).map((i) => (
               <ImageSkeleton
-                class={`${projectGridItem} ${i === 0 ? "xl:h-full" : ""}`}
+                class:list={`${projectGridItem} ${i === 0 ? "xl:h-full" : ""}`}
               />
             ))
       }

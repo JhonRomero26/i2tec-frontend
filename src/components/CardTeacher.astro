@@ -4,9 +4,9 @@ type Props = {
   image: string;
   prefix?: string;
   class?: string;
-};
+}
 
-const { name, image, class: className } = Astro.props;
+const { name, image, class: className } = Astro.props
 ---
 
 <div class:list={["flex flex-col gap-2 p-2", className]}>

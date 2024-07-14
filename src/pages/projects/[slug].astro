@@ -1,30 +1,30 @@
 ---
-import ButtonAnchor from "@/components/ButtonAnchor.astro";
-import ImageSkeleton from "@/components/ImageSkeleton.astro";
-import PageLayout from "@/layouts/PageLayout.astro";
-import { BACKEND_IMAGE } from "@/lib/constants";
-import { firstValueArrayStringJoin } from "@/lib/firstValueArrayJoin";
-import { getImageFormats } from "@/lib/getImageFormats";
-import { parseDatePublished } from "@/lib/parseDatePublished";
-import type { Project } from "@/models";
-import { getProjects } from "@/services/project";
-import "@/styles/base/markdown.css";
-import snarkdown from "snarkdown";
+import ButtonAnchor from "@/components/ButtonAnchor.astro"
+import ImageSkeleton from "@/components/ImageSkeleton.astro"
+import PageLayout from "@/layouts/PageLayout.astro"
+import { BACKEND_IMAGE } from "@/lib/constants"
+import { firstValueArrayStringJoin } from "@/lib/firstValueArrayJoin"
+import { getImageFormats } from "@/lib/getImageFormats"
+import { parseDatePublished } from "@/lib/parseDatePublished"
+import type { Project } from "@/models"
+import { getProjects } from "@/services/project"
+import "@/styles/base/markdown.css"
+import snarkdown from "snarkdown"
 
 interface Props {
   project: Project;
   projects: Project[];
 }
 
-const { slug } = Astro.params;
-const res = await getProjects(["populate=*", `filters[slug][$eq]=${slug}`]);
-if (!res || res.data?.length === 0) return Astro.redirect("/404");
+const { slug } = Astro.params
+const res = await getProjects(["populate=*", `filters[slug][$eq]=${slug}`])
+if (!res || res.data?.length === 0) return Astro.redirect("/404")
 
-let project: Project = {} as Project;
+let project: Project = {} as Project
 
-if (res && res.data) project = res.data[0];
-const principalImage = getImageFormats(project.attributes.image, "large");
-const published = parseDatePublished(project.attributes.publishedAt);
+if (res && res.data) project = res.data[0]
+const principalImage = getImageFormats(project.attributes.image, "large")
+const published = parseDatePublished(project.attributes.publishedAt)
 ---
 
 <PageLayout title={`${project.attributes.title} | I2TEC`} description="">
@@ -45,12 +45,12 @@ const published = parseDatePublished(project.attributes.publishedAt);
               {
                 project && project.attributes.authors!.data.length > 0 ? (
                   project.attributes.authors!.data.map((author) => {
-                    const { first_name, last_name } = author.attributes;
+                    const { first_name, last_name } = author.attributes
                     const authorName = firstValueArrayStringJoin(
                       first_name,
                       last_name
-                    );
-                    return <div>{authorName}</div>;
+                    )
+                    return <div>{authorName}</div>
                   })
                 ) : (
                   <div>Sin autores</div>
@@ -87,7 +87,7 @@ const published = parseDatePublished(project.attributes.publishedAt);
           <div
             set:html={project!.attributes.description
               ? snarkdown(project!.attributes.description)
-              : '<div class="text-center py-8">Sin contenido</div>'}
+              : "<div class=\"text-center py-8\">Sin contenido</div>"}
           />
         <div>
       </div>

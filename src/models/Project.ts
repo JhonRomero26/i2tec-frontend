@@ -1,4 +1,4 @@
-import type { ImageResponse, Person } from "@/models";
+import type { ImageResponse, Person } from "@/models"
 
 export interface Project {
   attributes: ProjectAttributes;

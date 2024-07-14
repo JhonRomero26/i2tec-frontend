@@ -1,19 +1,19 @@
 ---
-import { Image } from "astro:assets";
+import { Image } from "astro:assets"
 
 type Props = {
   image?: string;
   size?: number;
   class?: string;
   alt: string;
-};
+}
 
 const {
   image = "/images/user-placeholder.png",
   size = 40,
   class: className,
   alt,
-} = Astro.props;
+} = Astro.props
 ---
 
 <picture

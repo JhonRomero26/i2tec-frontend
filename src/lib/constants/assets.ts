@@ -1,2 +1,2 @@
-export const pathAssets = "/assets";
-export const pathProjectAssets = `${pathAssets}`;
+export const pathAssets = "/assets"
+export const pathProjectAssets = `${pathAssets}`

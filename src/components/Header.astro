@@ -1,15 +1,15 @@
 ---
-import Button from "@/components/Button.astro";
-import { Icon } from "astro-icon/components";
+import Button from "@/components/Button.astro"
+import { Icon } from "astro-icon/components"
 
-import { APP_ROUTES } from "@/lib/constants/routing";
-import { getSocialNetworks } from "@/services/social-network";
-import type { SocialNetwork } from "@/models";
+import { APP_ROUTES } from "@/lib/constants/routing"
+import { getSocialNetworks } from "@/services/social-network"
+import type { SocialNetwork } from "@/models"
 
-const res = await getSocialNetworks();
-let socials: SocialNetwork[] = [];
+const res = await getSocialNetworks()
+let socials: SocialNetwork[] = []
 if (res && res.data) {
-  socials = res.data;
+  socials = res.data
 }
 ---
 
@@ -56,7 +56,7 @@ if (res && res.data) {
             {
               socials.length > 0 &&
                 socials.map(({ attributes }) => {
-                  const { url, title } = attributes;
+                  const { url, title } = attributes
                   return (
                     <li>
                       <a
@@ -69,7 +69,7 @@ if (res && res.data) {
                         <span class="sr-only">{title}</span>
                       </a>
                     </li>
-                  );
+                  )
                 })
             }
           </ul>

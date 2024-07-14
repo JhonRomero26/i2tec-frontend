@@ -1,5 +1,5 @@
-import { BACKEND_URL } from "@/lib/constants";
-import type { ResponseAPI } from "@/models";
+import { BACKEND_URL } from "@/lib/constants"
+import type { ResponseAPI } from "@/models"
 
 export const fecthBackendAPI = <T>(
   url: string,
@@ -10,14 +10,14 @@ export const fecthBackendAPI = <T>(
     "/api",
     url,
     params ? `?${params.join("&")}` : "",
-  );
+  )
 
   return fetch(requestURL, options)
     .then((res) => {
-      if (!res.ok) throw new Error(res.statusText);
-      return res.json();
+      if (!res.ok) throw new Error(res.statusText)
+      return res.json()
     })
     .catch((err) => {
-      console.error(err);
-    });
-};
+      console.error(err)
+    })
+}
