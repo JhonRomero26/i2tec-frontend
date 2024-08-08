@@ -2,7 +2,7 @@
 import PopularProjectsSection from "@/components/PopularProjectsSection.astro"
 import QualitiesSection from "@/components/QualitiesSection.astro"
 import HomeHeroSection from "@/components/HomeHeroSection.astro"
-import PageLayout from "@/layouts/PageLayout.astro"
+import Layout from "@/layouts/Layout.astro"
 import ProjectsSection from "@/components/ProjectsSection.astro"
 import ProjectsCarousel from "@/components/ProjectsCarousel.astro"
 import { getProjects } from "@/services/project"
@@ -12,7 +12,7 @@ const res = (await getProjects(["populate=*", "sort[0]=createdAt:desc"])) ?? []
 const projects = res && res.data ? res.data : []
 ---
 
-<PageLayout title="Bienvenidos al centro I2TEC" description="">
+<Layout title="Bienvenidos al centro I2TEC" description="">
   <main>
     <HomeHeroSection />
     <ProjectsSection class="mb-40">
@@ -30,7 +30,7 @@ const projects = res && res.data ? res.data : []
     <QualitiesSection />
     <ApproachSection />
   </main>
-</PageLayout>
+</Layout>
 
 <script>
 import { sliderProyectsOptions } from "@/lib/constants"

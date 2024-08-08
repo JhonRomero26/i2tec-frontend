@@ -1,7 +1,7 @@
 ---
 import Button from "@/components/Button.astro"
 import GridView from "@/components/GridView.astro"
-import PageLayout from "@/layouts/PageLayout.astro"
+import Layout from "@/layouts/Layout.astro"
 import Input from "@/components/Input.astro"
 import { Icon } from "astro-icon/components"
 import Pagination from "@/components/Pagination.astro"
@@ -40,7 +40,7 @@ if (meta) {
 }
 ---
 
-<PageLayout title="Noticias | I2TEC" description="">
+<Layout title="Noticias | I2TEC" description="">
   <main>
     <section class="py-32 bg-primary text-white">
       <div class="container">
@@ -136,7 +136,7 @@ if (meta) {
       </div>
     </section>
   </main>
-</PageLayout>
+</Layout>
 
 <script>
 import Swiper from "swiper"

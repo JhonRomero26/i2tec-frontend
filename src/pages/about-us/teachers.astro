@@ -1,7 +1,7 @@
 ---
 import CardTeacher from "@/components/CardTeacher.astro"
 import TeacherDetailSection from "@/components/TeacherDetailSection.astro"
-import PageLayout from "@/layouts/PageLayout.astro"
+import Layout from "@/layouts/Layout.astro"
 import { BACKEND_IMAGE } from "@/lib/constants"
 import { getTeacherAttributes } from "@/lib/getTeacherAttributes"
 import { getImageFormats } from "@/lib/getImageFormats"
@@ -19,7 +19,7 @@ if (selectedTeacher) {
 }
 ---
 
-<PageLayout title="Docentes | I2TEC" description="">
+<Layout title="Docentes | I2TEC" description="">
   <main>
     <section class="py-32 bg-primary text-white bg-svg-architect">
       <div class="container">
@@ -80,7 +80,7 @@ if (selectedTeacher) {
       </div>
     </section>
   </main>
-</PageLayout>
+</Layout>
 
 <script>
   import { BACKEND_IMAGE } from "@/lib/constants"

@@ -1,12 +1,12 @@
 ---
 import TitleWithText from "@/components/TitleWithText.astro"
-import PageLayout from "@/layouts/PageLayout.astro"
+import Layout from "@/layouts/Layout.astro"
 import dataEnvolve from "@/data/envolve-data.json"
 
 const { features } = dataEnvolve
 ---
 
-<PageLayout title="Nuestro entorno | I2TEC" description="">
+<Layout title="Nuestro entorno | I2TEC" description="">
   <main>
     <section class="py-32">
       <div class="container grid gap-12 pb-32 lg:grid-cols-[1fr_0.5fr]">
@@ -49,7 +49,7 @@ rflow-hidden lg:col-start-2 lg:col-end-3"
       </div>
     </section>
   </main>
-</PageLayout>
+</Layout>
 
 <script is:inline define:vars={{ features }}>
   const $features = document.querySelectorAll("[data-id=\"envolve\"]")

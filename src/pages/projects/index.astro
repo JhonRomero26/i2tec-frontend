@@ -1,7 +1,7 @@
 ---
 import TitleWithText from "@/components/TitleWithText.astro"
 import GridView from "@/components/GridView.astro"
-import PageLayout from "@/layouts/PageLayout.astro"
+import Layout from "@/layouts/Layout.astro"
 import SearchBox from "@/components/SearchBox.astro"
 import CardProject from "@/components/CardProject.astro"
 import Pagination from "@/components/Pagination.astro"
@@ -41,7 +41,7 @@ if (meta) {
 }
 ---
 
-<PageLayout title="Proyectos | I2TEC" description="">
+<Layout title="Proyectos | I2TEC" description="">
   <main>
     <section class="py-40 bg-gradient-to-r from-cyan-500 to-blue-500">
       <div class="items-center text-white">
@@ -103,4 +103,4 @@ if (meta) {
       </div>
     </section>
   </main>
-</PageLayout>
+</Layout>

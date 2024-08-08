@@ -1,7 +1,7 @@
 ---
 import ButtonAnchor from "@/components/ButtonAnchor.astro"
 import ImageSkeleton from "@/components/ImageSkeleton.astro"
-import PageLayout from "@/layouts/PageLayout.astro"
+import Layout from "@/layouts/Layout.astro"
 import { BACKEND_IMAGE } from "@/lib/constants"
 import { firstValueArrayStringJoin } from "@/lib/firstValueArrayJoin"
 import { getImageFormats } from "@/lib/getImageFormats"
@@ -27,7 +27,7 @@ const principalImage = getImageFormats(project.attributes.image, "large")
 const published = parseDatePublished(project.attributes.publishedAt)
 ---
 
-<PageLayout title={`${project.attributes.title} | I2TEC`} description="">
+<Layout title={`${project.attributes.title} | I2TEC`} description="">
   <main>
     <section class="section pt-16">
       <div class="container max-w-screen-lg">
@@ -93,4 +93,4 @@ const published = parseDatePublished(project.attributes.publishedAt)
       </div>
     </section>
   </main>
-</PageLayout>
+</Layout>
