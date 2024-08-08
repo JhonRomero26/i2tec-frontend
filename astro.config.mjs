@@ -1,7 +1,7 @@
 import { defineConfig } from "astro/config";
 import node from "@astrojs/node";
 import icon from "astro-icon";
-import { seoConfig } from "@/lib/seoConfig";
+import { seoConfig } from "./src/lib/seoConfig";
 
 // https://astro.build/config
 export default defineConfig({
