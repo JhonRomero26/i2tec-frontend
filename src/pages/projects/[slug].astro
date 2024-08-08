@@ -27,7 +27,9 @@ const principalImage = getImageFormats(project.attributes.image, "large")
 const published = parseDatePublished(project.attributes.publishedAt)
 ---
 
-<Layout title={`${project.attributes.title} | I2TEC`} description="">
+<Layout
+  title={`${project.attributes.title} | I2TEC`}
+  description={`${project.attributes.description.slice(0, 150)}...`}>
   <main>
     <section class="section pt-16">
       <div class="container max-w-screen-lg">

@@ -12,7 +12,9 @@ const res = (await getProjects(["populate=*", "sort[0]=createdAt:desc"])) ?? []
 const projects = res && res.data ? res.data : []
 ---
 
-<Layout title="Bienvenidos al centro I2TEC" description="">
+<Layout
+  title="Investigación, Innovación y Tecnología | I2TEC"
+  description="En el I2TEC trabajamos con docentes y investigadores de distintas ramas tecnológicas para ofrecer soluciones tecnológicas desde la ciudad de Loja en la Universidad Nacional de Loja.">
   <main>
     <HomeHeroSection />
     <ProjectsSection class="mb-40">
