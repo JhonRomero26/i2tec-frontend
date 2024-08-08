@@ -1,6 +1,7 @@
 import { defineConfig } from "astro/config";
 import node from "@astrojs/node";
 import icon from "astro-icon";
+import { seoConfig } from "@/lib/seoConfig";
 
 // https://astro.build/config
 export default defineConfig({
@@ -14,6 +15,7 @@ export default defineConfig({
       cssMinify: "lightningcss"
     },
   },
+  site: seoConfig.site,
   integrations: [
     icon({
       include: {

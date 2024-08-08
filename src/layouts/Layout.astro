@@ -1,0 +1,43 @@
+---
+import Footer from "@/components/Footer.astro";
+import Header from "@/components/Header.astro";
+import SEO from "@/components/SEO.astro";
+import "@/styles/global.scss"
+import type { Preload } from "@/types/Preload";
+import { ViewTransitions } from "astro:transitions"
+
+interface Props {
+  title: string
+  description: string
+  canonical?: string
+  image?: string
+  preload?: Array<Preload>
+}
+
+const {
+  title,
+  description,
+  canonical,
+  image,
+  preload
+} = Astro.props
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <SEO
+      title={title}
+      description={description}
+      canonical={canonical}
+      preload={preload}
+      image={image}
+    />
+    <ViewTransitions />
+  </head>
+  <body>
+    <Header />
+    <slot />
+    <Footer />
+  </body>
+</html>

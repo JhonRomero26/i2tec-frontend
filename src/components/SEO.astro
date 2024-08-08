@@ -1,0 +1,62 @@
+---
+import type { Preload } from "@/types/Preload"
+
+type Props = {
+  title: string
+  description: string
+  image?: string
+  canonical?: string
+  preload?: Array<Preload>
+}
+
+const {
+  title,
+  description,
+  image = "/og.jpg",
+  canonical,
+  preload
+} = Astro.props
+
+
+const determineCanonicalURL = () => {
+	if (Astro.url.host.includes("localhost")) return "http://localhost:4321"
+	return canonical || Astro.url.pathname
+}
+
+const imageSummary = new URL(image, Astro.url)
+const canonicalURL = new URL(determineCanonicalURL(), Astro.site)
+---
+
+<title>{title}</title>
+<meta charset="UTF-8" />
+<meta name="description" content={description} />
+
+{
+	preload?.map(({ href, as, type, rel = "preload", crossorigin }) => (
+		<link {rel} {href} {as} {type} {crossorigin} />
+	))
+}
+
+<link rel="canonical" href={canonicalURL} />
+<meta name="viewport" content="width=device-width" />
+<meta name="theme-color" content="#ffffff" />
+
+<meta name="keywords" content="investigación, tecnología, innovación, i2tec, unl, jhonromero26" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageSummary} />
+
+<meta property="og:image" content={imageSummary} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:site_name" content="Centro I2TEC" />
+<meta property="og:url" content={Astro.url} />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="es_EC" />
+
+<meta name="robots" content="index, follow" />
+<meta name="googlebot" content="index, follow" />
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
