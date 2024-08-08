@@ -8,11 +8,17 @@ export default defineConfig({
   adapter: node({
     mode: "standalone",
   }),
+  compressHTML: true,
+  vite: {
+    build: {
+      cssMinify: "lightningcss"
+    },
+  },
   integrations: [
     icon({
       include: {
         tabler: ["*"],
       },
-    }),
+    })
   ],
 });
