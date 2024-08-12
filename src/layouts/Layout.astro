@@ -2,25 +2,19 @@
 import Footer from "@/components/Footer.astro";
 import Header from "@/components/Header.astro";
 import SEO from "@/components/SEO.astro";
-import "@/styles/global.scss"
+import "@/styles/global.scss";
 import type { Preload } from "@/types/Preload";
-import { ViewTransitions } from "astro:transitions"
+import { ViewTransitions } from "astro:transitions";
 
 interface Props {
-  title: string
-  description: string
-  canonical?: string
-  image?: string
-  preload?: Array<Preload>
+  title: string;
+  description: string;
+  canonical?: string;
+  image?: string;
+  preload?: Array<Preload>;
 }
 
-const {
-  title,
-  description,
-  canonical,
-  image,
-  preload
-} = Astro.props
+const { title, description, canonical, image, preload } = Astro.props;
 ---
 
 <!doctype html>
@@ -37,7 +31,9 @@ const {
   </head>
   <body>
     <Header />
-    <slot />
+    <main>
+      <slot />
+    </main>
     <Footer />
   </body>
 </html>

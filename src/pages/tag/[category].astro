@@ -9,18 +9,13 @@ import { getProjects } from "@/services/project";
 import { BACKEND_IMAGE } from "@/lib/constants";
 import { getImageFormats } from "@/lib/getImageFormats";
 
-const searchParam: string = Astro.url.searchParams.get("q") || "";
+const { category = "" } = Astro.params;
 const pagParam = Astro.url.searchParams.get("pag") || "";
 const res = await getProjects({
   params: [
     "pagination[pageSize]=36",
     pagParam && `pagination[page]=${pagParam}`,
-    searchParam &&
-      [
-        `filters[$and][0][$or][0][title][$containsi]=${searchParam}`,
-        `filters[$and][0][$or][1][authors][first_name][$containsi]=${searchParam}`,
-        `filters[$and][0][$or][2][authors][last_name][$containsi]=${searchParam}`,
-      ].join("&"),
+    `filters[categories][name][$containsi]=${category}`,
   ],
 });
 
@@ -50,28 +45,17 @@ if (meta) {
     <div class="items-center text-white">
       <TitleWithText class="text-center">
         <h1 slot="title" class="text-3xl font-bold mb-4">
-          Explorando la creatividad y la innovación
+          ¡Proyectos segun su categoría!
         </h1>
         <p class="font-medium">
-          Una selección de proyectos excepcionales qu Explorando la creatividad
-          y la innovacióne están cambiando el mundo y abriendo nuevas
-          posibilidades para el futuro dentro de I<sup>2</sup>
-          TEC
+          Encuentra los proyectos que se desarrollan en el I2TEC para la
+          innovación continua en el sur del Ecuador.
         </p>
       </TitleWithText>
     </div>
   </section>
   <section class="mt-16 section">
     <div class="container">
-      <div class="mb-12 flex flex-col">
-        <SearchBox
-          id="search-projects"
-          name="q"
-          title="Busquemos proyectos:"
-          value={searchParam}
-          placeholder="María Gómez o Impresora 3D"
-        />
-      </div>
       <div class="relative">
         <GridView id="projects-view" count={projects.length} minWidth="250px">
           {

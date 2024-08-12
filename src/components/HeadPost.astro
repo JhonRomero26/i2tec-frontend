@@ -1,0 +1,86 @@
+---
+import { parseDatePublished } from "@/lib/parseDatePublished";
+import type { Person } from "@/models";
+import { Icon } from "astro-icon/components";
+import { Image } from "astro:assets";
+
+type Props = {
+  id: string;
+  title: string;
+  excerpt: string;
+  published: string | Date;
+  authors: Person[];
+  image: string;
+};
+
+const { id, title, published, authors, image, excerpt } = Astro.props;
+
+const publisDate = parseDatePublished(published);
+---
+
+<header>
+  <div
+    class="mb-2 flex flex-col justify-between max-w-3xl mt-0 mx-auto px-4 sm:flex-row sm:items-center sm:px-6"
+  >
+    <p>
+      <Icon
+        class="-mt-0.5 text-gray-800 h-4 inline-block w-4"
+        name="tabler:clock"
+      />
+      <time class="inline-block" datetime={publisDate}>{publisDate}</time>
+      <span> · </span>
+      <span>5 min read</span>
+    </p>
+  </div>
+  <h1
+    id="post-title"
+    class="mx-auto sm:px-6 max-w-3xl px-4 font-bold font-heading leading-tighter md:text-5xl text-4xl tracking-tighter mb-3"
+  >
+    {title}
+  </h1>
+  {
+    authors.length > 0 && (
+      <p class="mb-2 max-w-3xl mt-0 mx-auto px-4 sm:flex-row sm:items-center sm:px-6">
+        <Icon
+          class="-mt-0.5 text-gray-800 h-4 inline-block w-4"
+          name="tabler:user"
+        />
+        <span>
+          {authors
+            .map((author) => {
+              const { first_name, last_name } = author;
+              return `${last_name.split(" ")[0]}, ${first_name}`;
+            })
+            .join(" · ")}
+        </span>
+      </p>
+    )
+  }
+  <p
+    id="post-excerpt"
+    class="text-muted text-slate-600 max-w-3xl mb-8 md:text-2xl mt-4 mx-auto px-4 sm:px-6 text-justify text-xl"
+  >
+    {excerpt}
+  </p>
+  <figure
+    class="bg-gray-200 mb-6 lg:max-w-[900px] max-w-full mx-auto sm:rounded-md"
+  >
+    <Image
+      transition:name={`card-wrapper-image ${id}`}
+      loading="lazy"
+      width={900}
+      height={500}
+      class="aspect-[16/9] lg:rounded-lg w-full object-cover object-center"
+      src={image}
+      alt={title}
+    />
+    <!-- <ButtonAnchor
+      target="_blank"
+      class="absolute bottom-0 right-0 h-auto px-12 py-6 z-[1]"
+      href={repositoryURL}
+      kind="primary"
+    >
+      Vér proyecto
+    </ButtonAnchor> -->
+  </figure>
+</header>

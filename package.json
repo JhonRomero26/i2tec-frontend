@@ -16,7 +16,7 @@
     "@astrojs/node": "8.3.2",
     "@csstools/postcss-sass": "5.1.1",
     "@iconify-json/tabler": "1.1.119",
-    "astro": "4.13.2",
+    "astro": "4.13.3",
     "astro-icon": "1.1.0",
     "snarkdown": "2.0.0",
     "swiper": "11.1.9",
@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "2.24.1",
+    "@tailwindcss/typography": "0.5.14",
     "@typescript-eslint/parser": "8.0.1",
     "eslint": "9.8.0",
     "eslint-plugin-astro": "1.2.3",

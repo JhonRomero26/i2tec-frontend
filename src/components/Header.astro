@@ -1,15 +1,15 @@
 ---
-import Button from "@/components/Button.astro"
-import { Icon } from "astro-icon/components"
+import Button from "@/components/Button.astro";
+import { Icon } from "astro-icon/components";
 
-import { APP_ROUTES } from "@/lib/constants/routing"
-import { getSocialNetworks } from "@/services/social-network"
-import type { SocialNetwork } from "@/models"
+import { APP_ROUTES } from "@/lib/constants/routing";
+import { getSocialNetworks } from "@/services/social-network";
+import type { SocialNetwork } from "@/models";
 
-const res = await getSocialNetworks()
-let socials: SocialNetwork[] = []
+const res = await getSocialNetworks();
+let socials: SocialNetwork[] = [];
 if (res && res.data) {
-  socials = res.data
+  socials = res.data;
 }
 ---
 
@@ -55,22 +55,19 @@ if (res && res.data) {
           <ul class="flex justify-between px-4 py-8">
             {
               socials.length > 0 &&
-                socials.map(({ attributes }) => {
-                  const { url, title } = attributes
-                  return (
-                    <li>
-                      <a
-                        href={url}
-                        class="text-xl"
-                        rel="noreferrer"
-                        target="_blank"
-                      >
-                        <Icon name={`tabler:brand-${title.toLowerCase()}`} />
-                        <span class="sr-only">{title}</span>
-                      </a>
-                    </li>
-                  )
-                })
+                socials.map(({ url, title }) => (
+                  <li>
+                    <a
+                      href={url}
+                      class="text-xl"
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      <Icon name={`tabler:brand-${title.toLowerCase()}`} />
+                      <span class="sr-only">{title}</span>
+                    </a>
+                  </li>
+                ))
             }
           </ul>
         </div>

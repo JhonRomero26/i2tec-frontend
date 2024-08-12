@@ -15,15 +15,7 @@ export interface Pagination {
 }
 
 export interface ImageResponse {
-  data: ImageData;
-}
-
-export interface ImageData {
-  attributes: DataImageAttributes;
   id: number;
-}
-
-export interface DataImageAttributes {
   alternativeText: null;
   caption: null;
   createdAt: Date;

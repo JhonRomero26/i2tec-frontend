@@ -1,4 +1,6 @@
 ---
+import { Image } from "astro:assets";
+
 export type CardWrapperProps = {
   id: string;
   href: string;
@@ -6,7 +8,7 @@ export type CardWrapperProps = {
   image: string;
   class?: string;
   effectImage: boolean;
-}
+};
 
 const {
   id,
@@ -15,13 +17,16 @@ const {
   title,
   class: className,
   effectImage = true,
-} = Astro.props
+} = Astro.props;
 ---
 
-<article class:list={["group relative isolate w-full h-auto", className]}>
-  <picture class="block relative aspect-video overflow-hidden">
-    <img
-      transition:name={`card ${id} image`}
+<article
+  class:list={["group relative isolate w-full h-auto max-w-96", className]}
+>
+  <div class="block relative aspect-video overflow-hidden">
+    <Image
+      inferSize
+      transition:name={`card-wrapper-image ${id}`}
       loading="lazy"
       class:list={[
         "h-full w-full object-cover object-center transition-transform",
@@ -34,14 +39,19 @@ const {
       alt={title}
       title={title}
     />
-  </picture>
+  </div>
   {
     href ? (
       <a
         href={href}
         class="flex flex-col gap-2 pt-4 text-inherit no-underline before:absolute before:top-0 before:left-0 before:block before:h-full before:w-full before:content-[''] hover:no-underline"
       >
-        <h3 transition:name={`card ${id} title`} class="line-clamp-2 text-ellipsis text-lg font-bold">{title}</h3>
+        <h3
+          transition:name={`card ${id} title`}
+          class="line-clamp-2 text-ellipsis text-lg font-bold"
+        >
+          {title}
+        </h3>
         <slot />
         <div class="gap-1 text-neutral-600">
           <slot name="metainfo" />
@@ -50,7 +60,12 @@ const {
       </a>
     ) : (
       <div class="flex flex-col gap-2 pt-4">
-        <h3 transition:name={`card ${id} title`} class="line-clamp-2 text-ellipsis text-lg font-bold">{title}</h3>
+        <h3
+          transition:name={`card ${id} title`}
+          class="line-clamp-2 text-ellipsis text-lg font-bold"
+        >
+          {title}
+        </h3>
         <slot />
         <div class="gap-1 text-neutral-600">
           <slot name="metainfo" />

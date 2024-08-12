@@ -1,20 +1,20 @@
 ---
-import { APP_ROUTES } from "@/lib/constants"
-import infoFooter from "@/data/footer-client-data.json"
+import { APP_ROUTES } from "@/lib/constants";
+import infoFooter from "@/data/footer-client-data.json";
 
-import { Icon } from "astro-icon/components"
-import { getSocialNetworks } from "@/services/social-network"
-import type { SocialNetwork } from "@/models"
-import IconAndText from "@/components/IconAndText.astro"
-import { getContactEmail, getContactPhone } from "@/services/contacts"
+import { Icon } from "astro-icon/components";
+import { getSocialNetworks } from "@/services/social-network";
+import type { SocialNetwork } from "@/models";
+import IconAndText from "@/components/IconAndText.astro";
+import { getContactEmail, getContactPhone } from "@/services/contacts";
 
-const res = await getSocialNetworks()
-const resPhone = await getContactPhone()
-const resEmail = await getContactEmail()
+const res = await getSocialNetworks();
+const resPhone = await getContactPhone();
+const resEmail = await getContactEmail();
 
-let socials: SocialNetwork[] = []
+let socials: SocialNetwork[] = [];
 if (res && res.data) {
-  socials = res.data
+  socials = res.data;
 }
 ---
 
@@ -40,27 +40,27 @@ if (res && res.data) {
         <div class="font-semibold">Contactos</div>
         <ul class="flex flex-col items-center">
           {
-            resPhone && resPhone.data && (
+            resPhone && (
               <IconAndText>
                 <Icon name="tabler:phone" />
                 <a
                   class="no-underline text-inherit"
-                  href={`tel:${resPhone.data.attributes.phone}`}
+                  href={`tel:${resPhone.phone}`}
                 >
-                  {resPhone.data.attributes.phone}
+                  {resPhone.phone}
                 </a>
               </IconAndText>
             )
           }
           {
-            resEmail && resEmail.data && (
+            resEmail && (
               <IconAndText>
                 <Icon name="tabler:mail" />
                 <a
                   class="no-underline text-inherit"
-                  href={`mailto:${resEmail.data.attributes.email}`}
+                  href={`mailto:${resEmail.email}`}
                 >
-                  {resEmail.data.attributes.email}
+                  {resEmail.email}
                 </a>
               </IconAndText>
             )
@@ -88,26 +88,22 @@ if (res && res.data) {
     <ul class="mt-6 flex flex-wrap justify-center gap-6 sm:gap-8 lg:gap-12">
       {
         socials.length > 0 &&
-          socials.map(({ attributes }) => {
-            const { url, title } = attributes
-
-            return (
-              <li>
-                <a
-                  class="no-underline text-inherit"
-                  href={url}
-                  rel="noreferrer"
-                  target="_blank"
-                >
-                  <span class="sr-only">{title}</span>
-                  <Icon
-                    class="text-xl"
-                    name={`tabler:brand-${title.toLowerCase()}`}
-                  />
-                </a>
-              </li>
-            )
-          })
+          socials.map(({ title, url }) => (
+            <li>
+              <a
+                class="no-underline text-inherit"
+                href={url}
+                rel="noreferrer"
+                target="_blank"
+              >
+                <span class="sr-only">{title}</span>
+                <Icon
+                  class="text-xl"
+                  name={`tabler:brand-${title.toLowerCase()}`}
+                />
+              </a>
+            </li>
+          ))
       }
     </ul>
   </div>

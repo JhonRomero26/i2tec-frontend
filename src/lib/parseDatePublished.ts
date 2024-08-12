@@ -5,6 +5,6 @@ export const datePublishedOptions: Intl.DateTimeFormatOptions = {
   timeZone: "utc",
 }
 
-export function parseDatePublished(date: Date, locate: string = "es"): string {
+export function parseDatePublished(date: string | Date, locate: string = "es"): string {
   return new Date(date).toLocaleDateString(locate, datePublishedOptions)
 }

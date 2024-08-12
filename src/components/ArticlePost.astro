@@ -1,0 +1,38 @@
+---
+import HeadPost from "./HeadPost.astro";
+import FooterPost from "@/components/FooterPost.astro";
+import type { Category, Person } from "@/models";
+import snarkdown from "snarkdown";
+
+type Props = {
+  id: string;
+  title: string;
+  excerpt: string;
+  authors: Person[];
+  published: string | Date;
+  image: string;
+  content: string;
+  categories?: Category[];
+};
+
+const { id, title, authors, published, image, content, excerpt, categories } =
+  Astro.props;
+---
+
+<article>
+  <HeadPost
+    id={id}
+    title={title}
+    excerpt={excerpt}
+    authors={authors}
+    published={published}
+    image={image}
+  />
+  <div
+    class="mx-auto sm:px-6 max-w-3xl px-6 mt-8 lg:prose-xl prose prose-a:text-primary prose-headings:font-bold prose-headings:font-heading prose-headings:leading-tighter prose-headings:scroll-mt-[80px] prose-headings:mt-[80px] prose-headings:tracking-tighter prose-img:rounded-md prose-img:shadow-lg prose-li:my-0 prose-md"
+    set:html={content
+      ? snarkdown(content)
+      : '<div class="text-center py-8">Sin contenido</div>'}
+  />
+  <FooterPost title={title} excerpt={excerpt} categories={categories} />
+</article>

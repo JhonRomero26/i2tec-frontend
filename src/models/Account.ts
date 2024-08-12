@@ -10,5 +10,5 @@ export interface Account {
   confirmed: boolean
   blocked: boolean
   role?: string
-  person?: { data: Person }
+  person?: Person
 }

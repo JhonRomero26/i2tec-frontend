@@ -1,18 +1,18 @@
 ---
-import ImageSkeleton from "@/components/ImageSkeleton.astro"
-import PopularProject from "@/components/PopularProject.astro"
-import { arrayIterable } from "@/lib/arrayIterable"
-import type { Project } from "@/models/Project"
-import { BACKEND_IMAGE } from "@/lib/constants/environment"
-import { getImageFormats } from "@/lib/getImageFormats"
+import ImageSkeleton from "@/components/ImageSkeleton.astro";
+import PopularProject from "@/components/PopularProject.astro";
+import { arrayIterable } from "@/lib/arrayIterable";
+import type { Project } from "@/models/Project";
+import { BACKEND_IMAGE } from "@/lib/constants/environment";
+import { getImageFormats } from "@/lib/getImageFormats";
 
 interface Props {
   projects?: Project[];
 }
 
-const { projects = [] } = Astro.props
+const { projects = [] } = Astro.props;
 const projectGridItem =
-  "sm:col-span-2 sm:first:col-span-4 xl:col-span-1 xl:first:col-span-3 xl:first:row-span-2"
+  "sm:col-span-2 sm:first:col-span-4 xl:col-span-1 xl:first:col-span-3 xl:first:row-span-2";
 ---
 
 <section class="section">
@@ -22,21 +22,18 @@ const projectGridItem =
       {
         projects.length > 0
           ? projects.slice(0, 3).map((project: Project) => {
-              const imageSrc = getImageFormats(
-                project.attributes.image,
-                "medium"
-              )
+              const imageSrc = getImageFormats(project.image, "medium");
 
               return (
                 <PopularProject
                   class:list={projectGridItem}
-                  href={`/projects/${project.attributes.slug}`}
-                  title={project.attributes.title}
+                  href={`/projects/${project.slug}`}
+                  title={project.title}
                   image={`${BACKEND_IMAGE}${imageSrc}`}
-                  authors={project.attributes.authors?.data!}
-                  publishedDate={project.attributes.publishedAt}
+                  authors={project.authors!}
+                  publishedDate={project.publishedAt}
                 />
-              )
+              );
             })
           : arrayIterable(3).map((i) => (
               <ImageSkeleton

@@ -1,19 +1,17 @@
-import type { ImageResponse, Person } from "@/models"
+import type { ImageResponse, Person, Category } from "@/models"
 
 export interface Project {
-  attributes: ProjectAttributes;
   id: number;
-}
-
-export interface ProjectAttributes {
-  createdAt: Date;
   image?: ImageResponse;
   publishedAt: Date;
   slug: string;
   title: string;
   popular: boolean;
-  authors?: { data: Person[] };
+  authors?: Person[];
   repositoryURL?: string;
-  description: string;
+  categories?: Category[]
+  excerpt: string;
+  content: string;
+  createdAt: Date;
   updatedAt: Date;
 }

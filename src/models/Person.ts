@@ -1,11 +1,7 @@
 import type { ImageResponse, Account, Project, Title } from "@/models"
 
 export interface Person {
-  attributes: PersonAttributes;
   id: number;
-}
-
-export interface PersonAttributes {
   account?: Account;
   avatar?: ImageResponse;
   createdAt: Date;

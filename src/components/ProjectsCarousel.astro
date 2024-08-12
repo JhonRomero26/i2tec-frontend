@@ -1,40 +1,39 @@
 ---
-import ImageSkeleton from "@/components/ImageSkeleton.astro"
-import CardProject from "@/components/CardProject.astro"
+import ImageSkeleton from "@/components/ImageSkeleton.astro";
+import CardProject from "@/components/CardProject.astro";
 
-import type { Project } from "@/models"
-import { arrayIterable } from "@/lib/arrayIterable"
-import { EffectsClass } from "@/lib/classNames/effects"
-import { BACKEND_IMAGE } from "@/lib/constants"
+import type { Project } from "@/models";
+import { arrayIterable } from "@/lib/arrayIterable";
+import { EffectsClass } from "@/lib/classNames/effects";
+import { BACKEND_IMAGE } from "@/lib/constants";
 
-import { getImageFormats } from "@/lib/getImageFormats"
+import { getImageFormats } from "@/lib/getImageFormats";
 
 interface Props {
   projects: Project[];
 }
 
-const { projects } = Astro.props
+const { projects } = Astro.props;
 ---
 
 {
   projects.length > 0 ? (
-    <div class="slider-scale px-6 overflow-x-auto scrollbar-invisible"
-    >
+    <div class="slider-scale overflow-x-auto scrollbar-invisible">
       <div class="slider-wrapper gap-4 flex flex-nowrap">
         {projects.map((project: Project) => {
-          const imageSrc = getImageFormats(project.attributes.image, "small")
+          const imageSrc = getImageFormats(project.image, "small");
           return (
             <div class="slider-slide inline-flex min-w-72">
               <CardProject
                 id={`${project.id}`}
-                href={`/projects/${project.attributes.slug}`}
+                href={`/projects/${project.slug}`}
                 image={`${BACKEND_IMAGE}${imageSrc}`}
-                authors={project.attributes.authors?.data}
-                title={project.attributes.title}
-                publishedDate={project.attributes.publishedAt}
+                authors={project.authors!}
+                title={project.title}
+                publishedDate={project.publishedAt}
               />
             </div>
-          )
+          );
         })}
       </div>
     </div>
