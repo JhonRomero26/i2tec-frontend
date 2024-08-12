@@ -13,7 +13,6 @@ const project = await getProject({ slug });
 if (!project) Astro.redirect("/404");
 
 const principalImage = getImageFormats(project.image, "large");
-console.log(project);
 ---
 
 <Layout

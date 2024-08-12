@@ -11,7 +11,7 @@ import ApproachSection from "@/components/ApproachSection.astro";
 const res = await getProjects({
   params: ["sort[0]=createdAt:desc"],
 });
-console.log(res);
+
 const projects = res && res.data ? res.data : [];
 ---
 
