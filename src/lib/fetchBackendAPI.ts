@@ -1,7 +1,7 @@
 import { BACKEND_URL } from "@/lib/constants"
 import type { ResponseAPI } from "@/models"
 
-export const fecthBackendAPI = <T>(
+export const fecthBackendAPI = async <T>(
   url: string,
   params?: string[],
   options?: RequestInit,

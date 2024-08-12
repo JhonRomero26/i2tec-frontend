@@ -4,11 +4,10 @@ import { Icon } from "astro-icon/components";
 
 type Props = {
   title: string;
-  excerpt: string;
   categories?: Category[];
 };
 
-const { title, excerpt, categories } = Astro.props;
+const { title, categories } = Astro.props;
 ---
 
 <div
