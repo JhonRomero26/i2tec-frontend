@@ -2,7 +2,7 @@ FROM docker.io/node:20-alpine AS runtime
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
-RUN npm install -g sharp
+# RUN npm install -g sharp
 
 WORKDIR /app
 COPY package.json ./
