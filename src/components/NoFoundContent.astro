@@ -1,0 +1,17 @@
+---
+import ImageSkeleton from "@/components/ImageSkeleton.astro"
+
+interface Props {
+	message?: string
+	absolute?: boolean
+}
+
+const { message = "No se encontro contenido", absolute = false } = Astro.props
+---
+
+<div class:list={["h-full w-full", absolute && "absolute left-0 top-0"]}>
+	<div class="flex h-full min-h-48 w-full flex-col items-center justify-center gap-4">
+		<ImageSkeleton class="h-32 min-w-64" />
+		<h6 class="font-medium">{message}</h6>
+	</div>
+</div>

@@ -1,0 +1,21 @@
+---
+interface Props {
+	class?: string
+}
+
+const { class: className } = Astro.props
+---
+
+<section class:list={["relative overflow-hidden", className]}>
+	<div
+		class="absolute -left-[10%] -top-1/2 -z-10 block h-[75vw] w-[75vw] animate-pulse rounded-full bg-brand-400/60 blur-[100px] dark:bg-brand-500/60 md:h-[22vw] md:w-[22vw] md:blur-[140px]"
+		style={{ animationDuration: "10s" }}
+	>
+	</div>
+	<div
+		class="absolute -right-[10%] -top-1/2 -z-10 block h-[75vw] w-[75vw] animate-pulse rounded-full bg-brand-400/60 blur-[100px] dark:bg-brand-500/60 md:h-[22vw] md:w-[22vw] md:blur-[140px]"
+		style={{ animationDuration: "10s" }}
+	>
+	</div>
+	<slot />
+</section>

@@ -1,0 +1,93 @@
+---
+import { Image } from "astro:assets"
+
+import CalendarIcon from "@/icons/CalendarIcon.astro"
+import FacebookIcon from "@/icons/FacebookIcon.astro"
+import InstagramIcon from "@/icons/InstagramIcon.astro"
+import { dateFormater } from "@/utils/formatters"
+
+interface Props {
+	href?: string
+	class?: string
+	title: string
+	image: string
+	description: string
+	facebookUrl: string
+	instagramUrl?: string
+	publishedAt: Date
+}
+
+const {
+	title,
+	image,
+	href,
+	facebookUrl,
+	instagramUrl,
+	description,
+	publishedAt,
+	class: className,
+} = Astro.props
+const published = dateFormater({ date: publishedAt })
+---
+
+<article class:list={["w-full p-2", className]}>
+	<div class="aspect-[16/11] w-full overflow-hidden rounded-lg">
+		<Image
+			src={image}
+			class="object-fit h-full w-full object-center"
+			alt={title}
+			width={300}
+			height={180}
+			quality={60}
+			format="webp"
+		/>
+	</div>
+	<div class="flex flex-col gap-4 pt-4">
+		<h3 class="text-2xl font-bold">
+			{title}
+		</h3>
+		<div class="flex w-full items-center justify-between gap-12 overflow-hidden">
+			<div class="flex min-w-28 items-center gap-2 text-sm">
+				<CalendarIcon class="text-xl" />
+				<time datetime={published}>{published}</time>
+			</div>
+			<div class="flex items-center gap-1">
+				{
+					href && (
+						<a
+							target="_blank"
+							title="Ver noticia en Facebook"
+							href={href}
+							class="btn btn-primary btn-sm"
+						>
+							Ver noticia
+						</a>
+					)
+				}
+				<a
+					target="_blank"
+					aria-label="Facebook"
+					title="Ver noticia en Facebook"
+					href={facebookUrl}
+					class="btn btn-icon btn-secondary btn-sm"
+				>
+					<FacebookIcon />
+				</a>
+				{
+					instagramUrl && (
+						<a
+							target="_blank"
+							aria-label="Instagram"
+							title="Ver noticia en Instagram"
+							href={instagramUrl}
+							class="btn btn-icon btn-secondary btn-sm"
+						>
+							<InstagramIcon />
+						</a>
+					)
+				}
+			</div>
+		</div>
+		<p class="line-clamp-6 text-ellipsis text-pretty">{description}</p>
+	</div>
+</article>

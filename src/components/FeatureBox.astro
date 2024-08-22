@@ -1,0 +1,20 @@
+---
+interface Props {
+	title: string
+	description: string
+}
+
+const { title, description } = Astro.props
+---
+
+<div
+	class="relative flex flex-col rounded-lg border border-accent bg-body p-6 shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur transition-colors dark:border-accent dark:bg-ui01 dark:shadow-[0_4px_30px_rgba(0,0,0,0.1)]"
+>
+	<div class="mb-6 text-5xl text-accent">
+		<slot name="icon" />
+	</div>
+	<div class="text-xl font-bold text-primary">{title}</div>
+	<p class="text-muted mt-2">
+		{description}
+	</p>
+</div>

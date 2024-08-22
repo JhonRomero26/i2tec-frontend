@@ -1,45 +1,17 @@
 ---
-import PopularProjectsSection from "@/components/PopularProjectsSection.astro"
-import QualitiesSection from "@/components/QualitiesSection.astro"
-import HomeHeroSection from "@/components/HomeHeroSection.astro"
+import ContactSection from "@/components/ContactSection.astro"
+import FeatureSection from "@/components/FeaturesSection.astro"
+import Hero from "@/components/Hero.astro"
+import ProjectSection from "@/components/ProjectSection.astro"
 import Layout from "@/layouts/Layout.astro"
-import ProjectsSection from "@/components/ProjectsSection.astro"
-import ProjectsCarousel from "@/components/ProjectsCarousel.astro"
-import { getProjects } from "@/services/project"
-import ApproachSection from "@/components/ApproachSection.astro"
-
-const res = (await getProjects(["populate=*", "sort[0]=createdAt:desc"])) ?? []
-const projects = res && res.data ? res.data : []
 ---
 
 <Layout
-  title="Investigación, Innovación y Tecnología | I2TEC"
-  description="En el I2TEC trabajamos con docentes y investigadores de distintas ramas tecnológicas para ofrecer soluciones tecnológicas desde la ciudad de Loja en la Universidad Nacional de Loja.">
-  <main>
-    <HomeHeroSection />
-    <ProjectsSection class="mb-40">
-      <ProjectsCarousel
-        projects={projects.length > 0 ? projects.slice(0, 15) : []}
-      />
-    </ProjectsSection>
-    <PopularProjectsSection
-      projects={projects.length > 0
-        ? projects
-            .slice(0, 20)
-            .filter((project) => project.attributes.popular === true)
-        : []}
-    />
-    <QualitiesSection />
-    <ApproachSection />
-  </main>
+	title="Investigación, Innovación y Tecnología | I2TEC"
+	description="En el I2TEC trabajamos con docentes y investigadores de distintas ramas tecnológicas para ofrecer soluciones tecnológicas desde la ciudad de Loja en la Universidad Nacional de Loja."
+>
+	<Hero />
+	<ProjectSection />
+	<FeatureSection />
+	<ContactSection />
 </Layout>
-
-<script>
-import { sliderProyectsOptions } from "@/lib/constants"
-import Swiper from "swiper"
-
-new Swiper(
-  "[data-carousel-id=\"home-projects-carousel\"]",
-  sliderProyectsOptions,
-)
-</script>

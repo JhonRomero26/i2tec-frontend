@@ -1,36 +1,25 @@
 ---
-import Input from "@/components/Input.astro"
-import Button from "@/components/Button.astro"
-import { Icon } from "astro-icon/components"
+import SearchIcon from "@/icons/SearchIcon.astro"
 
-type Props = {
-  title?: string;
-  id: string;
-  value?: string;
-  placeholder: string;
-  name: string;
-  preventSubmit?: boolean;
+interface Props {
+	id: string
+	value?: string
+	placeholder: string
+	class?: string
+	name: string
 }
 
-const { id, name, title, placeholder, value } = Astro.props
+const { id, name, placeholder, value, class: className } = Astro.props
 ---
 
-<form method="get">
-  <label
-    class="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-2"
-  >
-    {title && <span class="font-medium">{title}</span>}
-    <div class="flex align-baseline">
-      <Button
-        id={`${id}-submit`}
-        aria-label="Buscar"
-        kind="primary"
-        type="submit"
-        icon
-      >
-        <Icon name="tabler:search" />
-      </Button>
-      <Input value={value} name={name} placeholder={placeholder} />
-    </div>
-  </label>
-</form>
+<div class:list={["relative", className]}>
+	<button
+		id={id}
+		aria-label="Buscar"
+		class="absolute left-0 top-1/2 flex -translate-y-1/2 items-center justify-center p-2 text-2xl text-muted"
+		type="submit"
+	>
+		<SearchIcon />
+	</button>
+	<input class="input pl-10" value={value} name={name} placeholder={placeholder} />
+</div>

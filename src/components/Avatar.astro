@@ -1,37 +1,29 @@
 ---
 import { Image } from "astro:assets"
 
-type Props = {
-  image?: string;
-  size?: number;
-  class?: string;
-  alt: string;
+interface Props {
+	image?: string
+	size?: number
+	class?: string
+	alt: string
 }
 
-const {
-  image = "/images/user-placeholder.png",
-  size = 40,
-  class: className,
-  alt,
-} = Astro.props
+const { image = "/images/user-placeholder.png", size = 40, class: className, alt } = Astro.props
 ---
 
 <picture
-  style={{
-    width: size,
-    height: size,
-  }}
-  class:list={[
-    "block relative aspect-square overflow-hidden rounded-full",
-    className,
-  ]}
+	style={{
+		width: size,
+		height: size,
+	}}
+	class:list={["relative block aspect-square overflow-hidden rounded-full", className]}
 >
-  <Image
-    loading="lazy"
-    width={size}
-    height={size}
-    src={image}
-    alt={alt}
-    class="w-full h-full object-cover object-center"
-  />
+	<Image
+		loading="lazy"
+		width={size}
+		height={size}
+		src={image}
+		alt={alt}
+		class="h-full w-full object-cover object-center"
+	/>
 </picture>

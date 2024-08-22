@@ -1,0 +1,46 @@
+---
+import snarkdown from "snarkdown"
+
+import FooterPost from "@/components/FooterPost.astro"
+import HeadPost from "@/components/HeadPost.astro"
+import type { Category } from "@/models/Category"
+import type { Person } from "@/models/Person"
+
+interface Props {
+	id: string
+	title: string
+	excerpt: string
+	authors: Person[]
+	published: Date
+	image: string
+	content: string
+	categories?: Category[]
+}
+
+const { id, title, authors, published, image, content, excerpt, categories } = Astro.props
+---
+
+<section class="py-32">
+	<article>
+		<HeadPost
+			id={id}
+			title={title}
+			excerpt={excerpt}
+			authors={authors}
+			published={published}
+			image={image}
+		/>
+		<div
+			class="prose-headings:font-heading prose-headings:leading-tighter prose-md prose mx-auto mt-8 max-w-3xl px-6 dark:prose-invert lg:prose-xl prose-headings:mt-[80px] prose-headings:scroll-mt-[80px] prose-headings:font-bold prose-headings:tracking-tighter prose-a:text-accent prose-li:my-0 prose-img:rounded-md prose-img:shadow-lg sm:px-6"
+			set:html={content ? snarkdown(content) : '<div class="text-center py-8">Sin contenido</div>'}
+		/>
+		<FooterPost title={title} categories={categories} />
+	</article>
+</section>
+
+<script
+	async
+	defer
+	crossorigin="anonymous"
+	src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v20.0"
+	nonce="Yxgs4VZM"></script>

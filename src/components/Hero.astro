@@ -1,0 +1,36 @@
+---
+import TeamWorkIllustration from "./TeamWorkIllustration.astro"
+---
+
+<section class="relative w-full overflow-hidden py-32">
+	<div
+		class="-z-1 absolute -left-1/4 top-1/4 block h-[24%] w-1/2 animate-pulse rounded-full bg-brand-600/60 blur-[125px]"
+		style={{ animationDuration: "4s" }}
+	>
+	</div>
+	<div
+		class="-z-1 absolute -right-1/4 top-1/4 block h-[24%] w-1/2 animate-pulse rounded-full bg-brand-600/60 blur-[125px]"
+		style={{ animationDelay: "1s", animationDuration: "4s" }}
+	>
+	</div>
+
+	<div class="container flex items-center gap-12 max-lg:flex-col">
+		<div class="flex w-full max-w-xl flex-col text-center max-lg:items-center lg:text-left">
+			<img
+				loading="lazy"
+				src="/images/i2tec-logo-wh.webp"
+				class="mb-4 w-28 invert dark:invert-0"
+				alt="I2TEC Logo"
+			/>
+			<h1 class="mb-6 text-6xl font-bold text-primary">Buscando la innovación</h1>
+			<p class="text-balance">
+				Somos el centro de investigaición y innovación de la Universidad Nacional de Loja en la
+				ciudad de Loja, ubicado en el sur del Ecuador. Comprometidos a producir soluciones
+				tecnológicas de alto impacto.
+			</p>
+		</div>
+		<div class="flex w-full items-center justify-center lg:justify-end">
+			<TeamWorkIllustration class="max-w-sm lg:max-w-lg" />
+		</div>
+	</div>
+</section>

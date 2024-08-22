@@ -1,23 +1,21 @@
 ---
-import Layout from "@/layouts/Layout.astro"
-import HeroImage from "@/components/HeroImage.astro"
-import AboutusSection from "@/components/AboutusSection.astro"
+import ContactSection from "@/components/ContactSection.astro"
 import FoundersSection from "@/components/FoundersSection.astro"
+import HeroImage from "@/components/HeroImage.astro"
 import MisionAndVisionSection from "@/components/MisionAndVisionSection.astro"
-import infoPage from "@/data/about-us-data.json"
+import Layout from "@/layouts/Layout.astro"
 ---
 
 <Layout
-  title="Acerca de nosotros | I2TEC"
-  description="Tenemos la mejor infraestructura tecnológica que apoya a la educación en el Ecuador. El I2TEC es el impulso de tecnológico que mueve a la educación.">
-  <main>
-    <HeroImage
-      title={infoPage.heroInfo.title}
-      description={infoPage.heroInfo.description}
-      image={infoPage.heroInfo.image}
-    />
-    <AboutusSection />
-    <MisionAndVisionSection />
-    <FoundersSection />
-  </main>
+	title="Acerca de nosotros | I2TEC"
+	description="Tenemos la mejor infraestructura tecnológica que apoya a la educación en el Ecuador. El I2TEC es el impulso de tecnológico que mueve a la educación."
+>
+	<HeroImage
+		title="En I2TEC crecen todos"
+		description="Estamos comprometidos en fomentar un ambiente de trabajo inclusivo y respetuoso donde todas las ideas son bienvenidas y donde cada individuo tiene la oportunidad de crecer y desarrollarse profesionalmente."
+		image="/i2tec-about-us.webp"
+	/>
+	<MisionAndVisionSection />
+	<FoundersSection />
+	<ContactSection />
 </Layout>

@@ -1,22 +1,15 @@
 ---
 import type { Preload } from "@/types/Preload"
 
-type Props = {
-  title: string
-  description: string
-  image?: string
-  canonical?: string
-  preload?: Array<Preload>
+interface Props {
+	title: string
+	description: string
+	image?: string
+	canonical?: string
+	preload?: Array<Preload>
 }
 
-const {
-  title,
-  description,
-  image = "/og.jpg",
-  canonical,
-  preload
-} = Astro.props
-
+const { title, description, image = "/og.jpg", canonical, preload } = Astro.props
 
 const determineCanonicalURL = () => {
 	if (Astro.url.host.includes("localhost")) return "http://localhost:4321"

@@ -1,0 +1,56 @@
+---
+import FeatureBox from "@/components/FeatureBox.astro"
+import TitleSection from "@/components/TitleSection.astro"
+import AnalyzeIcon from "@/icons/AnalyzeIcon.astro"
+import BrainIcon from "@/icons/BrainIcon.astro"
+import ChevronsUpRightIcon from "@/icons/ChevronsUpRightIcon.astro"
+import IconsIcon from "@/icons/IconsIcon.astro"
+import SunIcon from "@/icons/SunIcon.astro"
+import View360NumberIcon from "@/icons/View360NumberIcon.astro"
+---
+
+<section class="py-32">
+	<TitleSection
+		class="mb-24"
+		title="Nuestras principales características"
+		description="Tenemo características que nos diferencian de otros centros de innovación."
+	/>
+	<div class="container grid gap-4 sm:grid-cols-2 sm:gap-y-8 md:gap-6 lg:grid-cols-3">
+		<FeatureBox
+			title="Innovación"
+			description="Estamos constantemente trabajando para mejorar la innovación. Desarrollamos soluciones tecnológicas que generan impacto positivo en la sociedad."
+		>
+			<ChevronsUpRightIcon slot="icon" />
+		</FeatureBox>
+		<FeatureBox
+			title="Experiencia"
+			description="Tenemos experiencia en el campo de la tecnología con cada desarrollo en proyectos de alto impacto en la comunidad tecnológica del Ecuador."
+		>
+			<AnalyzeIcon slot="icon" />
+		</FeatureBox>
+		<FeatureBox
+			title="Personas"
+			description="Trabajamos con docentes y estudiantes de distintas ramas tecnológicas que se dedican a desarrollar soluciones tecnológicas para mejorar la calidad de vida de las personas"
+		>
+			<View360NumberIcon slot="icon" />
+		</FeatureBox>
+		<FeatureBox
+			title="Creatividad y pensamiento innovador"
+			description="En el I2TEC nace una profunda dedicación a la creatividad e innovación con la capacidad de concebir soluciones fuera de lo convencional, abordando desafíos con un enfoque original."
+		>
+			<BrainIcon slot="icon" />
+		</FeatureBox>
+		<FeatureBox
+			title="Vinculados a la sociedad"
+			description="Nos dedicamos a crear productos y servicios intuitivos para brindar una experiencia excepcional en nuestros proyectos con cada interacción."
+		>
+			<IconsIcon slot="icon" />
+		</FeatureBox>
+		<FeatureBox
+			title="Tecnología"
+			description="Nos caracterizamos por la innovación y la creatividad. Desarrollamos soluciones tecnológicas que generan impacto positivo en la sociedad."
+		>
+			<SunIcon slot="icon" />
+		</FeatureBox>
+	</div>
+</section>

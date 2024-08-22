@@ -1,68 +1,78 @@
 ---
-import ButtonAnchor from "@/components/ButtonAnchor.astro"
-import { Icon } from "astro-icon/components"
-import { breandButtonClass } from "@/lib/classNames"
-import IconAndText from "./IconAndText.astro"
-import { parseDatePublished } from "@/lib/parseDatePublished"
+import { Image } from "astro:assets"
+
+import CalendarIcon from "@/icons/CalendarIcon.astro"
+import FacebookIcon from "@/icons/FacebookIcon.astro"
+import InstagramIcon from "@/icons/InstagramIcon.astro"
+import { dateFormater } from "@/utils/formatters"
 
 interface Props {
-  title: string;
-  summary: string;
-  image: string;
-  facebookUrl: string;
-  instagramUrl?: string;
-  published: Date;
+	href?: string
+	title: string
+	summary: string
+	image: string
+	facebookUrl: string
+	instagramUrl?: string
+	class?: string
+	publishedAt: Date | string
 }
 
-const { title, summary, image, facebookUrl, instagramUrl, published } =
-  Astro.props
+const {
+	title,
+	summary,
+	image,
+	href,
+	facebookUrl,
+	instagramUrl,
+	publishedAt,
+	class: className,
+} = Astro.props
 
-const publishedAt = parseDatePublished(published)
+const published = dateFormater({ date: publishedAt })
 ---
 
 <article
-  class="bg-white mx-auto max-w-screen-lg p-8 rounded-lg shadow-lg flex flex-col sm:flex-row gap-x-8 gap-y-6"
+	class:list={[
+		"mx-auto flex max-w-screen-lg flex-col gap-x-8 gap-y-6 rounded-lg border border-accent bg-ui01 p-8 shadow-lg",
+		className,
+	]}
 >
-  <picture class="flex-1 aspect-square block overflow-hidden rounded-lg h-full">
-    <img
-      loading="lazy"
-      class="h-full w-full object-fit object-cover"
-      src={image}
-    />
-  </picture>
-  <div class="flex flex-col flex-1">
-    <h3 class="mb-4 text-2xl font-bold leading-relaxed">
-      {title}
-    </h3>
-    <div class="flex flex-wrap gap-4 mb-6">
-      <IconAndText class="text-gray-600">
-        <Icon class="text-lg" name="tabler:calendar" />
-        <time datetime={publishedAt}>{publishedAt}</time>
-      </IconAndText>
-    </div>
-    <div class="line-clamp-[8] text-lg mb-12">
-      {summary}
-    </div>
-    <footer class="flex gap-2 mt-auto">
-      <ButtonAnchor
-        target="_target"
-        href={facebookUrl}
-        class:list={breandButtonClass["facebookBtn"]}
-      >
-        <Icon name="tabler:brand-facebook" />
-        Ver Noticia en facebook
-      </ButtonAnchor>
-      {
-        instagramUrl && (
-          <ButtonAnchor
-            href={instagramUrl}
-            class:list={breandButtonClass["instagramBtn"]}
-          >
-            <Icon name="tabler:brand-instagram" />
-            Ver Noticia en instagram
-          </ButtonAnchor>
-        )
-      }
-    </footer>
-  </div>
+	<figure class="block flex-1 overflow-hidden rounded-lg max-md:aspect-video">
+		<Image inferSize class="object-fit h-full w-full object-cover" src={image} alt={title} />
+	</figure>
+	<div class="flex flex-1 flex-col">
+		<h3 class="mb-4 text-2xl font-bold leading-relaxed">
+			{title}
+		</h3>
+		<div class="mb-6 flex flex-wrap gap-4">
+			<div class="flex items-center gap-2 text-sm">
+				<CalendarIcon class="text-lg" />
+				<time datetime={published}>{published}</time>
+			</div>
+		</div>
+		<div class="mb-12 line-clamp-6">
+			{summary}
+		</div>
+		<footer class="mt-auto flex gap-2">
+			{
+				href && (
+					<a target="_blank" title="Ver noticia en Facebook" href={href} class="btn btn-primary">
+						Ver noticia
+					</a>
+				)
+			}
+			<a target="_target" href={facebookUrl} class="btn btn-secondary">
+				<FacebookIcon />
+				Ver en facebook
+			</a>
+			{
+				instagramUrl && (
+					<a href={instagramUrl} class="btn btn-secondary">
+						<InstagramIcon />
+						Ver en instagram
+					</a>
+				)
+			}
+		</footer>
+	</div>
 </article>

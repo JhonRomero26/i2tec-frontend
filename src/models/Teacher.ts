@@ -1,11 +1,7 @@
-import type { Person } from "@/models"
+import type { Person } from "@/models/Person"
 
 export interface Teacher {
-  id: number
-  attributes: TeacherAttributes
-}
-
-export interface TeacherAttributes {
-  person: { data: Person }
-  biography: string
+	id: number
+	person: Person
+	biography: string
 }

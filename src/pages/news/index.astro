@@ -1,151 +1,157 @@
 ---
-import Button from "@/components/Button.astro"
 import GridView from "@/components/GridView.astro"
-import Layout from "@/layouts/Layout.astro"
-import Input from "@/components/Input.astro"
-import { Icon } from "astro-icon/components"
-import Pagination from "@/components/Pagination.astro"
-import { getTidings } from "@/services/news"
-import { BACKEND_IMAGE } from "@/lib/constants"
-import LastestNews from "@/components/LastestNews.astro"
-import CardNews from "@/components/CardNews.astro"
+import HeroRadial from "@/components/HeroRadial.astro"
+import HorizontalScroller from "@/components/HorizontalScroller.astro"
 import ImageSkeleton from "@/components/ImageSkeleton.astro"
-import { getImageFormats } from "@/lib/getImageFormats"
+import LastestNews from "@/components/LastestNews.astro"
+import NewsCard from "@/components/NewsCard.astro"
+import NoFoundContent from "@/components/NoFoundContent.astro"
+import Pagination from "@/components/Pagination.astro"
+import SearchBox from "@/components/SearchBox.astro"
+import TitleSection from "@/components/TitleSection.astro"
+import { BACKEND_URL } from "@/consts/app"
+import Layout from "@/layouts/Layout.astro"
+import type { News } from "@/models/News"
+import { getTidings } from "@/services/tidings"
+import { getImageFormat } from "@/utils/image"
 
 const searchParam: string = Astro.url.searchParams.get("q") || ""
 const pagParam = Astro.url.searchParams.get("pag") || ""
-const res = await getTidings([
-  "populate=*",
-  "sort[0]=publishedAt:desc",
-  "pagination[pageSize]=36",
-  pagParam && `pagination[page]=${pagParam}`,
-  searchParam && `filters[title][$containsi]=${searchParam}`,
-])
 
-const tidings = res && res.data ? res.data : []
-const meta = res && res.meta ? res.meta : undefined
-
-const [, firstPath] = Astro.url.pathname.split("/")
-let pageCount: number = 0
-let currentPage: number = 1
-let pagination = { next: "", prev: "" }
-
-if (meta) {
-  pageCount = meta.pagination.pageCount
-  currentPage = pagParam ? Number(pagParam) : 1
-  pagination = {
-    next: pageCount > currentPage ? `${currentPage + 1}` : "",
-    prev: currentPage < pageCount ? `${currentPage - 1}` : "",
-  }
+const pagination = {
+	count: 0,
+	currentPage: 1,
+	pages: {
+		next: "",
+		prev: "",
+	},
 }
+const response = {
+	data: {
+		lastestNews: [] as News[],
+		allTidings: [] as News[],
+	},
+	error: false,
+	message: "Hubo un error al obtener las noticias.",
+}
+
+await getTidings({
+	query: [
+		"sort[0]=publishedAt:desc",
+		"pagination[pageSize]=36",
+		pagParam && `pagination[page]=${pagParam}`,
+		searchParam && `filters[title][$containsi]=${searchParam}`,
+	],
+})
+	.then(({ data, meta }) => {
+		response.data.lastestNews = data!.slice(0, 3)
+		response.data.allTidings = data!.slice(3)
+		pagination.count = meta.pagination.pageCount
+		pagination.currentPage = pagParam ? Number(pagParam) : 1
+		pagination.pages.next =
+			pagination.count > pagination.currentPage ? `${pagination.currentPage + 1}` : ""
+		pagination.pages.prev =
+			pagination.count < pagination.currentPage ? `${pagination.currentPage - 1}` : ""
+	})
+	.catch((_) => {
+		response.error = true
+	})
+
+const existsTidings = response.data.allTidings && response.data.allTidings.length > 0
+const [, firstPath] = Astro.url.pathname.split("/")
 ---
 
 <Layout
-  title="Noticias | I2TEC"
-  description="Las noticias más relevantes en el mundo de la innovación en las que el I2TEC trabaja con docentes y investigadores.">
-  <main>
-    <section class="py-32 bg-primary text-white">
-      <div class="container">
-        <div class="text-center max-w-lg mx-auto mb-16">
-          <h1 class="font-thin text-center text-5xl uppercase mb-4">
-            Noticias
-          </h1>
-          <p>
-            Estamos presentes en todo lado, mantente al día sobre nuestras
-            noticias en el mundo de la innovación, investigación y tecnología.
-          </p>
-        </div>
-        <form class="flex text-black items-center mx-auto max-w-screen-lg">
-          <Input name="q" placeholder="¿Qué noticia buscas?" />
-          <Button class="border-b-2 border-b-white" kind="secondary" icon>
-            <Icon name="tabler:search" />
-          </Button>
-        </form>
-      </div>
-    </section>
-    {
-      !searchParam && tidings.length > 0 && (
-        <section class="mt-24 container max-w-screen-xl">
-          <h2 class="font-semibold text-2xl mb-12">Última noticia</h2>
-          <div id="last-news" class="swiper">
-            <div class="swiper-wrapper">
-              {tidings.splice(0, 3).map((news) => {
-                const imageSrc = getImageFormats(
-                  news.attributes.image,
-                  "medium",
-                )
+	title="Noticias | I2TEC"
+	description="Las noticias más relevantes en el mundo de la innovación en las que el I2TEC trabaja con docentes y investigadores."
+>
+	<HeroRadial class="pb-12 pt-36">
+		<div class="container">
+			<TitleSection
+				as="h1"
+				class="mb-24 text-center"
+				title="Somos influyentes en el mundo de la innovación"
+				description="Encuentra noticias acerca de nosotros en todo el mundo. Encuentralas en nuestra sección de noticias."
+			/>
+			<form class="mx-auto flex max-w-2xl items-center">
+				<SearchBox
+					class="w-full"
+					id="search-projects"
+					name="q"
+					value={searchParam}
+					placeholder="KIT 2.0 UNL"
+				/>
+			</form>
+		</div>
+	</HeroRadial>
+	{
+		!searchParam && response.data.lastestNews && (
+			<section class="my-24">
+				<div class="container">
+					<h2 class="mb-12 text-2xl font-semibold">Últimas noticias</h2>
+				</div>
+				<HorizontalScroller>
+					{response.error ? (
+						<NoFoundContent message={response.message} />
+					) : (
+						response.data.lastestNews.map((news) => {
+							const imageSrc = getImageFormat(news.image, "medium")
 
-                if (imageSrc === undefined) return <ImageSkeleton />
+							if (imageSrc === undefined) return <ImageSkeleton />
 
-                return (
-                  <div class="swiper-slide">
-                    <LastestNews
-                      title={news.attributes.title}
-                      summary={news.attributes.description}
-                      image={`${BACKEND_IMAGE}${imageSrc}`}
-                      published={news.attributes.publishedAt}
-                      facebookUrl={news.attributes.facebook_url}
-                      instagramUrl={news.attributes.instagram_url}
-                    />
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-        </section>
-      )
-    }
-    <section class="mt-12 section">
-      <div class="container max-w-screen-xl">
-        <h2 class="text-2xl font-semibold mb-8">
-          {
-            !searchParam
-              ? "Todas las noticias"
-              : `Resultados de la busqueda: ${searchParam}`
-          }
-        </h2>
-        <GridView count={tidings.length} minWidth="350px">
-          {
-            tidings.length > 0 &&
-              tidings.map((news) => {
-                const imageSrc = getImageFormats(
-                  news.attributes.image,
-                  "small",
-                )
+							return (
+								<LastestNews
+									class="slide min-w-[500px]"
+									title={news.title}
+									summary={news.description}
+									image={`${BACKEND_URL}${imageSrc}`}
+									publishedAt={news.publishedAt}
+									facebookUrl={news.facebook_url}
+									instagramUrl={news.instagram_url}
+								/>
+							)
+						})
+					)}
+				</HorizontalScroller>
+			</section>
+		)
+	}
 
-                return (
-                  <CardNews
-                    instagramUrl={news.attributes.instagram_url}
-                    facebookUrl={news.attributes.facebook_url}
-                    summary={news.attributes.description}
-                    title={news.attributes.title}
-                    image={`${BACKEND_IMAGE}${imageSrc}`}
-                    publishedDate={news.attributes.publishedAt}
-                    authors={news.attributes.authors?.data}
-                  />
-                )
-              })
-          }
-        </GridView>
-        <Pagination
-          class="mt-12 flex justify-center"
-          urlPag={`/${firstPath}?pag=`}
-          prevUrl={`${pagination.prev}`}
-          nextUrl={`${pagination.next}`}
-          currentPage={currentPage}
-          length={pageCount}
-        />
-      </div>
-    </section>
-  </main>
+	<section class="my-24">
+		<div class="container">
+			<h6 class="mb-12 text-2xl font-semibold">
+				{!searchParam ? "Todas las noticias" : `Resultados de la busqueda: ${searchParam}`}
+			</h6>
+			<GridView class="relative min-h-96" minWidth="350px">
+				{
+					existsTidings ? (
+						response.data.allTidings.map((news) => (
+							<NewsCard
+								instagramUrl={news.instagram_url}
+								facebookUrl={news.facebook_url}
+								description={news.description}
+								title={news.title}
+								image={`${BACKEND_URL}${getImageFormat(news.image, "small")}`}
+								publishedAt={news.publishedAt}
+							/>
+						))
+					) : (
+						<NoFoundContent absolute />
+					)
+				}
+			</GridView>
+			{
+				existsTidings && (
+					<Pagination
+						class="mt-24 flex justify-center"
+						urlPag={`/${firstPath}?pag=`}
+						prevUrl={`${pagination.pages.prev}`}
+						nextUrl={`${pagination.pages.next}`}
+						currentPage={pagination.currentPage}
+						length={pagination.count}
+					/>
+				)
+			}
+		</div>
+	</section>
 </Layout>
-
-<script>
-import Swiper from "swiper"
-import { Autoplay, Pagination } from "swiper/modules"
-
-new Swiper("#last-news", {
-  modules: [Autoplay, Pagination],
-  autoplay: { delay: 5000 },
-})
-</script>

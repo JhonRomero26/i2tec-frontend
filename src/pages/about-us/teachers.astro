@@ -1,142 +1,133 @@
 ---
-import CardTeacher from "@/components/CardTeacher.astro"
+import NoFoundContent from "@/components/NoFoundContent.astro"
+import TeacherCard from "@/components/TeacherCard.astro"
 import TeacherDetailSection from "@/components/TeacherDetailSection.astro"
+import { BACKEND_URL } from "@/consts/app"
 import Layout from "@/layouts/Layout.astro"
-import { BACKEND_IMAGE } from "@/lib/constants"
-import { getTeacherAttributes } from "@/lib/getTeacherAttributes"
-import { getImageFormats } from "@/lib/getImageFormats"
-import type { ImageResponse } from "@/models"
+import type { Teacher } from "@/models/Teacher"
 import { getTeachers } from "@/services/teachers"
+import { getImageFormat } from "@/utils/image"
 
-const res = await getTeachers(["populate=person.avatar"])
-const teachers = res && res.data ? res.data : []
-const selectedTeacher = teachers.length > 0 ? teachers[0] : undefined
-const personData = { fullName: "", avatar: {}, biography: "" }
+const response = {
+	data: [] as Teacher[],
+	error: false,
+	message: "Hubo un error al obtener las noticias.",
+}
 
-if (selectedTeacher) {
-  const result = getTeacherAttributes(selectedTeacher)
-  Object.assign(personData, result)
+await getTeachers()
+	.then(({ data }) => {
+		response.data = data!
+	})
+	.catch((_) => {
+		response.error = true
+	})
+
+if (response.error) return Astro.redirect("/404")
+
+const totalTeachers = response.data.length
+const selectedTeacher = totalTeachers > 0 ? response.data[0] : ({} as Teacher)
+const { first_name, last_name, avatar } = selectedTeacher?.person
+const personData = {
+	fullName: `${first_name} ${last_name}`,
+	avatar: `${BACKEND_URL}${avatar?.formats.small.url}`,
+	biography: selectedTeacher?.biography || "",
 }
 ---
 
 <Layout
-  title="Docentes | I2TEC"
-  description="Nuestros docentes fundadores y colaboradores en el I2TEC muestran cada día su compromiso para el avance de la tecnología. Conoce a quienes forman parte del I2TEC.">
-  <main>
-    <section class="py-32 bg-primary text-white bg-svg-architect">
-      <div class="container">
-        {
-          selectedTeacher ? (
-            <TeacherDetailSection
-              name={personData.fullName}
-              image={`${BACKEND_IMAGE}${
-                getImageFormats(personData.avatar as ImageResponse, "large")
-              }`}
-              summary={personData.biography}
-            />
-          ) : (
-            <TeacherDetailSection
-              name="No hemos encontrado docentes"
-              summary="En breve estaremos presentes con nuevos docentes que participan dentro del I2TEC"
-              image=""
-            />
-          )
-        }
-      </div>
-    </section>
-    <section class="section pt-40">
-      <div class="container">
-        <h1 class="mb-32 text-center text-4xl font-bold">
-          Nuestros docentes
-        </h1>
-      </div>
-      <div class="container">
-        <div
-          class="grid gap-4 grid-cols-[repeat(auto-fill,minmax(220px,1fr))]"
-        >
-          {
-            teachers.length > 0 &&
-              teachers.map((teacher) => {
-                const { fullName, avatar } = getTeacherAttributes(teacher)
-
-                return (
-                  <div
-                    id={`${teacher.id}`}
-                    class="transition hover:shadow bg-gray-50 rounded"
-                    data-ref="CardTeacher"
-                  >
-                    <CardTeacher
-                      class="cursor-pointer"
-                      image={
-                        avatar && avatar.data
-                          ? `${BACKEND_IMAGE}${getImageFormats(avatar, "small")}`
-                          : "/images/user-placeholder.png"
-                      }
-                      name={fullName}
-                    />
-                  </div>
-                )
-              })
-          }
-        </div>
-      </div>
-    </section>
-  </main>
+	title="Docentes | I2TEC"
+	description="Nuestros docentes fundadores y colaboradores en el I2TEC muestran cada día su compromiso para el avance de la tecnología. Conoce a quienes forman parte del I2TEC."
+>
+	<main>
+		<section class="bg-svg-architect bg-ui01 py-32">
+			<div class="container">
+				{
+					selectedTeacher ? (
+						<TeacherDetailSection
+							name={personData.fullName}
+							image={personData.avatar}
+							summary={personData.biography}
+						/>
+					) : (
+						<TeacherDetailSection
+							name="No hemos encontrado docentes"
+							summary="En breve estaremos presentes con nuevos docentes que participan dentro del I2TEC"
+							image="/user-placeholder.webp"
+						/>
+					)
+				}
+			</div>
+		</section>
+		<section class="section pt-40">
+			<div class="container">
+				<h1 class="text-center text-4xl font-bold">Nuestros docentes</h1>
+			</div>
+			<div class="container">
+				<div class="grid grid-cols-1 gap-4 py-32 lg:grid-cols-2 2xl:grid-cols-3">
+					{
+						response.error ? (
+							<NoFoundContent message={response.message} />
+						) : (
+							response.data.map(({ id, person: { first_name, last_name, avatar }, biography }) => (
+								<div data-id={id} data-ref="CardTeacher">
+									<TeacherCard
+										class="cursor-pointer"
+										firstName={first_name}
+										lastName={last_name}
+										image={
+											avatar
+												? `${BACKEND_URL}${getImageFormat(avatar, "small")}`
+												: "/user-placeholder.png"
+										}
+										description={biography}
+									/>
+								</div>
+							))
+						)
+					}
+				</div>
+			</div>
+		</section>
+	</main>
 </Layout>
 
-<script>
-  import { BACKEND_IMAGE } from "@/lib/constants"
-import { getImageFormats } from "@/lib/getImageFormats"
-import { getTeacherAttributes } from "@/lib/getTeacherAttributes"
-import type { ImageResponse, Teacher } from "@/models"
-import { getTeacher } from "@/services/teachers"
+<script is:inline define:vars={{ teachers: response.data }}>
+	const onLoad = () => {
+		const $cards = document.querySelectorAll("[data-ref='CardTeacher']")
+		const $name = document.querySelector("[data-ref='TeacherDetail-name']")
+		const $image = document.querySelector("[data-ref='TeacherDetail-image']")
+		const $summary = document.querySelector("[data-ref='TeacherDetail-summary']")
 
-  const $cards = document.querySelectorAll("[data-ref='CardTeacher']")
-  const $name = document.querySelector("[data-ref='TeacherDetail-name']")
-  const $image = document.querySelector(
-    "[data-ref='TeacherDetail-image']"
-  ) as HTMLImageElement
-  const $summary = document.querySelector("[data-ref='TeacherDetail-summary']")
+		const setTeacherInfo = ({ first_name, last_name, avatar, biography }) => {
+			const fullName = `${first_name} ${last_name}`
+			$name.innerHTML = fullName
+			if (avatar) $image.src = `https://admin.i2tec.ec${avatar.url}`
+			$summary.innerHTML = biography
+		}
 
-  const teachers: Teacher[] = []
-  const setTeacherInfo = ({
-    fullName,
-    avatar,
-    biography,
-  }: {
-    fullName: string;
-    avatar?: ImageResponse;
-    biography: string;
-  }) => {
-    $name!.innerHTML = fullName
-    if (avatar)
-      $image!.src = `${BACKEND_IMAGE}${
-        getImageFormats(avatar as ImageResponse, "large")
-      }`
-    $summary!.innerHTML = biography
-  }
+		$cards.forEach(($card) => {
+			$card.addEventListener("click", () => {
+				const id = Number($card.getAttribute("data-id"))
+				const index = teachers.findIndex((teacher) => teacher.id === id)
+				const {
+					person: { first_name, last_name, avatar },
+					biography,
+				} = teachers[index]
+				const teacher = {
+					avatar,
+					first_name,
+					biography,
+					last_name,
+				}
+				setTeacherInfo(teacher)
+				teachers.push(teacher)
+				window.scroll({ behavior: "smooth", top: 60 })
+			})
+		})
+	}
+	onLoad()
 
-  $cards.forEach(($card) => {
-    $card.addEventListener("click", () => {
-      const id = Number($card.getAttribute("id"))
-
-      const index = teachers.findIndex((teacher) => teacher.id === id)
-      if (index === -1)
-        getTeacher(id, ["populate=person.avatar"])
-          .then((res) => {
-            const result = getTeacherAttributes(res.data!)
-            setTeacherInfo(result)
-            teachers.push(res.data!)
-          })
-          .catch(() => {
-            console.error(`Not found teacher with id ${id}`)
-          })
-      else {
-        const result = getTeacherAttributes(teachers[index])
-        setTeacherInfo(result)
-      }
-
-      window.scroll({ behavior: "smooth", top: 60 })
-    })
-  })
+	document.addEventListener("astro:after-swap", () => {
+		onLoad()
+	})
 </script>

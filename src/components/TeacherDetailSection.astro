@@ -1,47 +1,53 @@
 ---
-type Props = {
-  name: string;
-  image?: string;
-  summary: string;
+import { Image } from "astro:assets"
+import snarkdown from "snarkdown"
+
+interface Props {
+	name: string
+	image?: string
+	summary: string
 }
 
 const { name, image, summary } = Astro.props
 ---
 
 <div
-  class="isolate mx-auto grid w-full max-w-screen-xl gap-8 bg-white/25 p-12 shadow backdrop-blur lg:grid-cols-[0.5fr_1fr]"
+	class="isolate mx-auto grid w-full max-w-screen-xl gap-8 rounded-lg bg-white/10 p-12 shadow-lg backdrop-blur dark:bg-gray-950/10 lg:grid-cols-[0.5fr_1fr]"
 >
-  <div class="flex lg:flex-col lg:justify-normal justify-center">
-    <picture
-      class="h-96 relative block ml-12 mt-12 aspect-[3/4] lg:h-min before:absolute before:bottom-12 before:right-12 before:z-[-1] before:h-full before:w-full before:border-8 before:border-solid before:border-primary before:content-['']"
-    >
-      {
-        image ? (
-          <img
-            data-ref="TeacherDetail-image"
-            loading="lazy"
-            class="w-full h-full object-cover object-center"
-            src={image}
-            alt={name}
-          />
-        ) : (
-          <img
-            data-ref="TeacherDetail-image"
-            loading="lazy"
-            class="w-full h-full object-cover object-center"
-            src="/images/user-placeholder.png"
-            alt={name}
-          />
-        )
-      }
-    </picture>
-  </div>
-  <div class="flex flex-col gap-4">
-    <div data-ref="TeacherDetail-name" class="text-3xl lg:text-4xl font-bold">
-      {name}
-    </div>
-    <div data-ref="TeacherDetail-summary" class="leading-relaxed text-lg">
-      {summary}
-    </div>
-  </div>
+	<div class="flex justify-center lg:flex-col lg:justify-normal">
+		<figure
+			class="relative ml-12 mt-12 block aspect-[3/4] h-96 before:absolute before:bottom-12 before:right-12 before:z-[-1] before:h-full before:w-full before:rounded-lg before:border-8 before:border-solid before:border-primary before:content-[''] lg:h-min"
+		>
+			{
+				image ? (
+					<Image
+						inferSize
+						data-ref="TeacherDetail-image"
+						loading="lazy"
+						class="h-full w-full rounded-lg object-cover object-center"
+						src={image}
+						alt={name}
+					/>
+				) : (
+					<img
+						data-ref="TeacherDetail-image"
+						loading="lazy"
+						class="h-full w-full rounded-lg object-cover object-center"
+						src="/images/user-placeholder.webp"
+						alt={name}
+					/>
+				)
+			}
+		</figure>
+	</div>
+	<div class="flex flex-col gap-4">
+		<div data-ref="TeacherDetail-name" class="text-3xl font-bold text-primary lg:text-4xl">
+			{name}
+		</div>
+		<div
+			data-ref="TeacherDetail-summary"
+			class="text-lg leading-relaxed"
+			set:html={snarkdown(summary)}
+		/>
+	</div>
 </div>

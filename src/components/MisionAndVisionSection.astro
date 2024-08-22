@@ -1,32 +1,39 @@
 ---
-import TitleWithText from "@/components/TitleWithText.astro"
 import InfoBox from "@/components/InfoBox.astro"
-import infoPage from "@/data/about-us-data.json"
+import TitleSection from "@/components/TitleSection.astro"
 ---
 
-<section class="section bg-primary text-white pt-40">
-  <div class="container">
-    <TitleWithText class="mb-12 text-center">
-      <h2 slot="title" class="text-center text-4xl font-bold mb-8">
-        Nuestra meta
-      </h2>
-       Tenemos una dirección hacia nuestros propositos, contamos con nuestra
-      misión y visión.
-    </TitleWithText>
-    <div class="grid gap-16 lg:grid-cols-2">
-      {
-        infoPage.misionAndVision.map((item, index) => (
-          <InfoBox
-            decoration={index % 2 == 0 ? "left" : "right"}
-            class="text-black"
-            title={item.title}
-          >
-            {item.description.map((paragraph) => (
-              <p class="text-gray-800">{paragraph}</p>
-            ))}
-          </InfoBox>
-        ))
-      }
-    </div>
-  </div>
+<section class="pt-40">
+	<div class="container">
+		<TitleSection
+			class="pt-32"
+			title="Surgimos de la investigación"
+			description="En el centro de investigación, innovación y tecnología, nuestro compromiso con la investigación es el corazón de todo lo que hacemos. Surgimos de la investigación y estamos dedicados a llevar a cabo investigaciones vanguardistas que aborden algunos de los desafíos más apremiantes de nuestro tiempo."
+		/>
+		<div class="grid gap-16 py-24 lg:grid-cols-2">
+			<InfoBox decoration="left" title="Misión">
+				<p class="text-pretty">
+					Dinamizar la investigación e innovación aplicada para el desarrollo de soluciones
+					tecnológicas que contribuyan con el medio ambiental y económicamente sostenibles hacia los
+					retos de la sociedad del Sur del Ecuador.
+				</p>
+				<p class="text-pretty">
+					Contribuir a que el conocimiento en ciencia, tecnología e innovación se transforme en
+					desarrollo de soluciones tecnológicas, para impulsar, articular, generar y transferir
+					conocimiento científico y tecnológico que aporte al desarrollo educativo, productivo y
+					sostenible, para dar respuesta a los intereses de la sociedad Sur del Ecuador, mediante
+					programas, proyectos y servicios económicamente sostenibles y que contribuyan con el
+					desarrollo de la sociedad.
+				</p>
+			</InfoBox>
+
+			<InfoBox decoration="right" title="Visión">
+				<p class="text-pretty">
+					Ser un referente regional y nacional en la gestión y apropiación de la ciencia, la
+					tecnología y la innovación, para ofrecer soluciones útiles, integrales, sostenibles e
+					innovadoras, para contribuir con el desarrollo de la sociedad.
+				</p>
+			</InfoBox>
+		</div>
+	</div>
 </section>

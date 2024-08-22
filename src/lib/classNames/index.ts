@@ -1,6 +1,0 @@
-export * from "@/lib/classNames/button"
-export * from "@/lib/classNames/header"
-export * from "@/lib/classNames/infoBox"
-export * from "@/lib/classNames/input"
-export * from "@/lib/classNames/effects"
-export * from "@/lib/classNames/slider"

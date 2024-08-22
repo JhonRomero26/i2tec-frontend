@@ -1,0 +1,55 @@
+---
+import { Image } from "astro:assets"
+
+import CalendarIcon from "@/icons/CalendarIcon.astro"
+import UserIcon from "@/icons/UserIcon.astro"
+import type { Person } from "@/models/Person"
+import { dateFormater, formatAuthorName } from "@/utils/formatters"
+
+interface Props {
+	id?: string
+	class?: string
+	href?: string
+	title: string
+	image: string
+	excerpt: string
+	authors?: Person[]
+	publishedAt: Date
+}
+
+const { id, title, href, image, excerpt, authors = [], publishedAt, class: className } = Astro.props
+const published = dateFormater({ date: publishedAt })
+const authorNames = authors.map(formatAuthorName).join("; ")
+---
+
+<article class:list={["w-full p-2", className]}>
+	<a class="group" href={href}>
+		<div class="aspect-[16/11] w-full overflow-hidden rounded-lg">
+			<Image
+				transition:name={`project ${id} image`}
+				src={image}
+				class="object-fit h-full w-full object-center transition-transform group-hover:scale-110"
+				alt={title}
+				width={300}
+				height={180}
+				format="webp"
+			/>
+		</div>
+		<div class="flex flex-col gap-4 pt-4">
+			<h3 class="flex-1 text-2xl font-bold transition-colors group-hover:text-accent">
+				{title}
+			</h3>
+			<p class="text-pretty">{excerpt}</p>
+			<div class="flex w-full justify-between gap-12 overflow-hidden">
+				<div class="flex min-w-28 items-center gap-2 text-sm">
+					<CalendarIcon class="text-xl" />
+					<time datetime={published}>{published}</time>
+				</div>
+				<div class="flex items-center gap-2">
+					<div><UserIcon class="text-xl" /></div>
+					<span class="text-nowrap text-sm">{authorNames}</span>
+				</div>
+			</div>
+		</div>
+	</a>
+</article>

@@ -1,0 +1,55 @@
+---
+import HorizontalScroller from "@/components/HorizontalScroller.astro"
+import NoFoundContent from "@/components/NoFoundContent.astro"
+import ProjectCard from "@/components/ProjectCard.astro"
+import TitleSection from "@/components/TitleSection.astro"
+import { BACKEND_URL } from "@/consts/app"
+import type { Project } from "@/models/Project"
+import { getProjects } from "@/services/project"
+import { getImageFormat } from "@/utils/image"
+
+const response = {
+	data: [] as Project[],
+	error: false,
+	message: "Hubo un error al obtener los proyectos",
+}
+
+await getProjects()
+	.then(({ data }) => {
+		response.data = data!
+	})
+	.catch((_) => {
+		response.error = true
+	})
+---
+
+<section class="py-32">
+	<TitleSection
+		class="mb-24"
+		title="Nuestros últimos proyectos"
+		description="Trabajamos en nuevos proyectos para impulsar el conocimiento tecnológico de nuestra comunidad."
+	/>
+	<HorizontalScroller gap="1.5rem">
+		{
+			response.error ? (
+				<NoFoundContent message={response.message} />
+			) : (
+				response.data.map((project) => (
+					<ProjectCard
+						id={`${project.id}`}
+						class="slide min-w-[400px] max-w-[400px]"
+						href={`/projects/${project.slug}`}
+						title={project.title}
+						image={BACKEND_URL.concat(getImageFormat(project.image, "small"))}
+						excerpt={project.excerpt}
+						authors={project.authors}
+						publishedAt={project.publishedAt}
+					/>
+				))
+			)
+		}
+	</HorizontalScroller>
+	<div class="mt-16 flex justify-center">
+		<a class="btn btn-secondary" href="/projects">Ver todos los proyectos</a>
+	</div>
+</section>

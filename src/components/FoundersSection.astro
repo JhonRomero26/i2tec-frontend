@@ -1,44 +1,50 @@
 ---
 import Avatar from "@/components/Avatar.astro"
-import { BACKEND_IMAGE } from "@/lib/constants"
-import { getPeople } from "@/services/person"
-import { getImageFormats } from "@/lib/getImageFormats"
+import { BACKEND_URL } from "@/consts/app"
+import type { Person } from "@/models/Person"
+import { getPeople } from "@/services/people"
+import { getImageFormat } from "@/utils/image"
 
-const res = await getPeople([
-  "populate=avatar",
-  "fields[0]=first_name",
-  "fields[1]=last_name",
-])
-
-const founders = res && res.data ? res.data : []
+const response = {
+	data: [] as Person[],
+	error: false,
+	message: "",
+}
+await getPeople({
+	query: ["fields[0]=first_name", "fields[1]=last_name", "filters[founder][$equal]=true"],
+})
+	.then(({ data }) => {
+		response.data = data!
+	})
+	.catch((_) => {
+		response.error = true
+	})
 ---
 
-<section class="section bg-primary text-white">
-  <div class="container max-w-screen-md">
-    <h2 class="mb-16 text-center text-4xl font-bold">Nuestros fundadores</h2>
-    <div class="flex flex-col gap-8 xs:flex-row md:gap-12">
-      {
-        founders!.length > 0 &&
-          founders?.map((founder) => {
-            const { first_name, last_name } = founder.attributes
-            const fullName = `${first_name} ${last_name}`
-
-            return (
-              <div class="w-full flex flex-col gap-3 items-center">
-                <Avatar
-                  class="w-44 h-44"
-                  image={
-                    founder.attributes.avatar && founder.attributes.avatar.data
-                      ? `${BACKEND_IMAGE}${getImageFormats(founder.attributes.avatar, "small")}`
-                      : "/images/user-placeholder.png"
-                  }
-                  alt={fullName}
-                />
-                <span class="text-center text-xl font-medium">{fullName}</span>
-              </div>
-            )
-          })
-      }
-    </div>
-  </div>
+<section class="py-24">
+	<div class="container">
+		<h2 class="mb-16 text-center text-4xl font-bold">Nuestros fundadores</h2>
+		<div class="flex flex-col gap-8 xs:flex-row md:gap-12">
+			{
+				response.data!.length > 0 &&
+					response.data?.map(({ first_name, last_name, avatar }) => (
+						<div class="flex w-full flex-col items-center gap-3">
+							<Avatar
+								class="h-44 w-44"
+								image={
+									avatar
+										? `${BACKEND_URL}${getImageFormat(avatar, "small")}`
+										: "/user-placeholder.webp"
+								}
+								alt={`${first_name} ${last_name}`}
+							/>
+							<span class="text-center text-xl">{`${first_name} ${last_name}`}</span>
+						</div>
+					))
+			}
+		</div>
+		<div class="mt-16 flex justify-center">
+			<a class="btn btn-secondary" href="/about-us/teachers">Todos nuestros docentes</a>
+		</div>
+	</div>
 </section>

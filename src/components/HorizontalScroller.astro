@@ -1,0 +1,19 @@
+---
+import NoFoundContent from "./NoFoundContent.astro"
+
+interface Props {
+	gap?: string
+}
+
+const { gap = "2rem" } = Astro.props
+---
+
+<div class="slider scrollbar-invisible relative overflow-x-auto">
+	<div style={{ gap }} class="flex flex-nowrap">
+		<div class="slide md:min-w-12 xl:min-w-[5.5vw]"></div>
+		<slot>
+			<NoFoundContent />
+		</slot>
+		<div class="slide min-w-px md:min-w-12 xl:min-w-[5.5vw]"></div>
+	</div>
+</div>

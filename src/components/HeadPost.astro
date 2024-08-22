@@ -1,0 +1,76 @@
+---
+import { Image } from "astro:assets"
+
+import ClockIcon from "@/icons/ClockIcon.astro"
+import UserIcon from "@/icons/UserIcon.astro"
+import type { Person } from "@/models/Person"
+import { dateFormater, formatAuthorName } from "@/utils/formatters"
+
+interface Props {
+	id: string
+	title: string
+	excerpt: string
+	published: Date
+	authors: Person[]
+	image: string
+}
+
+const { id, title, published, authors, image, excerpt } = Astro.props
+
+const publisDate = dateFormater({ date: published })
+const authorNames = authors.map(formatAuthorName).join(" · ")
+---
+
+<header>
+	<div
+		class="mx-auto mb-2 mt-0 flex max-w-3xl flex-col justify-between px-4 sm:flex-row sm:items-center sm:px-6"
+	>
+		<p>
+			<ClockIcon class="-mt-0.5 inline-block text-lg text-ui03" />
+			<time class="inline-block" datetime={publisDate}>{publisDate}</time>
+			<span> · </span>
+			<span>5 min read</span>
+		</p>
+	</div>
+	<h1
+		id="post-title"
+		class="font-heading leading-tighter mx-auto mb-3 max-w-3xl px-4 text-4xl font-bold tracking-tighter text-primary transition-colors sm:px-6 md:text-5xl"
+	>
+		{title}
+	</h1>
+	{
+		authors.length > 0 && (
+			<p class="mx-auto mb-2 mt-0 max-w-3xl px-4 sm:flex-row sm:items-center sm:px-6">
+				<UserIcon class="-mt-0.5 inline-block text-lg text-ui03" />
+				<span>{authorNames}</span>
+			</p>
+		)
+	}
+	<p
+		id="post-excerpt"
+		class="text-muted text-ui05 mx-auto mb-8 mt-4 max-w-3xl px-4 text-justify text-xl sm:px-6 md:text-2xl"
+	>
+		{excerpt}
+	</p>
+	<figure class="mx-auto mb-6 max-w-full bg-ui01 sm:rounded-md lg:max-w-[900px]">
+		<Image
+			transition:name={`project ${id} image`}
+			loading="lazy"
+			width={900}
+			height={500}
+			format="webp"
+			quality={65}
+			class="aspect-[16/9] w-full object-cover object-center lg:rounded-lg"
+			src={image}
+			alt={title}
+		/>
+		<!-- <ButtonAnchor
+      target="_blank"
+      class="absolute bottom-0 right-0 h-auto px-12 py-6 z-[1]"
+      href={repositoryURL}
+      kind="primary"
+    >
+      Vér proyecto
+    </ButtonAnchor> -->
+	</figure>
+</header>

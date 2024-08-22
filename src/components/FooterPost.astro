@@ -1,0 +1,91 @@
+---
+import FacebookIcon from "@/icons/FacebookIcon.astro"
+import XIcon from "@/icons/XIcon.astro"
+import type { Category } from "@/models/Category"
+
+interface Props {
+	title: string
+	categories?: Category[]
+}
+
+const { title, categories } = Astro.props
+---
+
+<div class="mx-auto mt-8 flex max-w-3xl flex-col justify-between px-6 sm:flex-row sm:px-6">
+	<ul class="mr-5 rtl:ml-5 rtl:mr-0">
+		{
+			categories?.map(({ name }) => (
+				<li class="mb-2 mr-2 inline-block bg-gray-100 px-2 py-0.5 font-medium lowercase dark:bg-slate-700 rtl:ml-2 rtl:mr-0">
+					<a
+						href={`/tag/${name}`}
+						class="text-muted hover:text-primary dark:text-slate-300 dark:hover:text-gray-200"
+					>
+						{name}
+					</a>
+				</li>
+			))
+		}
+	</ul>
+	<div class="mt-5 align-middle text-gray-600 sm:mt-1">
+		<span class="align-super font-bold text-slate-700">Compartir:</span>
+		<button
+			id="x-share"
+			class="ml-2 rtl:ml-0 rtl:mr-2"
+			data-social-share="X"
+			title="X Share"
+			data-text={title}
+		>
+			<XIcon class="h-6 w-6 text-gray-700 hover:text-slate-500" />
+		</button>
+		<button
+			id="fb-share"
+			data-href={Astro.url}
+			data-lazy="true"
+			class="ml-2 rtl:ml-0 rtl:mr-2"
+			data-social-share="facebook"
+			data-href={Astro.url}
+			title="Facebook Share"
+			data-text={title}
+		>
+			<FacebookIcon class="h-6 w-6 text-gray-700 hover:text-slate-500" />
+		</button>
+	</div>
+</div>
+
+<script>
+	const pageURL = `i2tec.ec${window.location.pathname}`
+	const xShare = document.getElementById("x-share")
+	const fbShare = document.getElementById("fb-share")
+	const linkedinShare = document.getElementById("linkedin-share")
+
+	const $title = document.getElementById("post-title")
+	const $excerpt = document.getElementById("post-excerpt")
+
+	const title = $title?.textContent
+	const excerpt = $excerpt?.textContent
+	const text = `¡No te pierdas de los nuevos projectos del I2TEC!
+${title}
+
+${excerpt}
+
+→ ${pageURL}`
+
+	const handleShare = async () => {
+		const intent = "https://twitter.com/intent/tweet"
+		window.open(`${intent}?text=${encodeURIComponent(text)}`)
+	}
+
+	const handleFbShare = async () => {
+		const intent = "https://www.facebook.com/sharer/sharer.php"
+		window.open(`${intent}?u=${encodeURIComponent(pageURL)}`)
+	}
+
+	const handleLkShare = async () => {
+		const intent = "https://api.linkedin.com/v2/ugcPosts"
+		window.open(`${intent}?text=${encodeURIComponent(text)}`)
+	}
+
+	xShare?.addEventListener("click", handleShare)
+	fbShare?.addEventListener("click", handleFbShare)
+	linkedinShare?.addEventListener("click", handleLkShare)
+</script>

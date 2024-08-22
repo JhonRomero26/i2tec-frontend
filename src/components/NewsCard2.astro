@@ -1,0 +1,67 @@
+---
+import { Image } from "astro:assets"
+
+import CalendarIcon from "@/icons/CalendarIcon.astro"
+import FacebookIcon from "@/icons/FacebookIcon.astro"
+import InstagramIcon from "@/icons/InstagramIcon.astro"
+import { dateFormater } from "@/utils/formatters"
+
+interface Props {
+	title: string
+	image: string
+	class?: string
+	summary: string
+	publishedAt: Date | string
+	facebookUrl?: string
+	instagramUrl?: string
+}
+
+const {
+	image,
+	title,
+	class: className,
+	publishedAt,
+	summary,
+	instagramUrl,
+	facebookUrl,
+} = Astro.props
+const published = dateFormater({ date: publishedAt })
+---
+
+<article class:list={["group relative isolate h-auto w-full bg-ui01", className]}>
+	<picture class="relative block aspect-video overflow-hidden">
+		<Image
+			quality={60}
+			format="webp"
+			inferSize
+			loading="lazy"
+			class="h-full w-full object-cover object-center transition-transform"
+			src={image}
+			alt={title}
+			title={title}
+		/>
+	</picture>
+
+	<div class="flex flex-col gap-2 pt-4">
+		<h3 class="line-clamp-2 text-ellipsis text-lg font-bold">{title}</h3>
+		<span class="order-2 line-clamp-3 text-neutral-700">{summary}</span>
+		<div class="gap-1 text-neutral-600">
+			<div class="flex items-center gap-2 text-base">
+				<CalendarIcon aria-label="published" />
+				<time datetime={published}>{published}</time>
+			</div>
+		</div>
+		<footer class="order-3 mt-4 flex justify-end" slot="footer">
+			<a target="_blank" href={facebookUrl} class="btn btn-icon">
+				<FacebookIcon />
+			</a>
+			{
+				instagramUrl && (
+					<a target="_blank" href={instagramUrl} class="btn btn-icon">
+						<InstagramIcon />
+					</a>
+				)
+			}
+		</footer>
+	</div>
+</article>

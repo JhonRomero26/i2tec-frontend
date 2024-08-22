@@ -1,82 +1,77 @@
 ---
-import Button from "@/components/Button.astro"
-import { Icon } from "astro-icon/components"
+import BurgerButton from "@/components/BurgerButton.astro"
+import ThemeToggle from "@/components/ThemeToggle.astro"
+import { APP_ROUTES } from "@/consts/routing"
 
-import { APP_ROUTES } from "@/lib/constants/routing"
-import { getSocialNetworks } from "@/services/social-network"
-import type { SocialNetwork } from "@/models"
-
-const res = await getSocialNetworks()
-let socials: SocialNetwork[] = []
-if (res && res.data) {
-  socials = res.data
-}
+const { pathname } = Astro.url
 ---
 
-<header transition:persist="true" class="main-header">
-  <div class="main-header-header">
-    <div
-      class="md:justify-initial container flex h-full items-center justify-between"
-    >
-      <a class="relative mr-4 flex h-full w-28" href="/">
-        <img
-          loading="lazy"
-          class="object-contain object-center"
-          src="/images/i2tec-logo.webp"
-          alt="Logo del centro de investigación, innovación y tecnología"
-        />
-      </a>
-
-      <Button id="burger-button" class="md:hidden" aria-label="Menu" icon>
-        <Icon slot="icon" name="tabler:menu-2" aria-label="Menu" />
-      </Button>
-
-      <nav id="header-navigator" class="main-header-navigator">
-        <div>
-          <ul class="flex flex-col text-sm md:flex-row">
-            {
-              APP_ROUTES.map((route) => (
-                <li class="menu-item">
-                  <a
-                    class="max-md:hover:bg-primary/10 block border-b-4 border-transparent px-4 py-2 font-bold transition-colors md:hover:border-primary md:hover:text-primary"
-                    href={route.path}
-                  >
-                    {route.label}
-                  </a>
-                </li>
-              ))
-            }
-          </ul>
-        </div>
-        <div class="max-md:flex-col flex gap-x-4 text-sm md:hidden">
-          <div class="text-center text-sm font-bold">
-            Nuestras redes sociales
-          </div>
-          <ul class="flex justify-between px-4 py-8">
-            {
-              socials.length > 0 &&
-                socials.map(({ attributes }) => {
-                  const { url, title } = attributes
-                  return (
-                    <li>
-                      <a
-                        href={url}
-                        class="text-xl"
-                        rel="noreferrer"
-                        target="_blank"
-                      >
-                        <Icon name={`tabler:brand-${title.toLowerCase()}`} />
-                        <span class="sr-only">{title}</span>
-                      </a>
-                    </li>
-                  )
-                })
-            }
-          </ul>
-        </div>
-      </nav>
-    </div>
-  </div>
+<header>
+	<div id="header" class="fixed left-0 top-0 z-50 w-full px-4 py-6 text-primary">
+		<div class="container flex h-full items-center justify-between">
+			<a class="relative mr-4 flex h-full w-28 flex-1" href="/">
+				<img
+					loading="lazy"
+					class="max-w-32 dark:hidden"
+					src="/images/i2tec-logo.webp"
+					alt="Logo del centro de investigación, innovación y tecnología"
+				/>
+				<img
+					loading="lazy"
+					class="hidden max-w-32 dark:block"
+					src="/images/i2tec-logo-wh.webp"
+					alt="Logo del centro de investigación, innovación y tecnología"
+				/>
+			</a>
+			<nav
+				id="header-navigator"
+				class="absolute right-8 top-full z-20 w-full max-w-48 flex-1 justify-center gap-4 rounded max-md:invisible max-md:flex-col max-md:bg-ui01 max-md:py-2 max-md:opacity-0 max-md:shadow md:static md:flex md:flex-row md:items-center md:p-0"
+			>
+				<ul class="flex flex-col text-sm md:flex-row">
+					{
+						APP_ROUTES.map(({ label, path }) => (
+							<li>
+								<a
+									class:list={[
+										"block border-transparent px-4 py-2 font-medium transition-colors hover:text-accent max-md:hover:bg-brand-500/25 md:hover:border-accent",
+										pathname === path && "text-accent",
+									]}
+									href={path}
+								>
+									{label}
+								</a>
+							</li>
+						))
+					}
+				</ul>
+			</nav>
+			<div class="flex flex-1 justify-end">
+				<ThemeToggle />
+				<BurgerButton />
+			</div>
+		</div>
+	</div>
 </header>
 
-<script src="./scripts/header.ts"></script>
+<script>
+	const onLoad = () => {
+		const $burgerBtn = document.querySelector("#burger-button") as HTMLButtonElement
+		const $navigator = document.querySelector("#header-navigator") as HTMLElement
+
+		const $cover = document.createElement("div")
+		$cover.classList.add("overlay")
+
+		const handleClickButton = () => {
+			$navigator.classList.toggle("max-md:opacity-0")
+			$navigator.classList.toggle("max-md:invisible")
+			$navigator.classList.toggle("max-md:h-max")
+		}
+
+		$burgerBtn.addEventListener("click", handleClickButton)
+	}
+	onLoad()
+
+	document.addEventListener("astro:after-swap", () => {
+		onLoad()
+	})
+</script>

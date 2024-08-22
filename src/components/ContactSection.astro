@@ -1,0 +1,75 @@
+---
+import TitleSection from "./TitleSection.astro"
+---
+
+<section class="pb-24">
+	<!-- <div class="container flex flex-col gap-12 rounded bg-ui01 px-8 py-12 shadow lg:flex-row"> -->
+	<div class="container flex flex-col items-center gap-12">
+		<div class="w-full flex-1 text-center max-lg:mx-auto max-lg:max-w-lg lg:text-left">
+			<TitleSection
+				title="Contactate con nosotros"
+				description="Ponte en contacto con nuestro equipo si necesitas poner en marcha una idea. Puedes enviar tu propuesta desde el siguiente formulario."
+			/>
+			<!-- <h2 class="mb-8 text-3xl font-bold text-primary">Contactate con nosotros</h2> -->
+			<!-- <p class="mb-4 text-pretty">
+				Ponte en contacto con nuestro equipo si necesitas poner en marcha una idea. Puedes enviar tu
+				propuesta desde el siguiente formulario.
+			</p>
+			<p class="text-pretty">
+				Cada idea la valoramos y la aceptamos, te propondremos la mejor solución y crearemos la
+				mejor desición y solución.
+			</p> -->
+		</div>
+		<a href="mailto:ci2tec@unl.edu.ec" class="btn btn-primary">Enviar mensaje</a>
+
+		<!-- <form id="contact-form" class="flex-1">
+			<div class="group relative z-0 mb-5 w-full">
+				<label for="email-contact" class="mb-2 block text-sm font-medium text-primary"
+					>Correo electrónico</label
+				>
+				<input
+					class="input"
+					type="email"
+					name="email-contact"
+					id="email-contact"
+					placeholder="example@domain.com"
+					required
+				/>
+			</div>
+			<div class="group relative z-0 mb-5 w-full">
+				<label for="message-contact" class="mb-2 block text-sm font-medium text-primary"
+					>Mensaje</label
+				>
+				<textarea
+					name="message-contact"
+					id="message-contact"
+					class="input"
+					rows="5"
+					placeholder="Un saludo especial para ustedes, me encantaria hablar sobre..."
+					required
+					>Un saludo especial, mi nombre es [nombre], me encantaria hablar sobre [asunto]...</textarea
+				>
+			</div>
+			<button type="submit" class="btn btn-primary">Enviar mensaje</button>
+		</form> -->
+	</div>
+</section>
+
+<script>
+	const onLoad = () => {
+		const $form = document.querySelector("#contact-form") as HTMLFormElement
+
+		$form.addEventListener("submit", () => {
+			const form = new FormData($form)
+			const email = form.get("email-contact") || ""
+			const message = form.get("message-contact") || ""
+
+			const url = `mailto:?subject=${email}&body=${message}`
+		})
+	}
+	onLoad()
+
+	document.addEventListener("astro:after-swap", () => {
+		onLoad()
+	})
+</script>
