@@ -1,4 +1,6 @@
 ---
+import snarkdown from "snarkdown"
+
 import NoFoundContent from "@/components/NoFoundContent.astro"
 import TeacherCard from "@/components/TeacherCard.astro"
 import TeacherDetailSection from "@/components/TeacherDetailSection.astro"
@@ -13,6 +15,8 @@ const response = {
 	error: false,
 	message: "Hubo un error al obtener las noticias.",
 }
+
+const snk = snarkdown
 
 await getTeachers()
 	.then(({ data }) => {
@@ -93,6 +97,10 @@ const personData = {
 
 <script is:inline define:vars={{ teachers: response.data }}>
 	const onLoad = () => {
+		let snarkdown
+		import("https://cdnjs.cloudflare.com/ajax/libs/snarkdown/2.0.0/snarkdown.es.min.js").then(
+			({ default: _snarkdown }) => (snarkdown = _snarkdown)
+		)
 		const $cards = document.querySelectorAll("[data-ref='CardTeacher']")
 		const $name = document.querySelector("[data-ref='TeacherDetail-name']")
 		const $image = document.querySelector("[data-ref='TeacherDetail-image']")
@@ -102,7 +110,7 @@ const personData = {
 			const fullName = `${first_name} ${last_name}`
 			$name.innerHTML = fullName
 			if (avatar) $image.src = `https://admin.i2tec.ec${avatar.url}`
-			$summary.innerHTML = biography
+			$summary.innerHTML = snarkdown(biography)
 		}
 
 		$cards.forEach(($card) => {
