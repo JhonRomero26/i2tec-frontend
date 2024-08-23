@@ -1,5 +1,7 @@
 ---
 import Avatar from "@/components/Avatar.astro"
+import HorizontalScroller from "@/components/HorizontalScroller.astro"
+import NoFoundContent from "@/components/NoFoundContent.astro"
 import { BACKEND_URL } from "@/consts/app"
 import type { Person } from "@/models/Person"
 import { getPeople } from "@/services/people"
@@ -8,7 +10,7 @@ import { getImageFormat } from "@/utils/image"
 const response = {
 	data: [] as Person[],
 	error: false,
-	message: "",
+	message: "Hubo un error al obtener a los fundadores.",
 }
 await getPeople({
 	query: ["fields[0]=first_name", "fields[1]=last_name", "filters[founder][$equal]=true"],
@@ -24,11 +26,13 @@ await getPeople({
 <section class="py-24">
 	<div class="container">
 		<h2 class="mb-16 text-center text-4xl font-bold">Nuestros fundadores</h2>
-		<div class="flex flex-col gap-8 xs:flex-row md:gap-12">
+		<HorizontalScroller gap="2rem">
 			{
-				response.data!.length > 0 &&
+				response.error ? (
+					<NoFoundContent message={response.message} />
+				) : (
 					response.data?.map(({ first_name, last_name, avatar }) => (
-						<div class="flex w-full flex-col items-center gap-3">
+						<div class="slide flex w-full flex-col items-center gap-3">
 							<Avatar
 								class="h-44 w-44"
 								image={
@@ -41,8 +45,9 @@ await getPeople({
 							<span class="text-center text-xl">{`${first_name} ${last_name}`}</span>
 						</div>
 					))
+				)
 			}
-		</div>
+		</HorizontalScroller>
 		<div class="mt-16 flex justify-center">
 			<a class="btn btn-secondary" href="/about-us/teachers">Todos nuestros docentes</a>
 		</div>
