@@ -4,14 +4,20 @@ import Layout from "@/layouts/Layout.astro"
 
 <Layout title="Pagina no encontrada | I2TEC" description="Error al buscar la página">
 	<div class="container flex min-h-screen max-w-2xl flex-col items-center justify-center py-32">
-		<img
-			width={256}
-			height={80}
-			class="max-w-64"
-			alt="I2TEC Logo"
-			loading="lazy"
-			src="images/i2tec-logo.webp"
-		/>
+		<figure class="flex min-h-20 items-center">
+			<img
+				loading="lazy"
+				class="max-w-64 dark:hidden"
+				src="/i2tec-logo.webp"
+				alt="Logo del centro de investigación, innovación y tecnología"
+			/>
+			<img
+				loading="lazy"
+				class="hidden max-w-64 dark:block"
+				src="/i2tec-logo-wh.webp"
+				alt="Logo del centro de investigación, innovación y tecnología"
+			/>
+		</figure>
 		<span class="mb-4 text-center text-9xl font-black text-accent">Error 404</span>
 		<div class="mb-8 text-center text-3xl">No podemos encontrar la página que estás buscando.</div>
 		<a href="/" class="btn btn-primary">Volver al inicio</a>

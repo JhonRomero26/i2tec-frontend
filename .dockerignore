@@ -1,0 +1,11 @@
+Makefile
+docker*.yaml
+Dockerfile*
+.DS_Store
+.env
+.gitignore
+README.md
+.vscode
+.zed
+.idle
+.github

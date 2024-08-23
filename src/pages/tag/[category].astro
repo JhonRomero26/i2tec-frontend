@@ -1,0 +1,124 @@
+---
+import GridView from "@/components/GridView.astro"
+import HeroRadial from "@/components/HeroRadial.astro"
+import NoFoundContent from "@/components/NoFoundContent.astro"
+import Pagination from "@/components/Pagination.astro"
+import ProjectCard from "@/components/ProjectCard.astro"
+import SearchBox from "@/components/SearchBox.astro"
+import TitleSection from "@/components/TitleSection.astro"
+import { BACKEND_URL } from "@/consts/app"
+import Layout from "@/layouts/Layout.astro"
+import type { Project } from "@/models/Project"
+import { getProjects } from "@/services/project"
+import { getImageFormat } from "@/utils/image"
+
+const { category = "" } = Astro.params
+const pagParam = Astro.url.searchParams.get("pag") || ""
+const searchParam: string = Astro.url.searchParams.get("q") || ""
+
+const pagination = {
+	count: 0,
+	currentPage: 1,
+	pages: {
+		next: "",
+		prev: "",
+	},
+}
+const response = {
+	data: [] as Project[],
+	error: false,
+	message: "Hubo un error al obtener los proyectos.",
+}
+await getProjects({
+	query: [
+		"pagination[pageSize]=36",
+		pagParam && `pagination[page]=${pagParam}`,
+		`filters[categories][name][$containsi]=${category}`,
+		searchParam &&
+			[
+				`filters[$and][0][$or][0][title][$containsi]=${searchParam}`,
+				`filters[$and][0][$or][1][authors][first_name][$containsi]=${searchParam}`,
+				`filters[$and][0][$or][2][authors][last_name][$containsi]=${searchParam}`,
+			].join("&"),
+	],
+})
+	.then(({ data, meta }) => {
+		response.data = data!
+		pagination.count = meta.pagination.pageCount
+		pagination.currentPage = pagParam ? Number(pagParam) : 1
+		pagination.pages.next =
+			pagination.count > pagination.currentPage ? `${pagination.currentPage + 1}` : ""
+		pagination.pages.prev =
+			pagination.count < pagination.currentPage ? `${pagination.currentPage - 1}` : ""
+	})
+	.catch((_) => {
+		response.error = true
+	})
+
+const [, firstPath] = Astro.url.pathname.split("/")
+const existsProjects = response.data.length > 0
+---
+
+<Layout
+	title="Proyectos | I2TEC"
+	description="Descubre los proyectos que se desarrollan en el I2TEC para la innovación continua en el sur del Ecuador. Encuentra inspiración o nuevos proyectos que pueden ser parte de tu futuro."
+>
+	<HeroRadial class="pb-12 pt-36">
+		<div class="container">
+			<TitleSection
+				as="h1"
+				class="mb-24 text-center"
+				title="Proyectos por categoría"
+				description="Encuentra los proyectos que se desarrollan en el I2TEC para la innovación continua en el sur del Ecuador."
+			/>
+			<form class="mx-auto flex max-w-2xl items-center">
+				<SearchBox
+					class="w-full"
+					id="search-projects"
+					name="q"
+					value={searchParam}
+					placeholder="María Gómez o Impresora 3D"
+				/>
+			</form>
+		</div>
+	</HeroRadial>
+
+	<section class="my-24">
+		<div class="container">
+			<h6 class="mb-12 text-2xl font-semibold">
+				{!searchParam ? "Todas los proyectos" : `Resultados de la busqueda: ${searchParam}`}
+			</h6>
+			<GridView class="relative min-h-96" minWidth="350px">
+				{
+					existsProjects ? (
+						response.data.map((project) => (
+							<ProjectCard
+								id={`${project.id}`}
+								href={`/projects/${project.slug}`}
+								title={project.title}
+								excerpt={project.excerpt}
+								image={BACKEND_URL.concat(getImageFormat(project.image, "small"))}
+								publishedAt={project.publishedAt}
+								authors={project.authors}
+							/>
+						))
+					) : (
+						<NoFoundContent absolute />
+					)
+				}
+			</GridView>
+			{
+				existsProjects && (
+					<Pagination
+						class="mt-24 flex justify-center"
+						urlPag={`/${firstPath}?pag=`}
+						prevUrl={`${pagination.pages.prev}`}
+						nextUrl={`${pagination.pages.next}`}
+						currentPage={pagination.currentPage}
+						length={pagination.count}
+					/>
+				)
+			}
+		</div>
+	</section>
+</Layout>

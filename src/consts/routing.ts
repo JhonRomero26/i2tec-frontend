@@ -35,6 +35,6 @@ export const ABOUT_ROUTES: RouteWithImage[] = [
 	// {
 	//   label: "Dentro de I2TEC",
 	//   path: "/about-us/envolve",
-	//   image: "/images/prueba.jpg",
+	//   image: "/prueba.jpg",
 	// },
 ]
