@@ -8,7 +8,7 @@
 [![Issues][issues-shield]][issues-url]
 
 <a href="https://github.com/JhonRomero26/i2tec-frontend">
-  <img width="300px" src="./public/images/i2tec.webp" alt="Logo" />
+  <img width="300px" src="./public/i2tec.webp" alt="Logo" />
 </a>
 
 ## Web oficial del I2TEC
