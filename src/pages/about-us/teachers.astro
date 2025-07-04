@@ -1,6 +1,4 @@
 ---
-import snarkdown from "snarkdown"
-
 import NoFoundContent from "@/components/NoFoundContent.astro"
 import TeacherCard from "@/components/TeacherCard.astro"
 import TeacherDetailSection from "@/components/TeacherDetailSection.astro"
@@ -15,8 +13,6 @@ const response = {
 	error: false,
 	message: "Hubo un error al obtener las noticias.",
 }
-
-const snk = snarkdown
 
 await getTeachers()
 	.then(({ data }) => {
@@ -43,7 +39,7 @@ const personData = {
 	description="Nuestros docentes fundadores y colaboradores en el I2TEC muestran cada día su compromiso para el avance de la tecnología. Conoce a quienes forman parte del I2TEC."
 >
 	<main>
-		<section class="bg-svg-architect bg-ui01 py-32">
+		<section class="bg-svg-architect bg-ui-01 py-32">
 			<div class="container">
 				{
 					selectedTeacher ? (
@@ -116,11 +112,11 @@ const personData = {
 		$cards.forEach(($card) => {
 			$card.addEventListener("click", () => {
 				const id = Number($card.getAttribute("data-id"))
-				const index = teachers.findIndex((teacher) => teacher.id === id)
+				const index = teachers?.findIndex((teacher) => teacher.id === id)
 				const {
 					person: { first_name, last_name, avatar },
 					biography,
-				} = teachers[index]
+				} = teachers?.[index]
 				const teacher = {
 					avatar,
 					first_name,
@@ -128,7 +124,7 @@ const personData = {
 					last_name,
 				}
 				setTeacherInfo(teacher)
-				teachers.push(teacher)
+				teachers?.push(teacher)
 				window.scroll({ behavior: "smooth", top: 60 })
 			})
 		})

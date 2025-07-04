@@ -13,8 +13,8 @@ interface Props {
 
 const { length, currentPage, urlPag, prevUrl, nextUrl, class: className } = Astro.props
 
-const disabledNavClass = "cursor-not-allowed bg-ui01 text-gray-200"
-const activeNavClass = "bg-white hover:bg-ui01 hover:text-gray-700"
+const disabledNavClass = "cursor-not-allowed bg-ui-01 text-gray-200"
+const activeNavClass = "bg-white hover:bg-ui-01 hover:text-gray-700"
 const defaultClass = "flex items-center justify-center px-4 h-10 leading-tight"
 
 const paginationList: number[] = Array.from({ length }, (_, i) => i + 1)
@@ -62,7 +62,7 @@ const paginationList: number[] = Array.from({ length }, (_, i) => i + 1)
 						class:list={[
 							defaultClass,
 							{
-								"cursor-not-allowed bg-accent text-white": currentPage === pag,
+								"bg-accent cursor-not-allowed text-white": currentPage === pag,
 								[activeNavClass]: currentPage !== pag,
 							},
 						]}

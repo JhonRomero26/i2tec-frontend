@@ -1,47 +1,87 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-html {
-	--dark: theme("colors.gray.950");
-	--light: theme("colors.white");
+@plugin "@tailwindcss/typography";
+@plugin "@midudev/tailwind-animations";
 
-	--ui-body: theme("colors.white");
-	--ui-01: theme("colors.gray.100");
-	--ui-02: theme("colors.gray.200");
-	--ui-03: theme("colors.gray.300");
-	--ui-04: theme("colors.gray.950");
-	--ui-05: theme("colors.gray.400");
-	--ui-muted: theme("colors.gray.500");
-	--ui-disabled: theme("colors.gray.200");
-	--ui-accent: theme("colors.brand.500");
-	--ui-primary: theme("colors.gray.950");
-	--ui-secondary: theme("colors.gray.800");
+/* @custom-variant dark (&:where(.dark, .dark *)); */
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@theme {
+	--color-brand-50: #e6effa;
+	--color-brand-100: #cddff4;
+	--color-brand-200: #96bce9;
+	--color-brand-300: #639dde;
+	--color-brand-400: #2d7ad2;
+	--color-brand-500: #225da0;
+	--color-brand-600: #173f6c;
+	--color-brand-700: #112e50;
+	--color-brand-800: #0c2037;
+	--color-brand-900: #050f19;
+	--color-brand-950: #03070d;
+
+	--color-gray-50: #f7f8f9;
+	--color-gray-100: #e8eaef;
+	--color-gray-200: #b2b9c8;
+	--color-gray-300: #a2acbe;
+	--color-gray-400: #909cb2;
+	--color-gray-500: #59657f;
+	--color-gray-600: #4b566d;
+	--color-gray-700: #3e475a;
+	--color-gray-800: #272d3a;
+	--color-gray-900: #1a1e27;
+	--color-gray-950: #13161c;
+
+	--breakpoint-xs: 320px;
 }
 
-html.dark {
-	--ui-body: theme("colors.gray.950");
-	--ui-01: theme("colors.gray.900");
-	--ui-02: theme("colors.gray.800");
-	--ui-03: theme("colors.gray.700");
-	--ui-04: theme("colors.white");
-	--ui-05: theme("colors.gray.500");
-	--ui-muted: theme("colors.gray.600");
-	--ui-disabled: theme("colors.gray.800");
-	--ui-accent: theme("colors.brand.500");
-	--ui-primary: theme("colors.white");
-	--ui-secondary: theme("colors.gray.200");
+@theme static {
+	--color-body: var(--color-white);
+	--color-ui-01: var(--color-gray-100);
+	--color-ui-02: var(--color-gray-200);
+	--color-ui-03: var(--color-gray-300);
+	--color-ui-04: var(--color-gray-950);
+	--color-ui-05: var(--color-gray-400);
+	--color-muted: var(--color-gray-500);
+	--color-disabled: var(--color-gray-200);
+	--color-accent: var(--color-brand-500);
+	--color-primary: var(--color-gray-950);
+	--color-secondary: var(--color-gray-800);
+
+	--color-typo-primary: var(--color-gray-950);
+	--color-typo-secondary: var(--color-gray-800);
+}
+
+@variant dark {
+	--color-body: var(--color-gray-950);
+	--color-ui-01: var(--color-gray-900);
+	--color-ui-02: var(--color-gray-800);
+	--color-ui-03: var(--color-gray-700);
+	--color-ui-04: var(--color-white);
+	--color-ui-05: var(--color-gray-500);
+	--color-muted: var(--color-gray-600);
+	--color-disabled: var(--color-gray-800);
+	--color-accent: var(--color-brand-500);
+	--color-primary: var(--color-white);
+	--color-secondary: var(--color-gray-200);
+
+	--color-typo-primary: var(--color-gray-50);
+	--color-typo-secondary: var(--color-gray-200);
 }
 
 @layer base {
+	html {
+		--dark: var(--color-gray-950);
+		--light: var(--color-white);
+	}
+
 	body {
-		@apply bg-body text-secondary transition-colors;
+		@apply text-typo-secondary bg-body transition-colors;
 	}
 }
 
 @layer components {
 	.btn {
-		@apply inline-flex items-center gap-2 rounded bg-transparent px-5 py-2.5 text-sm font-medium no-underline transition-colors hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:hover:bg-gray-900 dark:focus:ring-gray-800;
+		@apply inline-flex cursor-pointer items-center gap-2 rounded bg-transparent px-5 py-2.5 text-sm font-medium no-underline transition-colors hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:hover:bg-gray-900 dark:focus:ring-gray-800;
 	}
 
 	.btn-primary {
@@ -49,7 +89,7 @@ html.dark {
 	}
 
 	.btn-secondary {
-		@apply bg-ui02 hover:bg-ui03 focus:ring-ui02 dark:text-white dark:hover:bg-ui03 dark:hover:ring-ui02 dark:focus:ring-ui02;
+		@apply bg-ui-02 hover:bg-ui-03 dark:hover:bg-ui-03 focus:ring-ui-02 dark:hover:ring-ui-02 dark:focus:ring-ui-02 dark:text-white;
 	}
 
 	.btn-danger {
@@ -85,7 +125,7 @@ html.dark {
 	}
 
 	.input {
-		@apply w-full rounded border-[1px] border-ui02 bg-ui01 p-2 outline-0 transition-colors placeholder:text-muted focus:border-accent;
+		@apply bg-ui-01 border-ui-02 w-full rounded border-[1px] p-2 outline-0 transition-colors placeholder:text-muted focus:border-accent;
 	}
 
 	.overlay {
@@ -105,7 +145,7 @@ html.dark {
 	@keyframes blur {
 		to {
 			backdrop-filter: blur(10px);
-			@apply bg-body;
+			background-color: var(--color-body);
 		}
 	}
 

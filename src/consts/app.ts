@@ -1,1 +1,1 @@
-export const BACKEND_URL = "https://admin.i2tec.ec"
+export const { PUBLIC_CMS_URL: BACKEND_URL } = import.meta.env

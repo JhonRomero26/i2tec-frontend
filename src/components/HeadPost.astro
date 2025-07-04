@@ -26,7 +26,7 @@ const authorNames = authors.map(formatAuthorName).join(" · ")
 		class="mx-auto mb-2 mt-0 flex max-w-3xl flex-col justify-between px-4 sm:flex-row sm:items-center sm:px-6"
 	>
 		<p>
-			<ClockIcon class="-mt-0.5 inline-block text-lg text-ui03" />
+			<ClockIcon class="text-ui-03 -mt-0.5 inline-block text-lg" />
 			<time class="inline-block" datetime={publisDate}>{publisDate}</time>
 			<span> · </span>
 			<span>5 min read</span>
@@ -34,25 +34,25 @@ const authorNames = authors.map(formatAuthorName).join(" · ")
 	</div>
 	<h1
 		id="post-title"
-		class="font-heading leading-tighter mx-auto mb-3 max-w-3xl px-4 text-4xl font-bold tracking-tighter text-primary transition-colors sm:px-6 md:text-5xl"
+		class="font-heading leading-tighter text-primary mx-auto mb-3 max-w-3xl px-4 text-4xl font-bold tracking-tighter transition-colors sm:px-6 md:text-5xl"
 	>
 		{title}
 	</h1>
 	{
 		authors.length > 0 && (
 			<p class="mx-auto mb-2 mt-0 max-w-3xl px-4 sm:flex-row sm:items-center sm:px-6">
-				<UserIcon class="-mt-0.5 inline-block text-lg text-ui03" />
+				<UserIcon class="text-ui-03 -mt-0.5 inline-block text-lg" />
 				<span>{authorNames}</span>
 			</p>
 		)
 	}
 	<p
 		id="post-excerpt"
-		class="mx-auto mb-8 mt-4 max-w-3xl px-4 text-justify text-xl text-ui05 sm:px-6 md:text-2xl"
+		class="text-ui-05 mx-auto mb-8 mt-4 max-w-3xl px-4 text-justify text-xl sm:px-6 md:text-2xl"
 	>
 		{excerpt}
 	</p>
-	<figure class="mx-auto mb-6 max-w-full bg-ui01 sm:rounded-md lg:max-w-[900px]">
+	<figure class="bg-ui-01 mx-auto mb-6 max-w-full sm:rounded-md lg:max-w-[900px]">
 		<Image
 			transition:name={`project ${id} image`}
 			loading="lazy"

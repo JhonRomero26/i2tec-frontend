@@ -7,7 +7,7 @@ const { pathname } = Astro.url
 ---
 
 <header>
-	<div id="header" class="fixed left-0 top-0 z-50 w-full px-4 py-6 text-primary">
+	<div id="header" class="text-primary fixed left-0 top-0 z-50 w-full px-4 py-6">
 		<div class="container flex h-full items-center justify-between">
 			<a class="relative mr-4 flex h-full w-28 flex-1" href="/">
 				<img
@@ -25,7 +25,7 @@ const { pathname } = Astro.url
 			</a>
 			<nav
 				id="header-navigator"
-				class="absolute right-8 top-full z-20 w-full max-w-48 flex-1 justify-center gap-4 rounded max-md:invisible max-md:flex-col max-md:bg-ui01 max-md:py-2 max-md:opacity-0 max-md:shadow md:static md:flex md:flex-row md:items-center md:p-0"
+				class="max-md:bg-ui-01 absolute right-8 top-full z-20 w-full max-w-48 flex-1 justify-center gap-4 rounded max-md:invisible max-md:flex-col max-md:py-2 max-md:opacity-0 max-md:shadow md:static md:flex md:flex-row md:items-center md:p-0"
 			>
 				<ul class="flex flex-col text-sm md:flex-row">
 					{
@@ -33,7 +33,7 @@ const { pathname } = Astro.url
 							<li>
 								<a
 									class:list={[
-										"block border-transparent px-4 py-2 font-medium transition-colors hover:text-accent max-md:hover:bg-brand-500/25 md:hover:border-accent",
+										"hover:text-accent max-md:hover:bg-brand-500/25 md:hover:border-accent block border-transparent px-4 py-2 font-medium transition-colors",
 										pathname === path && "text-accent",
 									]}
 									href={path}

@@ -21,12 +21,12 @@ const {
 const fullName = `${firstName} ${lastName}`
 ---
 
-<article class:list={["flex gap-4 rounded border border-accent bg-ui01 p-4", className]}>
+<article class:list={["border-accent bg-ui-01 flex gap-4 rounded border p-4", className]}>
 	<figure class="block aspect-square h-56 min-w-36 max-w-36 overflow-hidden rounded">
 		<Image class="h-full w-full object-cover object-center" inferSize src={image} alt={fullName} />
 	</figure>
 	<div class="flex flex-col gap-4">
-		<h6 class="text-2xl font-medium text-primary">{fullName}</h6>
+		<h6 class="text-primary text-2xl font-medium">{fullName}</h6>
 		<div set:html={snarkdown(description)} class="line-clamp-6 text-pretty" />
 	</div>
 </article>
